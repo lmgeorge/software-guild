@@ -36,7 +36,7 @@ public class WindowMaster {
         System.out.println("Please enter window height between 1 and 25.5:");
         height = Float.parseFloat(unit.nextLine());
         if (height <= MIN_HEIGHT || height >= MAX_HEIGHT){
-            System.out.println("Error: Please enter a height between 1 and 25.");
+            System.out.println("Error: Please enter a height between 1 and 25.\n");
         }
     }while (height <= MIN_HEIGHT || height >= MAX_HEIGHT);
     
@@ -45,7 +45,7 @@ public class WindowMaster {
         System.out.println("Please enter window width 1 and 18.75:");
         width = Float.parseFloat(unit.nextLine());
         if (width <= MIN_WIDTH || width >= MAX_WIDTH){
-            System.out.println("Error: Please enter a width between 1 and 18.75.");
+            System.out.println("Error: Please enter a width between 1 and 18.75.\n");
         }
     }while (width <= MIN_WIDTH || width >= MAX_WIDTH);    
     
