@@ -26,13 +26,15 @@ public class WindowMaster {
           width, 
           cost, 
           perimeterWindow, 
-          areaWindow;
+          areaWindow,
+          glassCost,
+          trimCost;
 
              
     
     do {
         System.out.println("Please enter window height between 1 and 25.5:");
-        height = unit.nextFloat();
+        height = Float.parseFloat(unit.nextLine());
         if (height <= MIN_HEIGHT || height >= MAX_HEIGHT){
             System.out.println("Error: Please enter a height between 1 and 25.");
         }
@@ -41,17 +43,17 @@ public class WindowMaster {
     
     do {
         System.out.println("Please enter window width 1 and 18.75:");
-        width = unit.nextFloat();
+        width = Float.parseFloat(unit.nextLine());
         if (width <= MIN_WIDTH || width >= MAX_WIDTH){
             System.out.println("Error: Please enter a width between 1 and 18.75.");
         }
     }while (width <= MIN_WIDTH || width >= MAX_WIDTH);    
     
     System.out.println("Please enter the cost of glass per square inch.");
-    Float glassCost = unit.nextFloat();
+    glassCost = Float.parseFloat(unit.nextLine());
     
     System.out.println("Please enter the cost of trim per linear inch.");
-    Float trimCost = unit.nextFloat();
+    trimCost = Float.parseFloat(unit.nextLine());
     
     
     areaWindow = height * width;
