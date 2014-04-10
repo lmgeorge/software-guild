@@ -19,8 +19,9 @@ public class SpaceBoxing {
           jupiter3 = 2.65,
           saturn4 = 1.17,
           uranus5 = 1.05,
-          neptune6 = 1.23;
-   int earthWeight, choice;
+          neptune6 = 1.23, 
+          earthWeight; 
+   int planetChoice;
    Scanner ui = new Scanner(System.in);
    
    System.out.println(
@@ -30,12 +31,33 @@ public class SpaceBoxing {
    );
    
    System.out.println("Please enter your earth weight:");
-   earthWeight = ui.nextInt();
+   earthWeight = Double.parseDouble(ui.nextLine());
    
-   System.out.println("Which planet are you visiting?");
-   choice = ui.nextInt();
+   System.out.println("Which planet are you visiting (please enter the planet number)?");
+   planetChoice = Integer.parseInt(ui.nextLine());
    
-   switch (choice){
+   switch (planetChoice){
+     case 1:
+       System.out.println("Your weight would be " + (earthWeight*venus1) + " pounds on that planet.");
+       break;
+     case 2:
+       System.out.println("Your weight would be " + (earthWeight*mars2) + " pounds on that planet.");
+       break;
+     case 3:
+       System.out.println("Your weight would be " + (earthWeight*jupiter3) + " pounds on that planet.");
+       break;
+     case 4:
+       System.out.println("Your weight would be " + (earthWeight*saturn4) + " pounds on that planet.");
+       break;
+     case 5:
+       System.out.println("Your weight would be " + (earthWeight*uranus5) + " pounds on that planet.");
+       break;
+     case 6:
+       System.out.println("Your weight would be " + (earthWeight*neptune6) + " pounds on that planet.");
+       break;
+     default:
+       System.out.println("You chose to go no where I know...");
+       break;
      
    }
    
