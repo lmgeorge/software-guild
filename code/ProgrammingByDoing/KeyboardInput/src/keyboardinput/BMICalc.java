@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class BMICalc {
   
   public static void main (String[] args){
-    Float height, heightInches, weight, bmi;
+    float height, heightInches, weight, bmi;
     Scanner ui = new Scanner(System.in);
 
     System.out.println("Your height in (feet only):");
