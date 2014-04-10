@@ -27,20 +27,21 @@ public class BMICategories {
     bmi = (weight/2.2)/ pow((height*0.0254), 2);
     
     if(bmi < 18.5){
-      System.out.println("Your BMI is" + bmi + "\n"
+      System.out.println("Your BMI is " + bmi + "\n"
         + "BMI Category: underweight");
     }
     if(bmi <= 24.9 && bmi >= 18.5){
-      System.out.println("Your BMI is" + bmi + "\n"
-        + "BMI Category: underweight");
+      System.out.println("Your BMI is " + bmi + "\n"
+        + "BMI Category: normal weight");
     }
-    if(bmi <= 25.0 && bmi >= 29.9){
-      System.out.println("Your BMI is" + bmi + "\n"
-        + "BMI Category: underweight");
+    if(bmi >= 25.0 && bmi <= 29.9){
+      System.out.println("Your BMI is " + bmi + "\n"
+        + "BMI Category: overweight");
     }
-    if(bmi <= 25.0 && bmi >= 29.9){
-      System.out.println("Your BMI is" + bmi + "\n"
-        + "BMI Category: underweight");
+
+    if(bmi >= 30.0){
+      System.out.println("Your BMI is " + bmi + "\n"
+        + "BMI Category: obese");
     }
     
       
