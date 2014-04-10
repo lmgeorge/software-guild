@@ -22,40 +22,40 @@ public class RockPaperScissors {
     Scanner sc= new Scanner(System.in);
         Random r = new Random();
         
-        String user, computer="";
+        String user1, user2="";
         int cp;
         
         System.out.println("ROCK, PAPER, SCISSORS. PICK ONE.");
         
-        user = sc.nextLine();
+        user1 = sc.nextLine();
         cp =1+ r.nextInt(3);
         
         switch (cp) {
             case 1:
-                computer = "rock";
+                user2 = "rock";
                 break;
             case 2:
-                computer = "paper";
+                user2 = "paper";
                 break;
             case 3:
-                computer = "scissors";
+                user2 = "scissors";
                 break;
             default: 
                 
                 break;                
         }
-        System.out.println("Computer picks: " + computer);
+        System.out.println("User 1 picks: " + user2);
         
-        if (user.equalsIgnoreCase(computer)) {
+        if (user1.equalsIgnoreCase(user2)) {
             System.out.println("Its a tie.");
         }
-        else if ((user.equalsIgnoreCase("rock") && computer.equals("scissors")) || 
-                 (user.equalsIgnoreCase("paper") && computer.equals("rock")) ||
-                 (user.equalsIgnoreCase("scissors") && computer.equals("paper"))) {
+        else if ((user1.equalsIgnoreCase("rock") && user2.equals("scissors")) || 
+                 (user1.equalsIgnoreCase("paper") && user2.equals("rock")) ||
+                 (user1.equalsIgnoreCase("scissors") && user2.equals("paper"))) {
             System.out.println("You win!");
         }
         else {
-            System.out.println("Computer wins!");
+            System.out.println("User 1 wins!");
         }
             
   }
