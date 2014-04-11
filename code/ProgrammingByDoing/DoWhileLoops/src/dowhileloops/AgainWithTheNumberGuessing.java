@@ -1,0 +1,47 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package dowhileloops;
+
+import java.util.Random;
+import java.util.Scanner;
+
+/**
+ *
+ * @author apprentice
+ */
+public class AgainWithTheNumberGuessing {
+
+  public static void main(String[] args) {
+    Scanner ui = new Scanner(System.in);
+    Random rGen = new Random();
+
+    int guess, i = 1,
+      r = 7;//1 + rGen.nextInt(10);
+
+    System.out.println(
+      "I'm thinking of a number from 1 to 10.\n"
+      + "Your guess: "
+    );
+    guess = Integer.parseInt(ui.nextLine());
+
+    do {
+      if (guess != r) {
+        System.out.println("That is incorrect. Guess again.");
+        guess = Integer.parseInt(ui.nextLine());
+        i++;
+      }
+
+    } while (guess != r);
+
+    if (guess == r && i != 1) {
+      System.out.println("That's right! You're a good guesser.\n"
+        + "It only took you " + i + " tries.");
+    } else if (i == 1) {
+      System.out.println("That's right! You're a good guesser.\n"
+        + "It only took you " + i + " try.");
+    }
+  }
+}
