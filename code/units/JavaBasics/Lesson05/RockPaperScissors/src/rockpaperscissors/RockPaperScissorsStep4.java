@@ -22,7 +22,7 @@ public class RockPaperScissorsStep4 {
         Random r = new Random();
 
         int rounds, user1Wins = 0, user2Wins = 0, tie = 0;
-        String user1, user2 = "", playAgain;
+        String user1, user2, playAgain;
         do {
 
             System.out.println("HOW MANY ROUNDS? (1-10)");
