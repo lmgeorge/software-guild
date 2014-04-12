@@ -1,3 +1,5 @@
+package dowhileloops;
+
 
 import java.util.Scanner;
 
