@@ -11,22 +11,22 @@ import java.util.Random;
  *
  * @author lmgeorge <lauren.george@live.com>
  */
-public class BubbleSort {
+public class SelectionSort {
 
-  public static void bubble_sort(int[] a) {
-   for (int firstNum = 0; firstNum < a.length; firstNum++){
-     for (int secondNum = 0; secondNum < a.length; secondNum++){
-       swap(a, firstNum, secondNum);
-     }
-   }
+  public static void selection_sort(int[] a) {
+    for (int i = 0; i < a.length; i++) {
+      for (int j = 0; j < a.length; j++) {
+        swap(a, i, j);
+      }
+    }
   }
 
   public static void swap(int[] a, int i, int j) {
-    int swapper;
-    if (a[i] < a[j]){
-      swapper = a[j];
-      a[j] = a[i];
-      a[i] = swapper;
+    int min;
+    if (a[i] < a[j]) {
+      min = a[i];
+      a[i] = a[j];
+      a[j] = min;
     }
   }
 
@@ -48,7 +48,7 @@ public class BubbleSort {
     System.out.println();
 
     // Sort it
-    bubble_sort(arr);
+    selection_sort(arr);
 
     // Display it again to confirm that it's sorted
     System.out.print("after : ");
