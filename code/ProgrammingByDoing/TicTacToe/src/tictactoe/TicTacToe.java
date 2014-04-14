@@ -28,14 +28,13 @@ public class TicTacToe {
     System.out.println("\tTIC TAC TOE\n\n");
     displayBoard();
 
-    // test(); //uncomment to run test and comment code below
     do {
       rounds++;
       System.out.print("'O', choose your location (row, column): ");
       row = ui.nextInt();
       col = ui.nextInt();
       user_choice(row, col, 'O');
-
+        
       displayBoard();
 
       check = hasWon(rounds);
@@ -50,7 +49,7 @@ public class TicTacToe {
         check = hasWon(rounds);
       }
     } while (!(check.equals("stop")));
-    //stop comment
+
   }
 
   public static String hasWon(int rounds) {
@@ -99,7 +98,10 @@ public class TicTacToe {
       check = "go";
       won = false;
     }
-
+    
+    //Check if the game continues
+    //If not, print winner or if it is a tie
+    
     if (won == true && winChoice != ' ') {
       System.out.println("'" + winChoice + "'" + " won!");
       check = "stop";
