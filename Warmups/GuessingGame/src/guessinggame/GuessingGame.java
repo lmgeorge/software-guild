@@ -38,9 +38,9 @@ public class GuessingGame {
           System.out.println("WRONG!! OUT OF BOUNDS!!");
         }
        
-      } 
-      counter++;
+      }
       
+      counter++;
       
       
       if (userGuess < compNumber) {
