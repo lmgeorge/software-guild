@@ -33,7 +33,7 @@ public class TicTacToe {
       System.out.print("'O', choose your location (row, column): ");
       row = ui.nextInt();
       col = ui.nextInt();
-      user_choice(row, col, 'O');
+      userChoice(row, col, 'O');
         
       displayBoard();
 
@@ -43,7 +43,7 @@ public class TicTacToe {
         System.out.print("'X', choose your location (row, column): ");
         row = ui.nextInt();
         col = ui.nextInt();
-        user_choice(row, col, 'X');
+        userChoice(row, col, 'X');
 
         displayBoard();
         check = hasWon(rounds);
@@ -116,7 +116,7 @@ public class TicTacToe {
     return check;
   }
 
-  public static void user_choice(int row, int col, char marker) {
+  public static void userChoice(int row, int col, char marker) {
     board[row][col] = marker;
 
   }
