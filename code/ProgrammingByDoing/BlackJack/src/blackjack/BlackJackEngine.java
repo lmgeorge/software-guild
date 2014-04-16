@@ -136,19 +136,5 @@ public class BlackJackEngine {
     }
   }
 
-  public Random getR() {
-    return r;
-  }
 
-  public void setR(Random r) {
-    this.r = r;
-  }
-
-  public Scanner getUi() {
-    return ui;
-  }
-
-  public void setUi(Scanner ui) {
-    this.ui = ui;
-  }
 }
