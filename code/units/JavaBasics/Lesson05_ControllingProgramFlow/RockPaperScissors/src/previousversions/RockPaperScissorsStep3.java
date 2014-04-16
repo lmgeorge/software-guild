@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package rockpaperscissors;
+package previousversions;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -12,7 +12,7 @@ import java.util.Scanner;
  *
  * @author apprentice
  */
-public class RockPaperScissorsStep2 {
+public class RockPaperScissorsStep3 {
 
     /**
      * @param args the command line arguments
@@ -21,7 +21,7 @@ public class RockPaperScissorsStep2 {
         Scanner sc = new Scanner(System.in);
         Random r = new Random();
 
-        int rounds;
+        int rounds, user1Wins = 0, user2Wins = 0, tie = 0;
         String user1, user2 = "";
 //        int cp;
 
@@ -39,47 +39,54 @@ public class RockPaperScissorsStep2 {
             System.out.println("USER 2: ROCK, PAPER, SCISSORS. PICK ONE: ");
             user2 = sc.nextLine();
 
-//        cp =1+ r.nextInt(3);
-//        switch (cp) {
-//            case 1:
-//                user2 = "rock";
-//                break;
-//            case 2:
-//                user2 = "paper";
-//                break;
-//            case 3:
-//                user2 = "scissors";
-//                break;
-//            default: 
-//                
-//                break;                
-//        }
-//        System.out.println("User 2 picks: " + user2);
             if (user1.equalsIgnoreCase(user2)) {
                 System.out.println("Its a tie.");
+                tie++;
             } else if ((user1.equalsIgnoreCase("rock") && user2.equalsIgnoreCase("scissors"))) {
                 System.out.println("User 1 win!n"
                         + "Rock breaks Scissors to win");
+                user1Wins++;
             } else if (user1.equalsIgnoreCase("paper") && user2.equalsIgnoreCase("rock")) {
                 System.out.println("User 1 win!\n"
                         + "Paper wraps Rock to win!");
+                user1Wins++;
             } else if ((user1.equalsIgnoreCase("scissors") && user2.equalsIgnoreCase("paper"))) {
                 System.out.println("User 1 win!\n"
                         + "Scissor cuts Paper to win!");
-                
+                user1Wins++;
+
             } else if ((user2.equalsIgnoreCase("rock") && user1.equalsIgnoreCase("scissors"))) {
                 System.out.println("User 2 win!\n"
                         + "Rock breaks Scissors to win");
+                user2Wins++;
             } else if (user2.equalsIgnoreCase("paper") && user1.equalsIgnoreCase("rock")) {
                 System.out.println("User 2 win!\n"
                         + "Paper wraps Rock to win!");
+                user2Wins++;
+
             } else if ((user2.equalsIgnoreCase("scissors") && user1.equalsIgnoreCase("paper"))) {
                 System.out.println("User 2 win!\n"
                         + "Scissor cuts Paper to win!");
+                user2Wins++;
+
             }
 
         }
-
+            System.out.println("Ties: " + tie);
+            System.out.println("User 1 wins: " + user1Wins);
+            System.out.println("User 2 wins: " + user2Wins);
+            
+            if (user1Wins == user2Wins) {
+                System.out.println("Its a tie.");
+            }
+            else if (user1Wins > user2Wins) {
+                System.out.println("User 1 wins.");
+            }
+            else {
+                System.out.println("User 2 wins.");
+            }
+        
+        
     }
 
 }

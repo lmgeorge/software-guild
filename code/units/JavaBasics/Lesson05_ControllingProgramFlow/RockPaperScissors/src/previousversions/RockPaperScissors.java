@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package rockpaperscissors;
+package previousversions;
 
 import java.util.Random;
 import java.util.Scanner;

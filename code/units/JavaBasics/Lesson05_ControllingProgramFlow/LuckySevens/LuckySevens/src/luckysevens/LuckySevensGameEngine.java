@@ -15,12 +15,12 @@ import java.util.Scanner;
 public class LuckySevensGameEngine {
 
   private int roll1, roll2, rollCounter = 0, betLimit, maxAmountBet = 0, maxAmountRoll = 0;
-  private Random rGen = new Random();
-  private Scanner sc = new Scanner(System.in);
+  private final Random rGen = new Random();
+  private final Scanner sc = new Scanner(System.in);
 
   public void play() {
     System.out.print("How much money do you want to bet? ");
-    betLimit = getSc().nextInt();
+    betLimit = sc.nextInt();
     
     maxAmountBet = betLimit;
     if (betLimit > 0) {
@@ -32,8 +32,8 @@ public class LuckySevensGameEngine {
   }
 
   public int rollDice() {
-    roll1 = getrGen().nextInt(6) + 1;
-    roll2 = getrGen().nextInt(6) + 1;
+    roll1 = rGen.nextInt(6) + 1;
+    roll2 = rGen.nextInt(6) + 1;
     int sum = roll1 + roll2;
     return sum;
   }
@@ -57,32 +57,5 @@ public class LuckySevensGameEngine {
       + " when you had $" + maxAmountBet + ".");
   }
 
-  /**
-   * @return the rGen
-   */
-  public Random getrGen() {
-    return rGen;
-  }
-
-  /**
-   * @param rGen the rGen to set
-   */
-  public void setrGen(Random rGen) {
-    this.rGen = rGen;
-  }
-
-  /**
-   * @return the sc
-   */
-  public Scanner getSc() {
-    return sc;
-  }
-
-  /**
-   * @param sc the sc to set
-   */
-  public void setSc(Scanner sc) {
-    this.sc = sc;
-  }
 
 }
