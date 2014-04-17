@@ -11,7 +11,7 @@ import java.util.Scanner;
  *
  * @author lmgeorge <lauren.george@live.com>
  */
-public class SimpleCalcEngine {
+public class SimpleCalcEngine2 {
 
   private final Scanner ui = new Scanner(System.in);
   private int menuChoice;
@@ -20,14 +20,7 @@ public class SimpleCalcEngine {
   private final ConsoleIO cio = new ConsoleIO();
   public void startCalculator() {
     do {
-      menuChoice = cio.getNum(
-      "Choose an operation:\n"
-      + "1. Addition\n"
-      + "2. Subtraction\n"
-      + "3. Multiplication\n"
-      + "4. Division\n"
-      + "5. Exit");
-      cio.setValidNum(menuChoice, 1, 5);
+      menuChoice = displayMenu();
       cio.println();
 
       if (menuChoice != 5) {
@@ -36,17 +29,51 @@ public class SimpleCalcEngine {
         simpleMath(menuChoice, a, b);
       }
     } while (menuChoice != 5);
-    cio.println();
-    cio.println("Thank you!");
+  }
+
+  public int displayMenu() {
+    cio.println(
+      "Choose an operation:\n"
+      + "1. Addition\n"
+      + "2. Subtraction\n"
+      + "3. Multiplication\n"
+      + "4. Division\n"
+      + "5.Exit"
+    );
+    menuChoice = Integer.parseInt(ui.nextLine());
+    return menuChoice;
+  }
+
+  public boolean isValid(int menuChoice) {
+
+    this.menuChoice = menuChoice;
+
+    if (menuChoice < 1 || menuChoice > 5) {
+      cio.println("Incorrect menu choice.");
+      cio.print("Please choose a valid menu option: ");
+      valid = false;
+
+    } else if (menuChoice == 5) {
+      cio.println();
+      cio.println("Thank you!");
+      valid = true;
+
+    } else {
+      valid = true;
+    }
+
+    return valid;
   }
 
   public void getOperands(int menuChoice) {
     this.menuChoice = menuChoice;
 
-    a = cio.getDbl("Please enter your first operand: ");
+    cio.print("Please enter your first operand: ");
+    a = ui.nextDouble();
     cio.println();
     do {
-      b = cio.getDbl("Please enter your second operand: ");
+      cio.print("Please enter your second operand: ");
+      b = ui.nextDouble();
 
       if (b == 0) {
         cio.println("Error: Cannot divide by zero.\n");
@@ -55,7 +82,6 @@ public class SimpleCalcEngine {
     } while (b == 0);
 
   }
-
 
   /**
    * @param menuChoice
