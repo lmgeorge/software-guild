@@ -5,23 +5,31 @@
  */
 package addressbook;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 /**
  *
  * @author lmgeorge <lauren.george@live.com>
  */
 public class Controller {
 
-  ConsoleIO cio = new ConsoleIO();
-  AddressBook book = new AddressBook();
+  private ConsoleIO cio = new ConsoleIO();
+  private AddressBook book = new AddressBook();
 
-  public void runAddressBook() throws Exception {
-    book.loadAddressBook();
+  public void runAddressBook() {
+    try {
+      book.loadAddressBook();
+    } catch (FileNotFoundException ex) {
+      cio.println("ERROR: " + ex.getMessage());
+      //Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+    }
 
     menu();
 
   }
 
-  private void menu() throws Exception {
+  private void menu(){
     int selection = 0;
     cio.println("\nMain Menu:");
     cio.println("\n\t1.Add Address"
@@ -59,38 +67,80 @@ public class Controller {
 
   }  // close menu
 
-  private void addAddress() throws Exception {
+  private void addAddress() {
     Address newAddress = new Address();
+    String check;
     cio.print("ADD ADDRESS:\n");
     newAddress.setFirstName(cio.get("\tFirst Name: "));
-    newAddress.setLastName(cio.get("\tLast Name: "));
+    check = cio.get("\tLast Name: ");
+    newAddress.setLastName(check);
     newAddress.setStreet(cio.get("\tStreet Address: "));
     newAddress.setCity(cio.get("\tCity: "));
     newAddress.setState(cio.get("\tState: "));
     newAddress.setZip(cio.get("\tZIP code: "));
+    
+    if (book.checkKey(check)){
+      cio.println("Are you sure you want to change this address?");
+      try {
+      Address temp = book.getAddress(check);
 
+      cio.println("First Name: " + temp.getFirstName());
+      cio.println("Last Name: " + temp.getLastName());
+      cio.println("Street: " + temp.getStreet());
+      cio.println("City: " + temp.getCity());
+      cio.println("State: " + temp.getState());
+      cio.println("Zipcode: " + temp.getZip());
+    } catch (NullPointerException np) {
+      cio.println("ERROR: " + np.getMessage());
+    }
+      String answer = cio.get("y/n? ");
+      if (answer.equalsIgnoreCase("n")){
+        menu();
+      }
+    }
+    
     book.add(newAddress);
 
-    book.writeAddressBook();
-    menu();
+    try {
+      book.writeAddressBook();
+    } catch (IOException ex) {
+      cio.println("ERROR: " + ex.getMessage());
+      //Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    try {
+      menu();
+    } catch (Exception ex) {
+      cio.println("ERROR: " + ex.getMessage());
+    }
   }
 
-  private void find() throws Exception {
+  private void find() {
     cio.println("FIND ADDRESS:\n");
     String record = cio.get("Please enter a last name: ");
-    Address temp = book.getAddress(record);
-    cio.println("First Name: " + temp.getFirstName());
-    cio.println("Last Name: " + temp.getLastName());
-    cio.println("Street: " + temp.getStreet());
-    cio.println("City: " + temp.getCity());
-    cio.println("State: " + temp.getState());
-    cio.println("Zipcode: " + temp.getZip());
-    menu();
+    Address temp;
+    try {
+      temp = book.getAddress(record);
+
+      cio.println("First Name: " + temp.getFirstName());
+      cio.println("Last Name: " + temp.getLastName());
+      cio.println("Street: " + temp.getStreet());
+      cio.println("City: " + temp.getCity());
+      cio.println("State: " + temp.getState());
+      cio.println("Zipcode: " + temp.getZip());
+    } catch (NullPointerException np) {
+      cio.println("ERROR: " + np.getMessage());
+    }
+    try {
+      menu();
+    } catch (Exception ex) {
+      cio.println("ERROR: " + ex.getMessage());
+      //Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+    }
   }
 
-  private void displayAll() throws Exception {
+  private void displayAll() {
     String[] keys = book.getKeys();
-
+    
     for (int i = 0; i < keys.length; i++) {
       String record = keys[i];
       Address temp = book.getAddress(record);
@@ -108,27 +158,40 @@ public class Controller {
 
   }
 
-  private void delete() throws Exception {
+  private void delete() {
     Address delete = new Address();
     cio.print("DELETE ADDRESS:\n");
     String recordKey = cio.get("Please enter a last name: ");
     cio.println();
-    
-    Address temp = book.getAddress(recordKey);
-    cio.println("First Name: " + temp.getFirstName());
-    cio.println("Last Name: " + temp.getLastName());
-    cio.println("Street: " + temp.getStreet());
-    cio.println("City: " + temp.getCity());
-    cio.println("State: " + temp.getState());
-    cio.println("Zipcode: " + temp.getZip());
-    cio.println();
-    String answer = cio.get("Are you sure? (y/n) ");
-    if (answer.equalsIgnoreCase("y")) {
-      book.remove(recordKey);
-    }
 
-    book.writeAddressBook();
-    menu();
+    Address temp;
+    try {
+      temp = book.getAddress(recordKey);
+      cio.println("First Name: " + temp.getFirstName());
+      cio.println("Last Name: " + temp.getLastName());
+      cio.println("Street: " + temp.getStreet());
+      cio.println("City: " + temp.getCity());
+      cio.println("State: " + temp.getState());
+      cio.println("Zipcode: " + temp.getZip());
+      cio.println();
+      String answer = cio.get("Are you sure? (y/n) ");
+      if (answer.equalsIgnoreCase("y")) {
+        book.remove(recordKey);
+      }
+
+      book.writeAddressBook();
+    } catch (NullPointerException np) {
+      cio.println("ERROR: " + np.getMessage());
+    } catch (IOException ex) {
+      cio.println("ERROR: " + ex.getMessage());
+      //Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    try {
+      menu();
+    } catch (Exception ex) {
+      cio.println("ERROR: " + ex.getMessage());
+      //Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+    }
   }
 
 }
