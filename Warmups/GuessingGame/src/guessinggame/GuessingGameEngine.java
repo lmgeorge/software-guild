@@ -20,7 +20,7 @@ public class GuessingGameEngine {
   private int rounds = 0;
   private int userGuess = 0;
   private int compNumber = 0;
-  private int totalGuess = 1;
+  private int totalGuess = 0;
   private int wrongGuess = 0;
   private int avgGuesses = 0;
   private int sumTotalGuesses = 0;
@@ -36,13 +36,13 @@ public class GuessingGameEngine {
 
       cio.println("\nWelcome to the Guessing Game!\n"
         + "I'm thinking of a number between 1 and 20.");
-      cio.println(compNumber);
+
+      //cio.println(compNumber);
       getUserGuess();
 
       printResults();
 
-      cio.print("Do you want to play again? (y/n) ");
-      playAgain = cio.get();
+      playAgain = cio.get("Do you want to play again? (y/n) ");
 
       sumTotalGuesses += totalGuess;
 
@@ -54,11 +54,8 @@ public class GuessingGameEngine {
   public void getUserGuess() {
     do {
       while (userGuess > 20 || userGuess < 1) {
-        cio.print("Please enter your guess: ");
-        userGuess = cio.getNum();
- 
-        cio.println(userGuess);
-        
+        userGuess = cio.getNum("Please enter your guess: ");
+        cio.println();
         checkWrongGuess(userGuess);
       }
 
@@ -66,13 +63,13 @@ public class GuessingGameEngine {
 
       isValid();
 
-    
     } while (userGuess != compNumber);
   }
 
   public void checkWrongGuess(int userGuess) {
     this.userGuess = userGuess;
 
+    //cio.setValidNum(cio.getNum(), 1, 20, "WRONG!! OUT OF BOUNDS!!");
     if (userGuess > 20 || userGuess < 1) {
       totalGuess++;
       cio.println("WRONG!! OUT OF BOUNDS!!");
@@ -84,14 +81,17 @@ public class GuessingGameEngine {
     if (userGuess < compNumber) {
       cio.println("Your guess is too low.\n");
       userGuess = cio.getNum("Please enter your guess: ");
+      cio.println();
+
     } else if (userGuess > compNumber) {
       cio.println("Your guess is too high.\n");
       userGuess = cio.getNum("Please enter your guess: ");
-    }  
+      cio.println();
+    }
   }
 
   public void printResults() {
-    cio.println("You guessed right! The answer was " + compNumber + ".\n"
+    cio.println("You guessed right! The answer was " + compNumber + ".\n\n"
       + "Out of bounds guesses: " + wrongGuess + "\n"
       + "In bound guesses: " + (totalGuess - wrongGuess) + "\n"
       + "It only took you " + totalGuess + " tries this round.\n"

@@ -44,7 +44,7 @@ public class ServerCabinet {
     return servers.get(serverName);
   }
   
-  public void showCabinet() throws FileNotFoundException {
+  public void loadCabinet() throws FileNotFoundException {
     Scanner readFile = new Scanner(new BufferedReader(new FileReader(CABINET_FILE)));
     String record;
     String[] recordTokens;
@@ -68,20 +68,20 @@ public class ServerCabinet {
   }
   
   public void writeCabinet() throws IOException{
-    PrintWriter fileOut = new PrintWriter(new FileWriter(CABINET_FILE));
+    PrintWriter out = new PrintWriter(new FileWriter(CABINET_FILE));
     
     Collection<Server> values = servers.values();
     
     Iterator<Server> iter = values.iterator();
     while (iter.hasNext()){
       Server currentServer = iter.next();
-      fileOut.println(currentServer.getName()+DELIMITER
+      out.println(currentServer.getName()+DELIMITER
       + currentServer.getIp()+ DELIMITER
       + currentServer.getMake() + DELIMITER
       + currentServer.getRam() + DELIMITER
-      + currentServer.getProcessors() + DELIMITER);
-      
+      + currentServer.getProcessors());
+      out.flush();
     }
-    
+    out.close();
   }
 }

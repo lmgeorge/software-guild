@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package guessinggame;
+package addressbook;
 
 import java.util.Scanner;
 
@@ -11,24 +11,62 @@ import java.util.Scanner;
  *
  * @author lmgeorge <lauren.george@live.com>
  */
-public class ConsoleIO1 {
+public class ConsoleIO {
 
+  NumberFormatException ex = new NumberFormatException();
   private Scanner ui = new Scanner(System.in);
-  private double dbl;
-  private float flt;
   private String str;
   private int min;
   private int max;
+  private int x;
+  private double dbl;
   private double dMin;
   private double dMax;
+  private float flt;
   private float fMin;
   private float fMax;
-  private int x;
+
+  public boolean checkInt(String input) {
+    boolean result;
+    try {
+      Integer.parseInt(input);
+      result = true;
+    } catch (NumberFormatException nfe) {
+      print("Error: " + nfe.getMessage());
+      result = false;
+    }
+    return result;
+  }
+
+  public boolean checkFloat(String input) {
+    boolean result;
+    try {
+      Float.parseFloat(input);
+      result = true;
+    } catch (NumberFormatException nfe) {
+      print("Error: " + nfe.getMessage());
+      result = false;
+    }
+    return result;
+  }
+
+  public boolean checkDouble(String input) {
+    boolean result;
+    try {
+      Double.parseDouble(input);
+      result = true;
+    } catch (NumberFormatException nfe) {
+      print("Error: " + nfe.getMessage());
+      result = false;
+    }
+    return result;
+  }
 
   public String gets() {
     str = ui.nextLine();
     return str;
   }
+
   public String get() {
     str = ui.next();
     return str;
@@ -39,88 +77,108 @@ public class ConsoleIO1 {
     str = gets();
     return str;
   }
-  public String get(String line) {
-    println(line);
-    str = get();
-    return str;
-  }
 
-  public String setStr(String str) {
-    this.str = str;
+  public String get(String line) {
+    print(line);
+    str = ui.nextLine();
     return str;
   }
 
   //
   //integer methods
-  public int getsNum(String str) {
-    println(str);
-    x = Integer.parseInt(ui.nextLine());
+  public int getsNum(String prompt) {
+    println(prompt);
+    str = gets();
+    
+    while (!checkInt(str)) {
+      println("Error. Please enter a valid response");
+      str = gets();
+    }
+    str = gets();
+    x = Integer.parseInt(str);
+
     return x;
   }
-  public int getNum(String str) {
-    print(str);
-    x = Integer.parseInt(ui.next());
+
+  public boolean check(int x, String err) {
+
+    return true;
+  }
+
+  public int getNum(String prompt) {
+    println(prompt);
+    do {
+      str = get();
+      if (!checkInt(str)) {
+        println("Error. Please enter a valid response");
+      }
+    } while (!checkInt(str));
+    x = Integer.parseInt(str);
+
     return x;
   }
 
   public int getsNum() {
-    x = setNum(Integer.parseInt(ui.nextLine()));
+    try {
+      x = (Integer.parseInt(ui.nextLine()));
+
+    } catch (NumberFormatException nfe) {
+      println("ERROR: " + nfe.getMessage());
+      println();
+    }
     return x;
   }
+
   public int getNum() {
-    try{
-    x = setNum(Integer.parseInt(ui.next()));
-    }catch (NumberFormatException nfe){
+    try {
+      x = (Integer.parseInt(ui.next()));
+    } catch (NumberFormatException nfe) {
       println("ERROR: " + nfe.getMessage());
     }
     return x;
   }
 
-  public int setNum(int x) {
-    this.x = x;
-    return x;
-  }
-
-  public int setValidNum(int x, int min, int max) {
+  public int setValidNum(int x, int min, int max, String err) {
     this.min = min;
     this.max = max;
     this.x = x;
 
     while (x > max || x < min) {
-      println("Please enter a number within " + min + " and " + max + ".");
-      print("> ");
-      x = getNum();
+      println(err);
+      try {
+        x = getNum("> ");
+      } catch (NumberFormatException nfe) {
+        println("ERROR: " + nfe.getMessage());
+      }
     }
     return x;
   }
 
   //
   //float methods
-  public float getFlt() {
-    flt = setNum(Float.parseFloat(gets()));
+  public float getsFlt() {
+    try {
+      flt = Float.parseFloat(gets());
+    } catch (NumberFormatException nfe) {
+      println("ERROR: " + nfe.getMessage());
+    }
     return flt;
   }
 
-  public float getFlt(String str) {
+  public float getsFlt(String str) {
     print(str);
-    flt = setNum(Float.parseFloat(gets()));
+    flt = Float.parseFloat(gets());
     return flt;
   }
 
-  public float setNum(float flt) {
-    this.flt = flt;
-    return flt;
-  }
-
-  public float setValidNum(float x, float min, float max) {
+  public float setsValidNum(float x, float min, float max) {
     this.fMin = min;
     this.fMax = max;
     this.flt = x;
 
     while (x > max || x < min) {
       println("Please enter a number within " + min + " and " + max + ".");
-      print("> ");
-      x = getFlt();
+      x = getsFlt("> ");
     }
     return x;
   }
@@ -129,23 +187,18 @@ public class ConsoleIO1 {
   
    */
 
-  public double getDbl() {
-    dbl = setNum(Double.parseDouble(gets()));
+  public double getsDbl() {
+    dbl = Double.parseDouble(gets());
     return dbl;
   }
 
-  public double getDbl(String str) {
+  public double getsDbl(String str) {
     print(str);
-    dbl = setNum(Double.parseDouble(gets()));
+    dbl = Double.parseDouble(gets());
     return dbl;
   }
 
-  public double setNum(double dbl) {
-    this.dbl = dbl;
-    return dbl;
-  }
-
-  public double setValidNum(double x, double min, double max) {
+  public double setsValidNum(double x, double min, double max) {
     this.dMin = min;
     this.dMax = max;
     this.dbl = x;
@@ -153,7 +206,7 @@ public class ConsoleIO1 {
     while (x > max || x < min) {
       println("Please enter a number within " + min + " and " + max + ".");
       print("> ");
-      x = getDbl();
+      x = getsDbl();
     }
     return x;
   }

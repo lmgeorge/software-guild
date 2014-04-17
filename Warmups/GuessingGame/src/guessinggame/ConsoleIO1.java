@@ -29,6 +29,7 @@ public class ConsoleIO1 {
     str = ui.nextLine();
     return str;
   }
+
   public String get() {
     str = ui.next();
     return str;
@@ -39,6 +40,7 @@ public class ConsoleIO1 {
     str = gets();
     return str;
   }
+
   public String get(String line) {
     println(line);
     str = get();
@@ -54,23 +56,41 @@ public class ConsoleIO1 {
   //integer methods
   public int getsNum(String str) {
     println(str);
-    x = Integer.parseInt(ui.nextLine());
+    try {
+      x = setNum(Integer.parseInt(ui.nextLine()));
+
+    } catch (NumberFormatException nfe) {
+      println("ERROR: " + nfe.getMessage());
+      println();
+    }
     return x;
   }
+
   public int getNum(String str) {
     print(str);
-    x = Integer.parseInt(ui.next());
+    try {
+      x = setNum(Integer.parseInt(ui.next()));
+    } catch (NumberFormatException nfe) {
+      println("ERROR: " + nfe.getMessage());
+    }
     return x;
   }
 
   public int getsNum() {
-    x = setNum(Integer.parseInt(ui.nextLine()));
+    try {
+      x = setNum(Integer.parseInt(ui.nextLine()));
+
+    } catch (NumberFormatException nfe) {
+      println("ERROR: " + nfe.getMessage());
+      println();
+    }
     return x;
   }
+
   public int getNum() {
-    try{
-    x = setNum(Integer.parseInt(ui.next()));
-    }catch (NumberFormatException nfe){
+    try {
+      x = setNum(Integer.parseInt(ui.next()));
+    } catch (NumberFormatException nfe) {
       println("ERROR: " + nfe.getMessage());
     }
     return x;
@@ -81,13 +101,14 @@ public class ConsoleIO1 {
     return x;
   }
 
-  public int setValidNum(int x, int min, int max) {
+  public int setValidNum(int x, int min, int max, String str) {
     this.min = min;
     this.max = max;
     this.x = x;
 
     while (x > max || x < min) {
-      println("Please enter a number within " + min + " and " + max + ".");
+      println(str);
+      //println("Please enter a number within " + min + " and " + max + ".");
       print("> ");
       x = getNum();
     }
@@ -96,12 +117,12 @@ public class ConsoleIO1 {
 
   //
   //float methods
-  public float getFlt() {
+  public float getsFlt() {
     flt = setNum(Float.parseFloat(gets()));
     return flt;
   }
 
-  public float getFlt(String str) {
+  public float getsFlt(String str) {
     print(str);
     flt = setNum(Float.parseFloat(gets()));
     return flt;
@@ -112,7 +133,7 @@ public class ConsoleIO1 {
     return flt;
   }
 
-  public float setValidNum(float x, float min, float max) {
+  public float setsValidNum(float x, float min, float max) {
     this.fMin = min;
     this.fMax = max;
     this.flt = x;
@@ -120,7 +141,7 @@ public class ConsoleIO1 {
     while (x > max || x < min) {
       println("Please enter a number within " + min + " and " + max + ".");
       print("> ");
-      x = getFlt();
+      x = getsFlt();
     }
     return x;
   }
@@ -129,12 +150,12 @@ public class ConsoleIO1 {
   
    */
 
-  public double getDbl() {
+  public double getsDbl() {
     dbl = setNum(Double.parseDouble(gets()));
     return dbl;
   }
 
-  public double getDbl(String str) {
+  public double getsDbl(String str) {
     print(str);
     dbl = setNum(Double.parseDouble(gets()));
     return dbl;
@@ -145,7 +166,7 @@ public class ConsoleIO1 {
     return dbl;
   }
 
-  public double setValidNum(double x, double min, double max) {
+  public double setsValidNum(double x, double min, double max) {
     this.dMin = min;
     this.dMax = max;
     this.dbl = x;
@@ -153,7 +174,7 @@ public class ConsoleIO1 {
     while (x > max || x < min) {
       println("Please enter a number within " + min + " and " + max + ".");
       print("> ");
-      x = getDbl();
+      x = getsDbl();
     }
     return x;
   }

@@ -1,0 +1,2 @@
+web01::196.207.0.6::Dell::8 GB::8 cores
+web02::196.208.0.6::Dell::6 GB::12 cores
