@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package simplecalculator;
+package guessinggame;
 
 import java.util.Scanner;
 
@@ -11,7 +11,7 @@ import java.util.Scanner;
  *
  * @author lmgeorge <lauren.george@live.com>
  */
-public class ConsoleIO {
+public class ConsoleIO1 {
 
   private Scanner ui = new Scanner(System.in);
   private double dbl;
@@ -29,10 +29,19 @@ public class ConsoleIO {
     str = ui.nextLine();
     return str;
   }
+  public String get() {
+    str = ui.next();
+    return str;
+  }
 
   public String gets(String line) {
     println(line);
     str = gets();
+    return str;
+  }
+  public String get(String line) {
+    println(line);
+    str = get();
     return str;
   }
 
@@ -43,14 +52,27 @@ public class ConsoleIO {
 
   //
   //integer methods
-  public int getNum(String str) {
+  public int getsNum(String str) {
     println(str);
-    x = Integer.parseInt(gets());
+    x = Integer.parseInt(ui.nextLine());
+    return x;
+  }
+  public int getNum(String str) {
+    print(str);
+    x = Integer.parseInt(ui.next());
     return x;
   }
 
+  public int getsNum() {
+    x = setNum(Integer.parseInt(ui.nextLine()));
+    return x;
+  }
   public int getNum() {
-    x = setNum(Integer.parseInt(gets()));
+    try{
+    x = setNum(Integer.parseInt(ui.next()));
+    }catch (NumberFormatException nfe){
+      println("ERROR: " + nfe.getMessage());
+    }
     return x;
   }
 

@@ -25,6 +25,7 @@ public class GuessingGameEngine {
   private int avgGuesses = 0;
   private int sumTotalGuesses = 0;
   private String playAgain = "y";
+  private ConsoleIO1 cio = new ConsoleIO1();
 
   public void play() {
 
@@ -33,28 +34,31 @@ public class GuessingGameEngine {
       compNumber = r.nextInt(20) + 1;
       rounds++;
 
-      System.out.println("\nWelcome to the Guessing Game!\n"
+      cio.println("\nWelcome to the Guessing Game!\n"
         + "I'm thinking of a number between 1 and 20.");
-      System.out.println(compNumber);
+      cio.println(compNumber);
       getUserGuess();
 
       printResults();
 
-      System.out.print("Do you want to play again? (y/n) ");
-      playAgain = ui.next();
+      cio.print("Do you want to play again? (y/n) ");
+      playAgain = cio.get();
 
       sumTotalGuesses += totalGuess;
 
     }
     avgGuesses = sumTotalGuesses / rounds;
-    System.out.println("You average number of guesses per round: " + avgGuesses);
+    cio.println("You average number of guesses per round: " + avgGuesses);
   }
 
   public void getUserGuess() {
     do {
       while (userGuess > 20 || userGuess < 1) {
-        System.out.print("Please enter your guess: ");
-        userGuess = ui.nextInt();
+        cio.print("Please enter your guess: ");
+        userGuess = cio.getNum();
+ 
+        cio.println(userGuess);
+        
         checkWrongGuess(userGuess);
       }
 
@@ -62,8 +66,7 @@ public class GuessingGameEngine {
 
       isValid();
 
-      System.out.print("Please enter your guess: ");
-      userGuess = ui.nextInt();
+    
     } while (userGuess != compNumber);
   }
 
@@ -72,21 +75,23 @@ public class GuessingGameEngine {
 
     if (userGuess > 20 || userGuess < 1) {
       totalGuess++;
-      System.out.println("WRONG!! OUT OF BOUNDS!!");
+      cio.println("WRONG!! OUT OF BOUNDS!!");
       wrongGuess++;
     }
   }
 
   public void isValid() {
     if (userGuess < compNumber) {
-      System.out.println("Your guess is too low.\n");
+      cio.println("Your guess is too low.\n");
+      userGuess = cio.getNum("Please enter your guess: ");
     } else if (userGuess > compNumber) {
-      System.out.println("Your guess is too high.\n");
-    }
+      cio.println("Your guess is too high.\n");
+      userGuess = cio.getNum("Please enter your guess: ");
+    }  
   }
 
   public void printResults() {
-    System.out.println("You guessed right! The answer was " + compNumber + ".\n"
+    cio.println("You guessed right! The answer was " + compNumber + ".\n"
       + "Out of bounds guesses: " + wrongGuess + "\n"
       + "In bound guesses: " + (totalGuess - wrongGuess) + "\n"
       + "It only took you " + totalGuess + " tries this round.\n"
