@@ -22,7 +22,7 @@ public class Hangman {
   //private static final char[] board = {};
   //private static final String[] missed = {};
 
-  public static void main(String[] args) throws Exception {
+  public static void main(String[] args){
 
     HangmanEngine game = new HangmanEngine();
     game.play();

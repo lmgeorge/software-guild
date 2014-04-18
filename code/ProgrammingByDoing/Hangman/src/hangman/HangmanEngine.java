@@ -6,93 +6,142 @@
 package hangman;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author lmgeorge <lauren.george@live.com>
  */
 public class HangmanEngine {
-//
-//  private final String board;
-//  private final String missed;
-//
-//  public HangmanEngine() {
-//    this.missed = new String();
-//    this.board = new String();
-//
-//  }
 
-  public void play() throws Exception {
+  private String[] board;
+  private String missed = "";
+  private final ConsoleIO cio = new ConsoleIO();
+  private String guess;
+  private String finalWord;
+  private String hiddenWord;
+
+  public void play() {
 
 //Randomly select a word for the user to guess
-    String hiddenWord = getWord();
+    hiddenWord = getWord();
 
-    System.out.println("\tWelcome to Hangman!\n"
+    cio.println("\tWelcome to Hangman!\n"
       + "===================================\n\n");
-    System.out.println(hiddenWord);
 
-    String[] board = initBoard(hiddenWord.length());
-    displayBoard(board);
-    //Scanner ui = new Scanner(System.in);
-    //String userGuess = ui.nextLine();
-  }
+    //cio.println(hiddenWord);
+    initBoard(hiddenWord.length());
+    
+    displayBoard();
+    
+    do {
+      guess = cio.get("Guess: ");
 
-  public void checkGuess(String guess, String hiddenWord) {
-    if (hiddenWord.matches(guess)) {
+      checkGuess();
 
+      cio.println();
+
+      finalWord = toString(board, "");
+
+      displayBoard();
+
+    } while (keepPlaying() != true);
+
+    if (finalWord.contains(hiddenWord)) {
+      cio.println("You got it!\n");
     } else {
+      cio.println("Maybe next time...\n");
+    }
 
+    playAgain();
+
+  }
+
+  public void checkGuess() {
+
+    String[] wordAry = hiddenWord.split("");
+
+    for (int i = 0; i < wordAry.length; i++) {
+      if (guess.equalsIgnoreCase(wordAry[i])) {
+        board[i] = wordAry[i];
+      }
+    }
+
+    if (hiddenWord.contains(guess) == false) {
+      missed = missed.concat(guess.toLowerCase());
     }
   }
 
-  public String[] initBoard(int hiddenWordLength) throws Exception {
-    String[] board;
+  public boolean keepPlaying() {
+    return finalWord.contains(hiddenWord) || missed.length() > 6;
+  }
+
+  public void playAgain() {
+    String answer = cio.get("Would you like to play again? (y/n) ");
+    cio.println();
+    if (answer.equalsIgnoreCase("y")) {
+      play();
+    } else {
+      cio.println("Thanks for playing!");
+    }
+  }
+
+  public void initBoard(int hiddenWordLength) {
     board = new String[hiddenWordLength];
+    missed = "";
     for (int i = 0; i < hiddenWordLength; i++) {
-      board[i] = "_ ";
+      board[i] = "_";
     }
-    return board;
   }
 
-  public void displayBoard(String[] board) {
-    
-    System.out.print("Word:  ");
-    for (int i = 0; i < board.length; i++) {
-      System.out.print(board[i]);
+  public void displayBoard() {
+    cio.print("Word:  " + toString(board, " "));
+    cio.println();
+    cio.print("Missed: " + missed);
+    cio.println();
+  }
+
+  public String toString(String[] ary, String delimiter) {
+    String word = "";
+    for (int i = 0; i < ary.length; i++) {
+      word = word + ary[i] + delimiter;
     }
-    System.out.println();
-    System.out.print("Missed:  ");
-    
+    return word;
+  }
+
+  public String getWord() {
+    Random r = new Random();
+    String[] words = arrayFromFile();
+
+    int hW = r.nextInt(words.length) + 1;
+
+    hiddenWord = words[hW];
+
+    return hiddenWord;
   }
 
   /**
-   * @param filepath
-   * @param url - the URL to read words from
    * @return An array of words, initialized from the given URL
-   * @throws java.lang.Exception;
    */
-  public String[] arrayFromFile() throws Exception {
-    Scanner file = new Scanner(new BufferedReader(new FileReader("words.txt")));
-    String[] words = new String[3260];
+  public String[] arrayFromFile() {
+    Scanner file = null;
+    try {
+      file = new Scanner(new BufferedReader(new FileReader("words.txt")));
+    } catch (FileNotFoundException ex) {
+      Logger.getLogger(HangmanEngine.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    String[] words = new String[2000];
 
     for (int w = 0; w < words.length; w++) {
       String word = file.nextLine();
-        words[w] = word;
+      words[w] = word;
     }
     return words;
   }
 
-  public String getWord() throws Exception {
-    Random r = new Random();
-    String[] words = arrayFromFile();
-    
-    int hW = r.nextInt(words.length) + 20;
-    
-    String hiddenWord =  words[hW];
-
-    return hiddenWord;
-  }
 }

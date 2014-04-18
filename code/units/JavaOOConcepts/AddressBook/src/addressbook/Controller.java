@@ -55,6 +55,7 @@ public class Controller {
         break;
       case 4:
         cio.println("Total addresses: " + book.count() + " address records");
+        menu();
         break;
       case 5:
         displayAll();
