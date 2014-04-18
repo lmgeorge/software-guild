@@ -21,7 +21,7 @@ public class HangmanEngine {
 
   private String[] board;
   private String missed = "";
-  private final ConsoleIO cio = new ConsoleIO();
+  private final ConsoleIO3 cio = new ConsoleIO3();
   private String guess;
   private String finalWord;
   private String hiddenWord;

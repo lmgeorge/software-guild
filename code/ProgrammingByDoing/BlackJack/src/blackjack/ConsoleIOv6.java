@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hangman;
+package blackjack;
 
 import java.util.Scanner;
 
@@ -11,7 +11,7 @@ import java.util.Scanner;
  *
  * @author lmgeorge <lauren.george@live.com>
  */
-public class ConsoleIO {
+public class ConsoleIOv6 {
 
   NumberFormatException ex = new NumberFormatException();
   private Scanner ui = new Scanner(System.in);
@@ -106,7 +106,7 @@ public class ConsoleIO {
   }
 
   public int getNum(String prompt) {
-    println(prompt);
+    print(prompt);
     do {
       str = get();
       if (!checkInt(str)) {

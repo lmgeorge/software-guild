@@ -12,7 +12,7 @@ package unitoneskillcheck;
 public class Adder {
 
   public static void main(String[] args) {
-    ConsoleIOv4 cio = new ConsoleIOv4();
+    ConsoleIO4 cio = new ConsoleIO4();
     Adder adder = new Adder();
     int c;
     float percent = 0;

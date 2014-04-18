@@ -11,7 +11,7 @@ import java.util.Scanner;
  *
  * @author lmgeorge <lauren.george@live.com>
  */
-public class ConsoleIO {
+public class ConsoleIO2 {
 
   NumberFormatException ex = new NumberFormatException();
   private Scanner ui = new Scanner(System.in);

@@ -11,12 +11,12 @@ package unitoneskillcheck;
  */
 public class WhatIsYourNumber {
 
-  private final ConsoleIOv4 cio = new ConsoleIOv4();
+  private final ConsoleIO4 cio = new ConsoleIO4();
   private final Counter ctr = new Counter();
 
   public static void main(String[] args) {
 
-    ConsoleIOv4 cio = new ConsoleIOv4();
+    ConsoleIO4 cio = new ConsoleIO4();
 
     WhatIsYourNumber yourNum = new WhatIsYourNumber();
 

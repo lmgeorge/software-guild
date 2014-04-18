@@ -1,0 +1,5 @@
+Dante::Lab mix::male::1::70
+Jumbi::Rottweiler::male::12::135
+Nala::Golden Retriever::female::12::60
+Deogee::Rottweiler::male::8::110
+Moose::Pomeranian::male::14::15

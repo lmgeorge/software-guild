@@ -11,10 +11,10 @@ package unitoneskillcheck;
  */
 public class Counter {
 
-  ConsoleIOv4 cio = new ConsoleIOv4();
+  ConsoleIO4 cio = new ConsoleIO4();
 
   public static void main(String[] args) {
-    ConsoleIOv4 cio = new ConsoleIOv4();
+    ConsoleIO4 cio = new ConsoleIO4();
     Counter ctr = new Counter();
 
     ctr.to10();

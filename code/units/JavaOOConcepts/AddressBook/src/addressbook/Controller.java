@@ -14,7 +14,7 @@ import java.io.IOException;
  */
 public class Controller {
 
-  private ConsoleIO cio = new ConsoleIO();
+  private ConsoleIO2 cio = new ConsoleIO2();
   private AddressBook book = new AddressBook();
 
   public void runAddressBook() {

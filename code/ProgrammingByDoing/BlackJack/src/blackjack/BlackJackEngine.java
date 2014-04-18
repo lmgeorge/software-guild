@@ -31,8 +31,7 @@ public class BlackJackEngine {
     runUserPlay();
 
     runDealerPlay();
-    
-    
+
   }
 
   public void draw2() {
@@ -48,18 +47,18 @@ public class BlackJackEngine {
 
   public void runFirstPlay() {
     draw2();
-    
+
     System.out.println("You drew " + pDraw1 + " and " + pDraw2 + ".\n"
       + "Your total is " + (pSum) + ".\n");
-    
-    if (pSum >= 21){
+
+    if (pSum >= 21) {
       returnWinner(pSum, dSum);
     }
 
     System.out.println("The dealer has " + dDraw1 + " showing, and a hidden card.\n"
       + "Her total is hidden, too.\n");
-    
-    if (dSum >= 21){
+
+    if (dSum >= 21) {
       returnWinner(pSum, dSum);
     }
   }
@@ -76,7 +75,7 @@ public class BlackJackEngine {
           + "Your total is " + (pSum) + ".\n");
       }
       if (pSum >= 21) {
-        hitStay = returnWinner(pSum,dSum);
+        hitStay = returnWinner(pSum, dSum);
       }
     } while (hitStay.equalsIgnoreCase("hit"));
   }
@@ -94,32 +93,32 @@ public class BlackJackEngine {
       do {
 
         if (dSum < 16) {
-          dDraw1 = 2 + r.nextInt(10);
-          dSum += dDraw1;
-          
+
           if (dSum > 16) {
-            
+
             Thread.sleep(2000);
-            
+
             System.out.println("Dealer stays.\n");
-            hitStay = returnWinner(pSum,dSum);
-            
+            hitStay = returnWinner(pSum, dSum);
+
           } else if (dSum >= 21) {
-            hitStay = returnWinner(pSum,dSum);
-            
+            hitStay = returnWinner(pSum, dSum);
+
           } else {
+            dDraw1 = 2 + r.nextInt(10);
+            dSum += dDraw1;
             System.out.println(
               "Dealer chooses to hit.\n"
               + "She draws a " + dDraw1 + ".\n"
               + "Her total is " + dSum + ".\n");
-            hitStay = returnWinner(pSum,dSum);
+            hitStay = returnWinner(pSum, dSum);
           }
         } else {
-          
+
           Thread.sleep(2000);
-          
+
           System.out.println("Dealer stays.\n");
-          hitStay = returnWinner(pSum,dSum);
+          hitStay = returnWinner(pSum, dSum);
         }
 
       } while (dSum < 16 && hitStay.equalsIgnoreCase("hit"));
@@ -129,7 +128,7 @@ public class BlackJackEngine {
   public String returnWinner(int pSum, int dSum) {
     this.pSum = pSum;
     this.dSum = dSum;
-    
+
     System.out.println(
       "Dealer total is " + dSum + ".\n"
       + "Your total is " + pSum + ".\n"
@@ -144,9 +143,8 @@ public class BlackJackEngine {
       System.out.println("YOU LOSE!");
       hitStay = "stay";
     }
-    
+
     return hitStay;
   }
-
 
 }

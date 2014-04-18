@@ -12,7 +12,7 @@ package unitoneskillcheck;
 public class AreTheyTrue {
 
   public static void main(String[] args) {
-    ConsoleIOv4 cio = new ConsoleIOv4();
+    ConsoleIO4 cio = new ConsoleIO4();
     AreTheyTrue bool = new AreTheyTrue();
     int percent = 0;
     

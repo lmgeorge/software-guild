@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package unitoneskillcheck;
+package hangman;
 
 import java.util.Scanner;
 
@@ -11,7 +11,7 @@ import java.util.Scanner;
  *
  * @author lmgeorge <lauren.george@live.com>
  */
-public class ConsoleIOv4 {
+public class ConsoleIO3 {
 
   NumberFormatException ex = new NumberFormatException();
   private Scanner ui = new Scanner(System.in);
@@ -106,7 +106,7 @@ public class ConsoleIOv4 {
   }
 
   public int getNum(String prompt) {
-    print(prompt);
+    println(prompt);
     do {
       str = get();
       if (!checkInt(str)) {
