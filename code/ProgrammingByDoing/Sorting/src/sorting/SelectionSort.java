@@ -13,7 +13,7 @@ import java.util.Random;
  */
 public class SelectionSort {
 
-  public static void selection_sort(int[] a) {
+  public static void selectionSort(int[] a) {
     for (int i = 0; i < a.length; i++) {
       for (int j = 0; j < a.length; j++) {
         swap(a, i, j);
@@ -48,7 +48,7 @@ public class SelectionSort {
     System.out.println();
 
     // Sort it
-    selection_sort(arr);
+    selectionSort(arr);
 
     // Display it again to confirm that it's sorted
     System.out.print("after : ");

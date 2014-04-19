@@ -19,15 +19,12 @@ import java.util.logging.Logger;
  *
  * @author lmgeorge <lauren.george@live.com>
  */
-public class StoringDataInFile {
+public class StoringReadingSortingDataInFile {
 
   private Car[] cars = new Car[5];
   private ConsoleIO7 cio = new ConsoleIO7();
   private final String DELIMITER = "::";
-  private Scanner file;
-  //private PrintWriter temp = null;
   private String tempName = "temp.txt";
-
 
   public String writeMemory() {
 
@@ -44,16 +41,15 @@ public class StoringDataInFile {
       cio.println();
 
     }
-    tempName = cio.get("Save as: ");
-    writeFile(tempName);
-    return tempName;
+    String fileName = cio.get("Save as: ");
+    writeFile(fileName);
+    return fileName;
   }
 
-  public void writeFile(String tempName) {
-    this.tempName = tempName;
-   
+  public void writeFile(String fileName) {
+
     try {
-      PrintWriter temp = new PrintWriter(new FileWriter(tempName));
+      PrintWriter temp = new PrintWriter(new FileWriter(fileName));
 
       for (int i = 0; i < cars.length; i++) {
         temp.print(cars[i].make + DELIMITER);
@@ -68,26 +64,27 @@ public class StoringDataInFile {
       }
       temp.close();
     } catch (IOException ex) {
-      Logger.getLogger(StoringDataInFile.class.getName()).log(Level.SEVERE, null, ex);
+      Logger.getLogger(StoringReadingSortingDataInFile.class.getName()).log(Level.SEVERE, null, ex);
     } catch (NullPointerException ex) {
       cio.println("ERROR: " + ex.getMessage());
     }
   }
 
-  public void readFile(String fileName) {
-
+  public Scanner readFile(String fileName) {
+    Scanner file = null;
     try {
       file = new Scanner(new BufferedReader(new FileReader(fileName)));
       cio.println("Reading data from " + fileName + "\n");
-      arrayFromFile(fileName);
-      printMemory();
+      //arrayFromFile(file);
+      //printMemory(cars);
     } catch (FileNotFoundException ex) {
       cio.println(ex.getMessage());
     }
-
+    return file;
   }
 
-  public void arrayFromFile(String fileName) {
+  public Car[] arrayFromFile(Scanner file) {
+
     while (file.hasNextLine()) {
       for (int i = 0; i < cars.length; i++) {
         String record = file.nextLine();
@@ -104,9 +101,11 @@ public class StoringDataInFile {
       }
 
     }
+    return cars;
   }
 
-  public void printMemory() {
+  public void printMemory(Car[] cars) {
+    this.cars = cars;
     try {
       for (int i = 0; i < cars.length; i++) {
         cio.println("Car " + (i + 1) + ":");
@@ -120,6 +119,38 @@ public class StoringDataInFile {
       cio.println(ex.getMessage());
     }
 
+  }
+
+  public void selectionSort(Car[] a) {
+    for (int i = 0; i < a.length; i++) {
+      for (int j = 0; j < a.length; j++) {
+        swap(a, i, j);
+      }
+    }
+  }
+  public void selectionSortMake(Car[] a) {
+    for (int i = 0; i < a.length; i++) {
+      for (int j = 0; j < a.length; j++) {
+        swapMake(a, i, j);
+      }
+    }
+  }
+
+  public void swap(Car[] a, int i, int j) {
+    Car old;
+    if (a[i].year < a[j].year) {
+      old = a[i];
+      a[i] = a[j];
+      a[j] = old;
+    }
+  }
+  public void swapMake(Car[] a, int i, int j) {
+    Car old;
+    if (a[i].make.compareTo(a[j].make) < a[j].make.compareTo(a[i].make)) {
+      old = a[i];
+      a[i] = a[j];
+      a[j] = old;
+    }
   }
 
 }

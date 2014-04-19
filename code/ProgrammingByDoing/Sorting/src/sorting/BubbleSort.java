@@ -5,6 +5,7 @@
  */
 package sorting;
 
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -13,7 +14,7 @@ import java.util.Random;
  */
 public class BubbleSort {
 
-  public static void bubble_sort(int[] a) {
+  public static void bubbleSort(int[] a) {
    for (int firstNum = 0; firstNum < a.length; firstNum++){
      for (int secondNum = 0; secondNum < a.length; secondNum++){
        swap(a, firstNum, secondNum);
@@ -23,16 +24,19 @@ public class BubbleSort {
 
   public static void swap(int[] a, int i, int j) {
     int swapper;
+    //System.out.println("Is " + a[i] + " < " + a[j]+ "?");
+    //System.out.println(Arrays.toString(a) + "\n");
     if (a[i] < a[j]){
       swapper = a[j];
       a[j] = a[i];
       a[i] = swapper;
+      //System.out.println(Arrays.toString(a) + "\n");
     }
   }
 
   public static void main(String[] args) {
     Random r = new Random();
-    int[] arr = new int[10];
+    int[] arr = new int[5];
     int i;
 
     // Fill up the array with random numbers
@@ -48,7 +52,7 @@ public class BubbleSort {
     System.out.println();
 
     // Sort it
-    bubble_sort(arr);
+    bubbleSort(arr);
 
     // Display it again to confirm that it's sorted
     System.out.print("after : ");
