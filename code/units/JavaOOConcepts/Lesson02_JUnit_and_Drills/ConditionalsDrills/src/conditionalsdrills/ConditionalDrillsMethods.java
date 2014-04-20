@@ -7,6 +7,7 @@ package conditionalsdrills;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
 
 /**
  *
@@ -159,34 +160,77 @@ public class ConditionalDrillsMethods {
     return words[0].startsWith("ix", 1);
   }
 
-  public String toString(String[] ary, String delimiter) {
-    String word = "";
-    for (String ary1 : ary) {
-      word = word + ary1 + delimiter;
-    }
-    return word;
-  }
 //Drill 22
-
   public String startOz(String str) {
     String s;
     s = str.substring(0, 2);
     s = s.replaceAll("[a-n&&p-y]", "");
-    
+
     return s;
   }
 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  //Drill 23
+  public int max(int a, int b, int c) {
+    int max = a;
+
+    if (a >= b && a >= c) {
+      max = a;
+    } else if (b >= a && b >= c) {
+      max = b;
+    } else if (c >= a && c >= b) {
+      max = c;
+    }
+
+    return max;
+  }
+
+  //Drill 24
+  public int closer(int a, int b) {
+    int tie;
+
+    if (Math.abs(10 - a) < Math.abs(10 - b)) {
+      tie = a;
+    } else if (Math.abs(10 - a) > Math.abs(10 - b)) {
+      tie = b;
+    } else {
+      tie = 0;
+    }
+
+    return tie;
+  }
+
+  //Drill 25
+  public boolean gotE(String str) {
+    String s = str.replaceAll("[^eE]", "");
+
+    return s.length() <= 3 && s.length() >= 1;
+  }
+
+  //Drill 26
+  public String endUp(String str) {
+
+    String s;
+    if (str.length() < 3) {
+      s = str.toUpperCase();
+    } else {
+      s = str.substring(0, str.length() - 3) + str.substring(str.length() - 3).toUpperCase();
+    }
+    return s;
+  }
+
+  //Drill 27
+  public String everyNth(String str, int n) {
+    ArrayList<String> s = new ArrayList<>();
+    s.addAll(Arrays.asList(str.split("")));
+    String s1 = "";
+    int i = 0;
+    while(i <= s.size()){
+      s1 += s.get(i);
+      i+=n;
+    }
+    return s1;  
+  }
+
   
   
   
@@ -199,4 +243,11 @@ public class ConditionalDrillsMethods {
     return word;
   }
 
+  public String toString(String[] ary, String delimiter) {
+    String word = "";
+    for (String ary1 : ary) {
+      word = word + ary1 + delimiter;
+    }
+    return word;
+  }
 }

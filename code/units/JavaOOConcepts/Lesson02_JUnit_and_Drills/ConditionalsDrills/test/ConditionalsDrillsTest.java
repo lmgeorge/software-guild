@@ -110,62 +110,94 @@ public class ConditionalsDrillsTest {
 //    assertEquals("ChoChoCho", c.front3("Chocolate"));
 //    assertEquals("atatat", c.front3("at"));
 //  }
-  public void drill13() {
-    assertEquals("tcatt", c.backAround("cat"));
-    assertEquals("oHelloo", c.backAround("Hello"));
-    assertEquals("aaa", c.backAround("a"));
-  }
+//  public void drill13() {
+//    assertEquals("tcatt", c.backAround("cat"));
+//    assertEquals("oHelloo", c.backAround("Hello"));
+//    assertEquals("aaa", c.backAround("a"));
+//  }
+//
+//  public void drill14() {
+//    assertTrue(c.multiple3or5(3));
+//    assertTrue(c.multiple3or5(10));
+//    assertFalse(c.multiple3or5(8));
+//  }
+//
+//  public void drill15() {
+//    assertTrue(c.startHi("hi there"));
+//    assertTrue(c.startHi("hi"));
+//    assertFalse(c.startHi("high up"));
+//  }
+//
+//  public void drill16() {
+//    assertTrue(c.icyHot(120, -1));
+//    assertTrue(c.icyHot(-1, 120));
+//    assertFalse(c.icyHot(2, 120));
+//
+//  }
+//
+//  public void drill17() {
+//    assertTrue(c.between10and20(12, 99));
+//    assertTrue(c.between10and20(21, 12));
+//    assertFalse(c.between10and20(8, 99));
+//  }
+//
+//  public void drill18() {
+//    //skipped
+//  }
+//
+//  public void drill19() {
+//    assertTrue(c.soAlone(13, 99));
+//    assertTrue(c.soAlone(21, 99));
+//    assertFalse(c.soAlone(13, 13));
+//  }
+//
+//  public void drill20() {
+//    assertEquals("abc", c.removeDel("adelbc"));
+//    assertEquals("aHello", c.removeDel("adelHello"));
+//    assertEquals("adedbc", c.removeDel("adedbc"));
+//  }
+//
+//  public void drill21() {
+//    assertTrue(c.ixStart("mix snacks"));
+//    assertTrue(c.ixStart("pix snacks"));
+//    assertFalse(c.ixStart("piz snacks"));
+//  }
+//  
+//  public void drill22(){
+//    assertEquals("oz", c.startOz("ozymandias"));
+//    assertEquals("z", c.startOz("bzoo"));
+//    assertEquals("o", c.startOz("oxx"));
+//  }
+//  
+//  public void drill23() {
+//  assertEquals(3, c.max(1, 2, 3));
+//  assertEquals(3, c.max(1, 3, 2));
+//  assertEquals(3, c.max(3, 2, 1));
+//}
+//  public void drill24() {
+//    assertEquals(8, c.closer(8, 13));
+//    assertEquals(8, c.closer(13, 8));
+//    assertEquals(0, c.closer(13, 7));
+//  }
+//
+//  public void drill25() {
+//    assertTrue(c.gotE("Hello"));
+//    assertTrue(c.gotE("Heelle"));
+//    assertFalse(c.gotE("Heelele"));
+//  }
 
-  public void drill14() {
-    assertTrue(c.multiple3or5(3));
-    assertTrue(c.multiple3or5(10));
-    assertFalse(c.multiple3or5(8));
-  }
-
-  public void drill15() {
-    assertTrue(c.startHi("hi there"));
-    assertTrue(c.startHi("hi"));
-    assertFalse(c.startHi("high up"));
-  }
-
-  public void drill16() {
-    assertTrue(c.icyHot(120, -1));
-    assertTrue(c.icyHot(-1, 120));
-    assertFalse(c.icyHot(2, 120));
-
-  }
-
-  public void drill17() {
-    assertTrue(c.between10and20(12, 99));
-    assertTrue(c.between10and20(21, 12));
-    assertFalse(c.between10and20(8, 99));
-  }
-
-  public void drill18() {
-    //skipped
-  }
-
-  public void drill19() {
-    assertTrue(c.soAlone(13, 99));
-    assertTrue(c.soAlone(21, 99));
-    assertFalse(c.soAlone(13, 13));
-  }
-
-  public void drill20() {
-    assertEquals("abc", c.removeDel("adelbc"));
-    assertEquals("aHello", c.removeDel("adelHello"));
-    assertEquals("adedbc", c.removeDel("adedbc"));
-  }
-
-  public void drill21() {
-    assertTrue(c.ixStart("mix snacks"));
-    assertTrue(c.ixStart("pix snacks"));
-    assertFalse(c.ixStart("piz snacks"));
+//  public void drill26(){
+//    assertEquals("HeLLO", c.endUp("Hello"));
+//    assertEquals("hi thERE", c.endUp("hi there"));
+//    assertEquals("HI", c.endUp("hi"));
+//    
+//    
+//  }
+  
+  public void drill27(){
+    assertEquals("Mrce", c.everyNth("Miracle", 2));
+    assertEquals("aceg", c.everyNth("abcdefg", 2));
+    assertEquals("adg", c.everyNth("abcdefg", 3));
   }
   
-  public void drill22(){
-    assertEquals("oz", c.startOz("ozymandias"));
-    assertEquals("z", c.startOz("bzoo"));
-    assertEquals("o", c.startOz("oxx"));
-  }
 }
