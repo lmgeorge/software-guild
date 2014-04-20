@@ -162,11 +162,7 @@ public class ConditionalDrillsMethods {
 
 //Drill 22
   public String startOz(String str) {
-    String s;
-    s = str.substring(0, 2);
-    s = s.replaceAll("[a-n&&p-y]", "");
-
-    return s;
+    return str.substring(0, 2).replaceAll("[^oz]", "");
   }
 
   //Drill 23
@@ -250,4 +246,5 @@ public class ConditionalDrillsMethods {
     }
     return word;
   }
+
 }

@@ -41,10 +41,8 @@ public class ConditionalsDrillsTest {
   public void tearDown() {
   }
 
-  // TODO add test methods here.
-  // The methods must be annotated with annotation @Test. For example:
-  //
-  @Test
+
+//  @Test
 //   public void drill1() {
 //     assertTrue(c.areWeInTrouble(true, true));
 //     assertTrue(c.areWeInTrouble(false, false));
@@ -194,10 +192,10 @@ public class ConditionalsDrillsTest {
 //    
 //  }
   
-  public void drill27(){
-    assertEquals("Mrce", c.everyNth("Miracle", 2));
-    assertEquals("aceg", c.everyNth("abcdefg", 2));
-    assertEquals("adg", c.everyNth("abcdefg", 3));
-  }
+//  public void drill27(){
+//    assertEquals("Mrce", c.everyNth("Miracle", 2));
+//    assertEquals("aceg", c.everyNth("abcdefg", 2));
+//    assertEquals("adg", c.everyNth("abcdefg", 3));
+//  }
   
-}
+  }
