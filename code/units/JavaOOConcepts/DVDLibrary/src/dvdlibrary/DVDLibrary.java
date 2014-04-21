@@ -11,62 +11,66 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Scanner;
-import java.util.Set;
 
 /**
  *
  * @author lmgeorge <lauren.george@live.com>
  */
 public class DVDLibrary {
-  
-  HashMap<String, Dvd> dvdLib = new HashMap<>();
-  String DELIMITER = "::";
-  String fileName = "";
-  ConsoleIO10 cio = new ConsoleIO10();
-  
-  public void loadDvds() throws FileNotFoundException {
+
+  private HashMap<String, Dvd> dvdLib = new HashMap<>();
+  private final String DELIMITER = "::";
+  private final ConsoleIO10 c = new ConsoleIO10();
+
+  public void loadDvds(String fileName) throws FileNotFoundException {
     Scanner file = new Scanner(new BufferedReader(new FileReader(fileName)));
-    
+    String[] dvdInfo;
+
     while (file.hasNextLine()) {
-      String[] dvdInfo = file.nextLine().split(DELIMITER);
+      String dvdrecord = file.nextLine();
+      dvdInfo = dvdrecord.split(DELIMITER);
+
       Dvd dvd = new Dvd();
       dvd.setTitle(dvdInfo[0]);
       dvd.setYear(Integer.parseInt(dvdInfo[1]));
       dvd.setMpaaRating(dvdInfo[2]);
       dvd.setDirector(dvdInfo[3]);
       dvd.setStudio(dvdInfo[4]);
+      ArrayList<String> notes = new ArrayList<>();
       for (int i = 5; i < dvdInfo.length; i++) {
-        dvd.setNote(dvdInfo[i]);
+        notes.add(dvdInfo[i]);
+
       }
+
+      dvd.setNotes(notes);
+
       dvdLib.put(dvdInfo[0], dvd);
     }
-    
+    file.close();
   }
-  
-  public void writeDvdLib() throws IOException {
+
+  public void writeDvdLib(String fileName) throws IOException {
     PrintWriter file = new PrintWriter(new FileWriter(fileName));
-    Collection<Dvd> vals = dvdLib.values();
-    Iterator<Dvd> iter = vals.iterator();
-    
-    while (iter.hasNext()) {
+
+    String[] keys = getKeys();
+    for (String key : keys) {
       Dvd dvd = new Dvd();
-      file.println(
-        dvd.getTitle() + DELIMITER
-        + dvd.getYear() + DELIMITER
-        + dvd.getMpaaRating() + DELIMITER
-        + dvd.getDirector() + DELIMITER
-        + dvd.getStudio()
-        + cio.toString(dvd.getNotes(), DELIMITER));
+      file.print(dvdLib.get(key).getTitle() + DELIMITER 
+        + dvdLib.get(key).getYear() + DELIMITER 
+        + dvdLib.get(key).getMpaaRating() + DELIMITER 
+        + dvdLib.get(key).getDirector() + DELIMITER 
+        + dvdLib.get(key).getStudio() + DELIMITER);
+      
+      file.println(c.toString(dvdLib.get(key).getNotes(), DELIMITER));
       file.flush();
     }
     file.close();
   }
-  
-  public void addDvd(Dvd dvd) {
+
+  public void add(Dvd dvd) {
     dvdLib.put(dvd.getTitle(), dvd);
   }
 
@@ -77,13 +81,12 @@ public class DVDLibrary {
   public Dvd getDvd(String dvdTitle) {
     return dvdLib.get(dvdTitle);
   }
-  
-  public int numDvds(){
+
+  public int numDvds() {
     return dvdLib.size();
   }
-  
-  public String[] getKeys(){
+
+  public String[] getKeys() {
     return dvdLib.keySet().toArray(new String[0]);
-    
   }
 }

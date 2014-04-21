@@ -13,14 +13,14 @@ import java.util.ArrayList;
  * @author lmgeorge <lauren.george@live.com>
  */
 public class Dvd {
-  
+private final ConsoleIO10 c = new ConsoleIO10();  
 private String title;
 private int year;
 private String mpaaRating;
 private String director;
 private String studio;
-private ArrayList<String> notes;
-private String note;
+private ArrayList<String> notes = new ArrayList<>();
+
 
   public String getTitle() {
     return title;
@@ -63,24 +63,33 @@ private String note;
   }
 
   public ArrayList<String> getNotes() {
-    return notes;
+    ArrayList<String> al;
+     al = notes;
+    return al;
   }
 
-  public void setNotes(ArrayList<String> notes) {
-    this.notes = notes;
+  public void setNotes(ArrayList<String> al) {
+    this.notes = al;
   }
 
   public String getNote(int index) {
-    note = notes.get(index);
-    return note;
-  }
-  public String getNote() {
+    String note = notes.get(index);
     return note;
   }
 
+  public void setNote(String note, int counter) { 
+    try{
+    notes.add("Note " + counter + ": " + note);
+    } catch (NullPointerException ex){
+      c.println("ERROR: " + ex.getMessage());
+    }
+  }
   public void setNote(String note) {
-    this.note = note;  
-    notes.add("Note " + notes.size() + ": " + note);
+    try{
+    notes.add("Note: " + note);
+    } catch (NullPointerException ex){
+      c.println("ERROR: " + ex.getMessage());
+    }
   }
   
 

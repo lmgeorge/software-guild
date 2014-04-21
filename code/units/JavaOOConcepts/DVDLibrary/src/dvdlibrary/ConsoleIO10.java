@@ -40,11 +40,11 @@ public class ConsoleIO10 {
   /**
    * Equivalent to Scanner.nextLine()
    *
-   * @param line prints the prompt to the user = System.out.print();
+   * @param prompt prints the prompt to the user = System.out.print();
    * @return the user's input as a string
    */
-  public String gets(String line) {
-    print(line);
+  public String gets(String prompt) {
+    print(prompt);
     str = gets();
     return str;
   }
@@ -52,11 +52,11 @@ public class ConsoleIO10 {
   /**
    * Equivalent to Scanner.next()
    *
-   * @param line prints the prompt to the user = System.out.print();
+   * @param prompt prints the prompt to the user = System.out.print();
    * @return the user's input as a string
    */
-  public String get(String line) {
-    print(line);
+  public String get(String prompt) {
+    print(prompt);
     str = get();
     return str;
   }
@@ -446,7 +446,7 @@ public class ConsoleIO10 {
   public String toString(ArrayList<String> aryL, String delimiter) {
     String word = "";
     for (String aryL1 : aryL) {
-      word = word + delimiter + aryL1;
+      word += delimiter + aryL1;
     }
     return word;
   }
@@ -461,7 +461,7 @@ public class ConsoleIO10 {
   public String toString(String[] ary, String delimiter) {
     String word = "";
     for (String ary1 : ary) {
-      word = word + delimiter + ary1;
+      word += delimiter + ary1;
     }
     return word;
   }
