@@ -4,31 +4,23 @@
  * and open the template in the editor.
  */
 
-package dogexample;
+package interfaceexample;
+
+import java.util.HashMap;
 
 /**
  *
  * @author lmgeorge <lauren.george@live.com>
  */
-public class DogExample {
+public class InterfaceExample {
+  Processor processor = new Processor();
+  HashMap<String,Command> cmds = new HashMap<>();
 
   /**
    * @param args the command line arguments
    */
   public static void main(String[] args) {
-    ConsoleIO10 c = new ConsoleIO10();
-
-    Dog dog1 = new Dog("jumbi");
-    dog1.setAge(14);
-    dog1.setDogName("Jumbi");
-    dog1.setWeight(135);
-    
-    Labrador dante = new Labrador("Dante", "chocolate");
-    
-    c.println(dante.getDogName());
-
-    
-    
+    // TODO code application logic here
   }
   
 }

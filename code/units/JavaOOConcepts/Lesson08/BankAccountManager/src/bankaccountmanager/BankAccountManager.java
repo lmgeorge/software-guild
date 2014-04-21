@@ -3,32 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-package dogexample;
+package bankaccountmanager;
 
 /**
  *
  * @author lmgeorge <lauren.george@live.com>
  */
-public class DogExample {
+public class BankAccountManager {
 
   /**
    * @param args the command line arguments
    */
   public static void main(String[] args) {
-    ConsoleIO10 c = new ConsoleIO10();
-
-    Dog dog1 = new Dog("jumbi");
-    dog1.setAge(14);
-    dog1.setDogName("Jumbi");
-    dog1.setWeight(135);
-    
-    Labrador dante = new Labrador("Dante", "chocolate");
-    
-    c.println(dante.getDogName());
-
-    
-    
+    BankController bc = new BankController();
+    bc.exec();
   }
-  
 }

@@ -278,9 +278,11 @@ public class DvdLibController {
     String choice;
     ArrayList<String> notes = dvd.getNotes();
     c.println("Old notes:" + c.toString(dvd.getNotes(), "\n\t"));
-    choice = c.gets("Enter the note numbers you want to delete, separated by a comma, or 'all':\n ");
+    choice = c.gets("Enter the note numbers you want to delete, "
+      + "separated by a comma, or 'all':\n ");
     if (choice.contains("all")) {
-      if (c.gets("Are sure you want to permanently delete all notes (y/n)? ").equalsIgnoreCase("y")) {
+      if (c.gets("Are sure you want to permanently "
+        + "delete all notes (y/n)? ").equalsIgnoreCase("y")) {
         notes.clear();
       } else {
         c.println("Operation successfully quit.");
