@@ -20,7 +20,7 @@ import java.util.Scanner;
  * @author lmgeorge <lauren.george@live.com>
  */
 public class DVDLibrary {
-
+  HashMap<Object, Object> map = new HashMap<>();
   private HashMap<String, Dvd> dvdLib = new HashMap<>();
   private final String DELIMITER = "::";
   private final ConsoleIO c = new ConsoleIO();

@@ -22,18 +22,7 @@ public class PlayButton {
     DvdLibController control = new DvdLibController();
 
     control.run();
-//    HashMap<String, Dvd> test = new HashMap<>();
-//    Dvd testDvd = new Dvd();
-//    ArrayList<String> notes = new ArrayList<>();
-//
-//    notes.add("note1");
-//    notes.add("note2");
-//    testDvd.setNotes(notes);
-//
-//    test.put("test1", testDvd);
-//    c.println(c.toString(test.get("test1").getNotes(), "\n"));
 
-//    c.println(c.toString(notes, "::"));
   }
 
 }
