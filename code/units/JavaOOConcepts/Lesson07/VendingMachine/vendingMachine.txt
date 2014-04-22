@@ -1,0 +1,6 @@
+Snickers Bar::1.25::77::
+Apple::0.5::2::
+Frito Lays Classic::1.0::80::
+Plain Yogurt::2.5::8::
+Doritos Cool Ranch::1.0::150::
+String Mozzarella Cheese::3.0::5::

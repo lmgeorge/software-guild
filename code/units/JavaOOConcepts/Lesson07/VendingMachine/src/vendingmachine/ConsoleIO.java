@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gamebot;
+package vendingmachine;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 /**
@@ -425,7 +426,10 @@ public class ConsoleIO {
     return x;
   }
 
-  //printing methods
+  //printing methods 
+  public void println() {
+    System.out.println();
+  }
   public void println(String str) {
     System.out.println(str);
   }
@@ -456,10 +460,6 @@ public class ConsoleIO {
 
   public void print(double x) {
     System.out.print(x);
-  }
-
-  public void println() {
-    System.out.println();
   }
 
   public void print(boolean x) {
@@ -506,6 +506,19 @@ public class ConsoleIO {
     }
     return word;
   }
+  public String toString(String[] ary, String delimiter, boolean showIndex) {
+    String word = "";
+    if (showIndex) {
+      for (int i = 0; i < ary.length; i++) {
+        word += delimiter + (1 + i) + ". " + ary[i];
+      }
+    } else {
+      for (String ary1 : ary) {
+        word += delimiter + ary1;
+      }
+    }
+    return word;
+  }
 
   /**
    * Takes an arraylist of integers and returns ONE string with a delimiter between each entry; The delimiter is prepended to each entry
@@ -536,5 +549,7 @@ public class ConsoleIO {
     }
     return word;
   }
+  
+
 
 }
