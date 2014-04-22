@@ -16,7 +16,7 @@ public class Car {
   private int year;
   private String license;
 
-  ConsoleIO8 cio = new ConsoleIO8();
+  ConsoleIO cio = new ConsoleIO();
 
   public void toStringer(){
     

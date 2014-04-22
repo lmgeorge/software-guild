@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bankaccountmanager;
+package alminmaxavg;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -12,7 +12,7 @@ import java.util.Scanner;
  *
  * @author lmgeorge <lauren.george@live.com>
  */
-public class ConsoleIO10 {
+public class ConsoleIO {
 
   private final Scanner ui = new Scanner(System.in);
   private String str;
@@ -76,10 +76,10 @@ public class ConsoleIO10 {
     boolean badInput;
     do {
       badInput = false;
-  
+
       str = gets();
       try {
-        x = (Integer.parseInt(str));    
+        x = (Integer.parseInt(str));
       } catch (NumberFormatException ex) {
         badInput = true;
         println("ERROR: " + ex.getMessage() + "\n");
@@ -87,6 +87,7 @@ public class ConsoleIO10 {
     } while (badInput || x > max || x < min);
     return x;
   }
+
   /**
    * Equivalent to Scanner.nextLine() parsed using Integer.parseInt();
    *
@@ -97,15 +98,15 @@ public class ConsoleIO10 {
    * @return a parsed integer if in range, inclusive, includes try-catch
    */
   public int getsNum(String prompt, int min, int max) {
-    int x = max +1;
+    int x = max + 1;
     boolean badInput;
-    
+
     do {
       badInput = false;
       print(prompt);
       str = gets();
       try {
-        x = (Integer.parseInt(str));    
+        x = (Integer.parseInt(str));
       } catch (NumberFormatException ex) {
         badInput = true;
         println("ERROR: " + ex.getMessage() + "\n");
@@ -217,7 +218,7 @@ public class ConsoleIO10 {
       print(prompt);
       str = gets();
       try {
-        x = (Float.parseFloat(str));    
+        x = (Float.parseFloat(str));
       } catch (NumberFormatException ex) {
         badInput = true;
         println("ERROR: " + ex.getMessage() + "\n");
@@ -323,20 +324,20 @@ public class ConsoleIO10 {
    */
   public double getsNum(String prompt, double min, double max) {
     double x = max + 1;
-    
+
     boolean badInput;
     do {
       badInput = false;
       print(prompt);
       str = gets();
       try {
-        x = (Double.parseDouble(str));    
+        x = (Double.parseDouble(str));
       } catch (NumberFormatException ex) {
         badInput = true;
         println("ERROR: " + ex.getMessage() + "\n");
       }
     } while (badInput || x > max || x < min);
- 
+
     return x;
   }
 
@@ -470,16 +471,23 @@ public class ConsoleIO10 {
   }
 
   /**
-   * Takes an arraylist of strings and returns ONE string with a delimiter between each entry The delimiter is prepended to each entry
+   * Takes an array list of strings and returns ONE string with a delimiter between each entry The delimiter is prepended to each entry
    *
    * @param aryL the array list to be converted to a string
-   * @param delimiter is added BEFORE each entry in the arraylist
+   * @param delimiter is added BEFORE each entry in the array list
+   * @param showIndex if true, prints the index + 1 in front of entry;
    * @return a string with the specified delimiter between each entry
    */
-  public String toString(ArrayList<String> aryL, String delimiter) {
+  public String toString(ArrayList<String> aryL, String delimiter, boolean showIndex) {
     String word = "";
-    for (String aryL1 : aryL) {
-      word += delimiter + aryL1;
+    if (showIndex) {
+      for (int i = 0; i < aryL.size(); i++) {
+        word += delimiter + (1 + i) + ". " + aryL.get(i);
+      }
+    } else {
+      for (String aryL1 : aryL) {
+        word += delimiter + aryL1;
+      }
     }
     return word;
   }

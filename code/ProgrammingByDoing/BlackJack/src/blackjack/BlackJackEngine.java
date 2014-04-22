@@ -6,16 +6,15 @@
 package blackjack;
 
 import java.util.Random;
-import java.util.Scanner;
 
 /**
  *
  * @author lmgeorge <lauren.george@live.com>
  */
 public class BlackJackEngine {
+  protected ConsoleIO c = new ConsoleIO();
+  private final Random r = new Random();
 
-  private Random r = new Random();
-  private Scanner ui = new Scanner(System.in);
   final int STAY = 1;
   final int HIT = 2;
 
@@ -24,7 +23,7 @@ public class BlackJackEngine {
 
   public void play() throws Exception {
 
-    System.out.println("Welcome to Blackjack!\n");
+    c.println("Welcome to Blackjack!\n");
 
     runFirstPlay();
 
@@ -48,14 +47,14 @@ public class BlackJackEngine {
   public void runFirstPlay() {
     draw2();
 
-    System.out.println("You drew " + pDraw1 + " and " + pDraw2 + ".\n"
+    c.println("You drew " + pDraw1 + " and " + pDraw2 + ".\n"
       + "Your total is " + (pSum) + ".\n");
 
     if (pSum >= 21) {
       returnWinner(pSum, dSum);
     }
 
-    System.out.println("The dealer has " + dDraw1 + " showing, and a hidden card.\n"
+    c.println("The dealer has " + dDraw1 + " showing, and a hidden card.\n"
       + "Her total is hidden, too.\n");
 
     if (dSum >= 21) {
@@ -65,13 +64,13 @@ public class BlackJackEngine {
 
   public void runUserPlay() {
     do {
-      System.out.println("Do you want to hit or stay?");
-      hitStay = ui.nextLine();
+      
+      hitStay = c.gets("Do you want to hit or stay? ");
 
       if (hitStay.equalsIgnoreCase("hit")) {
         pDraw1 = 1 + r.nextInt(11);
         pSum += pDraw1;
-        System.out.println("You drew " + pDraw1 + ".\n"
+        c.println("You drew " + pDraw1 + ".\n"
           + "Your total is " + (pSum) + ".\n");
       }
       if (pSum >= 21) {
@@ -82,11 +81,11 @@ public class BlackJackEngine {
 
   public void runDealerPlay() throws Exception {
     if (pSum < 21) {
-      System.out.println("\nOkay, dealer's turn...\n");
+      c.println("\nOkay, dealer's turn...\n");
 
       Thread.sleep(1000);
 
-      System.out.println(
+      c.println(
         "Her hidden card was " + dDraw2 + ".\n"
         + "Her total was " + dSum + ".\n");
 
@@ -98,7 +97,7 @@ public class BlackJackEngine {
 
             Thread.sleep(2000);
 
-            System.out.println("Dealer stays.\n");
+            c.println("Dealer stays.\n");
             hitStay = returnWinner(pSum, dSum);
 
           } else if (dSum >= 21) {
@@ -107,7 +106,7 @@ public class BlackJackEngine {
           } else {
             dDraw1 = 2 + r.nextInt(10);
             dSum += dDraw1;
-            System.out.println(
+            c.println(
               "Dealer chooses to hit.\n"
               + "She draws a " + dDraw1 + ".\n"
               + "Her total is " + dSum + ".\n");
@@ -117,7 +116,7 @@ public class BlackJackEngine {
 
           Thread.sleep(2000);
 
-          System.out.println("Dealer stays.\n");
+          c.println("Dealer stays.\n");
           hitStay = returnWinner(pSum, dSum);
         }
 
@@ -129,18 +128,18 @@ public class BlackJackEngine {
     this.pSum = pSum;
     this.dSum = dSum;
 
-    System.out.println(
+    c.println(
       "Dealer total is " + dSum + ".\n"
       + "Your total is " + pSum + ".\n"
     );
     if ((dSum < pSum && pSum <= 21) || dSum > 21) {
-      System.out.println("YOU WIN!");
+      c.println("YOU WIN!");
       hitStay = "stay";
     } else if (dSum == pSum) {
-      System.out.println("It's a tie...dealer wins.");
+      c.println("It's a tie...dealer wins.");
       hitStay = "stay";
     } else {
-      System.out.println("YOU LOSE!");
+      c.println("YOU LOSE!");
       hitStay = "stay";
     }
 

@@ -21,7 +21,7 @@ public class HangmanEngine implements Game {
 
   private String[] board;
   private String missed = "";
-  private final ConsoleIO3 cio = new ConsoleIO3();
+  private final ConsoleIO cio = new ConsoleIO();
   private String guess;
   private String finalWord;
   private String hiddenWord;
@@ -51,7 +51,7 @@ public class HangmanEngine implements Game {
 
       cio.println();
 
-      finalWord = toString(board, "");
+      finalWord = cio.toString(board, "");
 
       displayBoard();
 
@@ -105,19 +105,12 @@ public class HangmanEngine implements Game {
   }
 
   public void displayBoard() {
-    cio.print("Word:  " + toString(board, " "));
+    cio.print("Word:  " + cio.toString(board, " "));
     cio.println();
     cio.print("Missed: " + missed);
     cio.println();
   }
 
-  public String toString(String[] ary, String delimiter) {
-    String word = "";
-    for (int i = 0; i < ary.length; i++) {
-      word = word + ary[i] + delimiter;
-    }
-    return word;
-  }
 
   public String getWord() {
     Random r = new Random();

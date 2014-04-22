@@ -16,7 +16,7 @@ public class DogExample {
    * @param args the command line arguments
    */
   public static void main(String[] args) {
-    ConsoleIO10 c = new ConsoleIO10();
+    ConsoleIO c = new ConsoleIO();
 
     Dog dog1 = new Dog("jumbi");
     dog1.setAge(14);

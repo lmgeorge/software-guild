@@ -23,7 +23,7 @@ public class DVDLibrary {
 
   private HashMap<String, Dvd> dvdLib = new HashMap<>();
   private final String DELIMITER = "::";
-  private final ConsoleIO10 c = new ConsoleIO10();
+  private final ConsoleIO c = new ConsoleIO();
 
   public void loadDvds(String fileName) throws FileNotFoundException {
     Scanner file = new Scanner(new BufferedReader(new FileReader(fileName)));

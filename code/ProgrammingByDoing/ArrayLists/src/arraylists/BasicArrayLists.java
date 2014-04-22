@@ -19,7 +19,7 @@ import java.util.Scanner;
  */
 public class BasicArrayLists {
 
-  private final ConsoleIO8 cio = new ConsoleIO8();
+  private final ConsoleIO cio = new ConsoleIO();
   private final Random rGen = new Random();
   private int r;
 

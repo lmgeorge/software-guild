@@ -11,16 +11,16 @@ package records;
  * @author lmgeorge <lauren.george@live.com>
  */
 public class LilDatabaseLoop {
-  ConsoleIO7 cio = new ConsoleIO7();
+  ConsoleIO cio = new ConsoleIO();
   Student[] sAry = new Student[3];
   public void run(){
     
     
    for (int i = 0; i < sAry.length; i++){ 
     sAry[i] = new Student();
-    sAry[i].name =  cio.get("Enter the student's name: ");
-    sAry[i].year = cio.get("Enter the student's year: ");
-    sAry[i].gradeAvg = cio.getFlt("Enter the student's average: ");
+    sAry[i].name =  cio.gets("Enter the student's name: ");
+    sAry[i].year = cio.gets("Enter the student's year: ");
+    sAry[i].gradeAvg = cio.getsFloat("Enter the student's average: ");
     
     cio.println();
    }

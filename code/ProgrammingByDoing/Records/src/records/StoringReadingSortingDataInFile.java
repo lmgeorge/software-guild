@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 public class StoringReadingSortingDataInFile {
 
   private Car[] cars = new Car[5];
-  private ConsoleIO7 cio = new ConsoleIO7();
+  private ConsoleIO cio = new ConsoleIO();
   private final String DELIMITER = "::";
   private String tempName = "temp.txt";
 

@@ -11,30 +11,30 @@ package records;
  * @author lmgeorge <lauren.george@live.com>
  */
 public class LilDatabase {
-  ConsoleIO7 cio = new ConsoleIO7();
+  ConsoleIO cio = new ConsoleIO();
   Student[] sAry = new Student[3];
   public void run(){
     
     
     
     sAry[0] = new Student();
-    sAry[0].name =  cio.get("Enter the student's name: ");
-    sAry[0].year = cio.get("Enter the student's year: ");
-    sAry[0].gradeAvg = cio.getFlt("Enter the student's average: ");
+    sAry[0].name =  cio.gets("Enter the student's name: ");
+    sAry[0].year = cio.gets("Enter the student's year: ");
+    sAry[0].gradeAvg = cio.getsFloat("Enter the student's average: ");
     
     cio.println();
     
     sAry[1] = new Student();
-    sAry[1].name =  cio.get("Enter the student's name: ");
-    sAry[1].year = cio.get("Enter the student's year: ");
-    sAry[1].gradeAvg = cio.getFlt("Enter the student's average: ");
+    sAry[1].name =  cio.gets("Enter the student's name: ");
+    sAry[1].year = cio.gets("Enter the student's year: ");
+    sAry[1].gradeAvg = cio.getsFloat("Enter the student's average: ");
     
     cio.println();
     
     sAry[2] = new Student();
-    sAry[2].name =  cio.get("Enter the student's name: ");
-    sAry[2].year = cio.get("Enter the student's year: ");
-    sAry[2].gradeAvg = cio.getFlt("Enter the student's average: ");
+    sAry[2].name =  cio.gets("Enter the student's name: ");
+    sAry[2].year = cio.gets("Enter the student's year: ");
+    sAry[2].gradeAvg = cio.getsFloat("Enter the student's average: ");
     
     cio.println("The names are: \n"
       + sAry[0].name + "\n"

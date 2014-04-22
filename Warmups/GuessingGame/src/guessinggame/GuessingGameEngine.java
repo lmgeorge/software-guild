@@ -25,7 +25,7 @@ public class GuessingGameEngine {
   private int avgGuesses = 0;
   private int sumTotalGuesses = 0;
   private String playAgain = "y";
-  private ConsoleIO1 cio = new ConsoleIO1();
+  private ConsoleIO cio = new ConsoleIO();
 
   public void play() {
 
@@ -80,12 +80,12 @@ public class GuessingGameEngine {
   public void isValid() {
     if (userGuess < compNumber) {
       cio.println("Your guess is too low.\n");
-      userGuess = cio.getNum("Please enter your guess: ");
+      userGuess = cio.getsNum("Please enter your guess: ");
       cio.println();
 
     } else if (userGuess > compNumber) {
       cio.println("Your guess is too high.\n");
-      userGuess = cio.getNum("Please enter your guess: ");
+      userGuess = cio.getsNum("Please enter your guess: ");
       cio.println();
     }
   }

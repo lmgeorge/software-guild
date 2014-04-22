@@ -11,7 +11,7 @@ package logicdrills;
  */
 public class LogicDrills6Thru17 {
 
-  ConsoleIO9 cio = new ConsoleIO9();
+  ConsoleIO cio = new ConsoleIO();
 
   //Drill 6 
   public String alarmClock(int day, boolean vacation) {

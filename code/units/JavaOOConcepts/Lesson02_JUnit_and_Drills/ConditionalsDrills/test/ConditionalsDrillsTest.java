@@ -5,7 +5,7 @@
  */
 
 import conditionalsdrills.ConditionalDrillsMethods;
-import conditionalsdrills.ConsoleIO9;
+import conditionalsdrills.ConsoleIO;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.*;
@@ -20,7 +20,7 @@ import org.junit.Test;
 public class ConditionalsDrillsTest {
 
   ConditionalDrillsMethods c = new ConditionalDrillsMethods();
-  ConsoleIO9 cio = new ConsoleIO9();
+  ConsoleIO cio = new ConsoleIO();
 
   public ConditionalsDrillsTest() {
   }

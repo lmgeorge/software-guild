@@ -18,8 +18,8 @@ public class Labrador extends Dog{
   }
   
   public String color(String name, String color){
-    super(name);
-    this.color = color;
+    //super(name);
+    return this.color = color;
   }
   
   

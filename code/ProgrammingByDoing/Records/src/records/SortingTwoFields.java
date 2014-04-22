@@ -20,7 +20,7 @@ import java.util.Scanner;
 public class SortingTwoFields {
 
   //private ReportCard rc = new ReportCard();
-  private final ConsoleIO7 cio = new ConsoleIO7();
+  private final ConsoleIO cio = new ConsoleIO();
   private final String DELIMITER = " ";
   private final String RECORD_FILE = "gb.txt";
   private final ReportCard[] r = new ReportCard[30];

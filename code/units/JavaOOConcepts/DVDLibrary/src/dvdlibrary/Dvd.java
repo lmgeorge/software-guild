@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * @author lmgeorge <lauren.george@live.com>
  */
 public class Dvd {
-private final ConsoleIO10 c = new ConsoleIO10();  
+private final ConsoleIO c = new ConsoleIO();  
 private String title;
 private int year;
 private String mpaaRating;

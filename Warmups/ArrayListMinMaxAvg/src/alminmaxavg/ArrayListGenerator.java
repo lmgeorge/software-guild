@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class ArrayListGenerator {
 
   private ArrayList<Integer> al = new ArrayList<>();
-  private ConsoleIOv5 cio = new ConsoleIOv5();
+  private ConsoleIO cio = new ConsoleIO();
   private int x = 0;
   private String s;
   private int min = 0;

@@ -11,27 +11,27 @@ package records;
  * @author lmgeorge <lauren.george@live.com>
  */
 public class BasicRecords {
-  ConsoleIO7 cio = new ConsoleIO7();
+  ConsoleIO cio = new ConsoleIO();
  
   public void run(){
     Student s = new Student();
-    s.name =  cio.get("Enter the student's name: ");
-    s.year = cio.get("Enter the student's year: ");
-    s.gradeAvg = cio.getFlt("Enter the student's average: ");
+    s.name =  cio.gets("Enter the student's name: ");
+    s.year = cio.gets("Enter the student's year: ");
+    s.gradeAvg = cio.getsFloat("Enter the student's average: ");
     
     cio.println();
     
     Student s1 = new Student();
-    s1.name =  cio.get("Enter the student's name: ");
-    s1.year = cio.get("Enter the student's year: ");
-    s1.gradeAvg = cio.getFlt("Enter the student's average: ");
+    s1.name =  cio.gets("Enter the student's name: ");
+    s1.year = cio.gets("Enter the student's year: ");
+    s1.gradeAvg = cio.getsFloat("Enter the student's average: ");
     
     cio.println();
     
     Student s2 = new Student();
-    s2.name =  cio.get("Enter the student's name: ");
-    s2.year = cio.get("Enter the student's year: ");
-    s2.gradeAvg = cio.getFlt("Enter the student's average: ");
+    s2.name =  cio.gets("Enter the student's name: ");
+    s2.year = cio.gets("Enter the student's year: ");
+    s2.gradeAvg = cio.getsFloat("Enter the student's average: ");
     
     cio.println("The names are: \n"
       + s.name + "\n"

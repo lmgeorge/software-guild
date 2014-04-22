@@ -16,7 +16,7 @@ import java.util.Scanner;
  */
 public class GettingDataFromAFile {
 
-  private ConsoleIO7 cio = new ConsoleIO7();
+  private ConsoleIO cio = new ConsoleIO();
 
   private Scanner file;
   private Canine[] k9 = new Canine[5];

@@ -15,7 +15,7 @@ public class LogicDrills {
    * @param args the command line arguments
    */
   public static void main(String[] args) {
-    ConsoleIO9 cio = new ConsoleIO9();
+    ConsoleIO cio = new ConsoleIO();
     LogicDrills6Thru17 l = new LogicDrills6Thru17();
 
     

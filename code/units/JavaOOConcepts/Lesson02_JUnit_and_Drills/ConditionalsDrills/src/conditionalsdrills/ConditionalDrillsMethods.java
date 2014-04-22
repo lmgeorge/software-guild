@@ -7,7 +7,6 @@ package conditionalsdrills;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Locale;
 
 /**
  *
@@ -15,7 +14,7 @@ import java.util.Locale;
  */
 public class ConditionalDrillsMethods {
 
-  ConsoleIO9 cio = new ConsoleIO9();
+  ConsoleIO cio = new ConsoleIO();
 
 // Drill 1: Mischievous Children  
   public boolean areWeInTrouble(boolean aSmile, boolean bSmile) {
@@ -82,7 +81,7 @@ public class ConditionalDrillsMethods {
     ArrayList<String> lets = new ArrayList<>();
     lets.addAll(Arrays.asList(str.split("")));
     lets.remove(n);
-    String s = toString(lets, "");
+    String s = cio.toString(lets, "", false);
 
     return s;
   }
@@ -96,7 +95,7 @@ public class ConditionalDrillsMethods {
     lets[0] = lets[lets.length - 1];
     lets[lets.length - 1] = temp;
 
-    temp = toString(lets, "");
+    temp = cio.toString(lets, "");
     return temp;
   }
 
@@ -230,21 +229,6 @@ public class ConditionalDrillsMethods {
   
   
   
-  
-  public String toString(ArrayList<String> ary, String delimiter) {
-    String word = "";
-    for (String ary1 : ary) {
-      word = word + ary1 + delimiter;
-    }
-    return word;
-  }
 
-  public String toString(String[] ary, String delimiter) {
-    String word = "";
-    for (String ary1 : ary) {
-      word = word + ary1 + delimiter;
-    }
-    return word;
-  }
 
 }

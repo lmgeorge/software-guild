@@ -11,7 +11,7 @@ package dogexample;
  * @author lmgeorge <lauren.george@live.com>
  */
 public class Dog {
-  protected ConsoleIO10 c = new ConsoleIO10();
+  protected ConsoleIO c = new ConsoleIO();
   
   protected String dogName;
   protected int age;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gamebot;
+package bankaccountmanager;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -12,7 +12,7 @@ import java.util.Scanner;
  *
  * @author lmgeorge <lauren.george@live.com>
  */
-public class ConsoleIO10 {
+public class ConsoleIO {
 
   private final Scanner ui = new Scanner(System.in);
   private String str;

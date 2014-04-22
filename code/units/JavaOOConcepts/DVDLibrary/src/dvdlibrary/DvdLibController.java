@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  */
 public class DvdLibController {
 
-  private final ConsoleIO10 c = new ConsoleIO10();
+  private final ConsoleIO c = new ConsoleIO();
   private DVDLibrary dvds = new DVDLibrary();
 
   public void run() throws Exception {

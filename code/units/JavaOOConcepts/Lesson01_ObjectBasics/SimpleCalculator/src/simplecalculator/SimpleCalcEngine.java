@@ -20,14 +20,14 @@ public class SimpleCalcEngine {
   private final ConsoleIO cio = new ConsoleIO();
   public void startCalculator() {
     do {
-      menuChoice = cio.getNum(
+      menuChoice = cio.getsNum(
       "Choose an operation:\n"
       + "1. Addition\n"
       + "2. Subtraction\n"
       + "3. Multiplication\n"
       + "4. Division\n"
-      + "5. Exit");
-      cio.setValidNum(menuChoice, 1, 5);
+      + "5. Exit\n", 1, 5);
+
       cio.println();
 
       if (menuChoice != 5) {
@@ -43,10 +43,10 @@ public class SimpleCalcEngine {
   public void getOperands(int menuChoice) {
     this.menuChoice = menuChoice;
 
-    a = cio.getDbl("Please enter your first operand: ");
+    a = cio.getsDouble("Please enter your first operand: ");
     cio.println();
     do {
-      b = cio.getDbl("Please enter your second operand: ");
+      b = cio.getsDouble("Please enter your second operand: ");
 
       if (b == 0) {
         cio.println("Error: Cannot divide by zero.\n");

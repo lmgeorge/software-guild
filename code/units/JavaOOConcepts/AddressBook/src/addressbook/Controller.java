@@ -15,7 +15,7 @@ import java.io.IOException;
  */
 public class Controller {
 
-  private ConsoleIO2 cio = new ConsoleIO2();
+  private ConsoleIO cio = new ConsoleIO();
   private AddressBook book = new AddressBook();
 
   public void runAddressBook() {
@@ -39,11 +39,9 @@ public class Controller {
       + "\n\t4.List Address Count"
       + "\n\t5.List All Addresses"
       + "\n\t6.Exit\n");
-    while (selection < 1 || selection > 6) {
-      cio.print("Please select an operation: ");
-      selection = cio.getsNum();
+      selection = cio.getsNum("Please select an operation: ", 1, 6);
       cio.println();
-    }
+
     switch (selection) {
       case 1:
         addAddress();
@@ -73,13 +71,13 @@ public class Controller {
     Address newAddress = new Address();
     String check;
     cio.print("ADD ADDRESS:\n");
-    newAddress.setFirstName(cio.get("\tFirst Name: "));
-    check = cio.get("\tLast Name: ");
+    newAddress.setFirstName(cio.gets("\tFirst Name: "));
+    check = cio.gets("\tLast Name: ");
     newAddress.setLastName(check);
-    newAddress.setStreet(cio.get("\tStreet Address: "));
-    newAddress.setCity(cio.get("\tCity: "));
-    newAddress.setState(cio.get("\tState: "));
-    newAddress.setZip(cio.get("\tZIP code: "));
+    newAddress.setStreet(cio.gets("\tStreet Address: "));
+    newAddress.setCity(cio.gets("\tCity: "));
+    newAddress.setState(cio.gets("\tState: "));
+    newAddress.setZip(cio.gets("\tZIP code: "));
     
     if (book.checkKey(check)){
       cio.println("Are you sure you want to change this address?");
@@ -118,7 +116,7 @@ public class Controller {
 
   private void find() {
     cio.println("FIND ADDRESS:\n");
-    String record = cio.get("Please enter a last name: ");
+    String record = cio.gets("Please enter a last name: ");
     Address temp;
     try {
       temp = book.getAddress(record);

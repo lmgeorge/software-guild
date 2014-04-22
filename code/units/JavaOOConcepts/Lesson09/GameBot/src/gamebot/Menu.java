@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class Menu {
 
-  ConsoleIO10 c = new ConsoleIO10();
+  ConsoleIO c = new ConsoleIO();
 
   public void run() {
     ArrayList<Game> games = new ArrayList<>();

@@ -18,7 +18,7 @@ public class PlayButton {
    * @param args the command line arguments
    */
   public static void main(String[] args) throws Exception {
-    ConsoleIO10 c = new ConsoleIO10();
+    ConsoleIO c = new ConsoleIO();
     DvdLibController control = new DvdLibController();
 
     control.run();

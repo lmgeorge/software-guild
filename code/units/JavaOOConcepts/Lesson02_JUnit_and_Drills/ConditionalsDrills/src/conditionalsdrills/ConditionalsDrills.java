@@ -17,7 +17,7 @@ public class ConditionalsDrills {
    */
   public static void main(String[] args) {
     ConditionalDrillsMethods c = new ConditionalDrillsMethods();
-    ConsoleIO9 cio = new ConsoleIO9();
+    ConsoleIO cio = new ConsoleIO();
     
     
   }

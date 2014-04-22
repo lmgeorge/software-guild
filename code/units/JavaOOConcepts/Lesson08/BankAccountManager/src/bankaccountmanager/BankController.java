@@ -14,7 +14,7 @@ import java.util.Locale;
  */
 public class BankController {
 
-  private ConsoleIO10 c = new ConsoleIO10();
+  private ConsoleIO c = new ConsoleIO();
   private NumberFormat n = NumberFormat.getCurrencyInstance(Locale.US);
   private Checking checkAcc = new Checking();
   private Savings savingAcc = new Savings();

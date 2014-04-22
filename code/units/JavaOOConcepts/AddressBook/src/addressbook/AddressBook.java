@@ -42,12 +42,7 @@ public class AddressBook {
   }
 
   public String[] getKeys() {
-
-    Set<String> keySet = addressMap.keySet();
-
-    String[] keyArray = new String[keySet.size()];
-    keyArray = keySet.toArray(keyArray);
-    return keyArray;
+    return addressMap.keySet().toArray(new String[0]);
   }
 
   public void add(Address address) {

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dogexample;
+package unitoneskillcheck;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -12,7 +12,7 @@ import java.util.Scanner;
  *
  * @author lmgeorge <lauren.george@live.com>
  */
-public class ConsoleIO10 {
+public class ConsoleIO {
 
   private final Scanner ui = new Scanner(System.in);
   private String str;
@@ -72,18 +72,46 @@ public class ConsoleIO10 {
    * @return a parsed integer if in range, inclusive, includes try-catch
    */
   public int getsNum(int min, int max) {
-    int x = 0;
-    boolean badInput = true;
+    int x = max + 1;
+    boolean badInput;
     do {
+      badInput = false;
+
+      str = gets();
       try {
-        print("Please enter a number between " + min + " and " + max + ":");
-        str = gets();
         x = (Integer.parseInt(str));
-        badInput = false;
       } catch (NumberFormatException ex) {
+        badInput = true;
         println("ERROR: " + ex.getMessage() + "\n");
       }
-    } while (badInput && (x <= max && x >= min));
+    } while (badInput || x > max || x < min);
+    return x;
+  }
+
+  /**
+   * Equivalent to Scanner.nextLine() parsed using Integer.parseInt();
+   *
+   * Includes a prompt for to enter a number within a certain range print to the console
+   *
+   * @param min inclusive
+   * @param max inclusive
+   * @return a parsed integer if in range, inclusive, includes try-catch
+   */
+  public int getsNum(String prompt, int min, int max) {
+    int x = max + 1;
+    boolean badInput;
+
+    do {
+      badInput = false;
+      print(prompt);
+      str = gets();
+      try {
+        x = (Integer.parseInt(str));
+      } catch (NumberFormatException ex) {
+        badInput = true;
+        println("ERROR: " + ex.getMessage() + "\n");
+      }
+    } while (badInput || x > max || x < min);
     return x;
   }
 
@@ -177,23 +205,26 @@ public class ConsoleIO10 {
    *
    * Includes a prompt for to enter a number within a certain range print to the console
    *
+   * @param prompt System.out.print(prompt) to user
    * @param min inclusive
    * @param max inclusive
    * @return a parsed float if in range, inclusive, includes try-catch
    */
-  public float getsNum(float min, float max) {
-    boolean badInput = true;
-    float x = 0;
+  public float getsNum(String prompt, float min, float max) {
+    float x = max + 1;
+    boolean badInput;
     do {
+      badInput = false;
+      print(prompt);
+      str = gets();
       try {
-        print("Please enter a number between " + min + " and " + max + ":");
-        str = gets();
         x = (Float.parseFloat(str));
-        badInput = false;
       } catch (NumberFormatException ex) {
+        badInput = true;
         println("ERROR: " + ex.getMessage() + "\n");
       }
-    } while (badInput && (x <= max && x >= min));
+    } while (badInput || x > max || x < min);
+
     return x;
   }
 
@@ -291,19 +322,22 @@ public class ConsoleIO10 {
    * @param max inclusive
    * @return a parsed double if in range, inclusive, includes try-catch
    */
-  public double getsNum(double min, double max) {
-    boolean badInput = true;
-    double x = 0;
+  public double getsNum(String prompt, double min, double max) {
+    double x = max + 1;
+
+    boolean badInput;
     do {
+      badInput = false;
+      print(prompt);
+      str = gets();
       try {
-        print("Please enter a number between " + min + " and " + max + ":");
-        str = gets();
         x = (Double.parseDouble(str));
-        badInput = false;
       } catch (NumberFormatException ex) {
+        badInput = true;
         println("ERROR: " + ex.getMessage() + "\n");
       }
-    } while (badInput && (x <= max && x >= min));
+    } while (badInput || x > max || x < min);
+
     return x;
   }
 
@@ -437,16 +471,23 @@ public class ConsoleIO10 {
   }
 
   /**
-   * Takes an arraylist of strings and returns ONE string with a delimiter between each entry The delimiter is prepended to each entry
+   * Takes an array list of strings and returns ONE string with a delimiter between each entry The delimiter is prepended to each entry
    *
    * @param aryL the array list to be converted to a string
-   * @param delimiter is added BEFORE each entry in the arraylist
+   * @param delimiter is added BEFORE each entry in the array list
+   * @param showIndex if true, prints the index + 1 in front of entry;
    * @return a string with the specified delimiter between each entry
    */
-  public String toString(ArrayList<String> aryL, String delimiter) {
+  public String toString(ArrayList<String> aryL, String delimiter, boolean showIndex) {
     String word = "";
-    for (String aryL1 : aryL) {
-      word += delimiter + aryL1;
+    if (showIndex) {
+      for (int i = 0; i < aryL.size(); i++) {
+        word += delimiter + (1 + i) + ". " + aryL.get(i);
+      }
+    } else {
+      for (String aryL1 : aryL) {
+        word += delimiter + aryL1;
+      }
     }
     return word;
   }
