@@ -126,93 +126,27 @@ public class DvdLibController {
 
   public void edit(String key) {
     //what dvd would you like to edit
-    String currentKey = key;
-    Dvd dvd = dvds.getDvd(currentKey);
-
-    String tempVal;
     String confirm;
-    int tempYear;
-    find(currentKey);
-    do {
-      int ui = c.getsNum(
-        "\n\t1. Edit Title"
-        + "\n\t2. Edit Release Year"
-        + "\n\t3. Edit MPAA Rating"
-        + "\n\t4. Edit Director"
-        + "\n\t5. Edit Studio"
-        + "\n\t6. Edit Notes"
-        + "\n\t7. Cancel"
-        + "\n\nPlease enter your choice: ");
-      //what would you like to edit? (switch)
-      switch (ui) {
-        case 1:
-          tempVal = c.gets("Enter new title: ");
-          c.println("Old title: " + dvd.getTitle());
-          confirm = c.gets("Confirm change (y/n): ");
-          if (confirm.equalsIgnoreCase("y")) {
-            dvd.setTitle(tempVal);
-            currentKey = tempVal;
-          } else {
-            c.println("No changes made.\n");
-          }
+    find(key);
+    try {
+      do {
+        int ui = c.getsNum(
+          "\n\t1. Edit Title"
+          + "\n\t2. Edit Release Year"
+          + "\n\t3. Edit MPAA Rating"
+          + "\n\t4. Edit Director"
+          + "\n\t5. Edit Studio"
+          + "\n\t6. Edit Notes"
+          + "\n\t7. Cancel"
+          + "\n\nPlease enter your choice: ", 1, 7);
 
-          break;
-        case 2:
-          tempYear = c.getsNum("Enter new release year: ");
-          c.println("Old release year: " + dvd.getYear());
-          confirm = c.gets("Confirm change (y/n): ");
-          if (confirm.equalsIgnoreCase("y")) {
-            dvd.setYear(tempYear);
-          } else {
-            c.println("No changes made.\n");
-          }
+        editor(key, ui);
 
-          break;
-        case 3:
-          tempVal = c.gets("Enter new rating: ");
-          c.println("Old rating: " + dvd.getMpaaRating());
-          confirm = c.gets("Confirm change (y/n): ");
-          if (confirm.equalsIgnoreCase("y")) {
-            dvd.setMpaaRating(tempVal);
-          } else {
-            c.println("No changes made.\n");
-          }
-          break;
-        case 4:
-          tempVal = c.gets("Enter new director: ");
-          c.println("Old director: " + dvd.getDirector());
-          confirm = c.gets("Confirm change (y/n): ");
-          if (confirm.equalsIgnoreCase("y")) {
-            dvd.setDirector(tempVal);
-          } else {
-            c.println("No changes made.\n");
-          }
-          break;
-        case 5:
-          tempVal = c.gets("Enter new studio: ");
-          c.println("Old studio: " + dvd.getStudio());
-          confirm = c.gets("Confirm change (y/n): ");
-          if (confirm.equalsIgnoreCase("y")) {
-            dvd.setStudio(tempVal);
-          } else {
-            c.println("No changes made.\n");
-          }
-          break;
-        case 6:
-          //coding
-          break;
-        case 7:
-          c.println("Cancelled.");
-          break;
-        default:
-          break;
-      }
-      //show changes
-      c.println("Updated record:");
-      find(currentKey);
-      confirm = c.gets("Would you like to continue editing (y/n)? ");
-    } while (confirm.equalsIgnoreCase("y"));
-
+        confirm = c.gets("Would you like to continue editing (y/n)? ");
+      } while (confirm.equalsIgnoreCase("y"));
+    } catch (NullPointerException ex) {
+      c.println("Error: no such record exists. Msg = " + ex.getMessage() + "\n");
+    }
     //save? 
     try {
       dvds.writeDvdLib("dvds.txt");
@@ -223,18 +157,21 @@ public class DvdLibController {
   }
 
   public void find(String key) {
-    Dvd dvd = dvds.getDvd(key);
-    c.println(
-      "\nTitle: " + dvd.getTitle() + "\n"
-      + "Release Year: " + dvd.getYear() + "\n"
-      + "MPAA Rating: " + dvd.getMpaaRating() + "\n"
-      + "Director: " + dvd.getDirector() + "\n"
-      + "Studio: " + dvd.getStudio() + "\n"
-      + "Notes:"
-      + c.toString(dvd.getNotes(), "\n\t")
-      + "\n\n"
-    );
-
+    try {
+      Dvd dvd = dvds.getDvd(key);
+      c.println(
+        "\nTitle: " + dvd.getTitle() + "\n"
+        + "Release Year: " + dvd.getYear() + "\n"
+        + "MPAA Rating: " + dvd.getMpaaRating() + "\n"
+        + "Director: " + dvd.getDirector() + "\n"
+        + "Studio: " + dvd.getStudio() + "\n"
+        + "Notes:"
+        + c.toString(dvd.getNotes(), "\n\t", true)
+        + "\n\n"
+      );
+    } catch (NullPointerException ex) {
+      c.println("Error: no such record exists. Msg = " + ex.getMessage() + "\n");
+    }
   }
 
   public void listAll() {
@@ -249,46 +186,153 @@ public class DvdLibController {
         + "Director: " + dvd.getDirector() + "\n"
         + "Studio: " + dvd.getStudio() + "\n"
         + "Notes:\t"
-        + c.toString(dvd.getNotes(), "\n\t")
+        + c.toString(dvd.getNotes(), "\n\t", true)
         + "\n================================================================\n\n"
       );
     }
 
   }
 
+  public void notesEditor(String key) {
+    String confirm;
+    Dvd dvd = dvds.getDvd(key);
+    ArrayList<String> notes = dvd.getNotes();
+    do {
+      int ui = c.getsNum("1. Add a note\n"
+        + "2. Delete a note\n"
+        + "3. Edit a note\n"
+        + "4. Delete all\n"
+        + "5. Cancel\n"
+        + "Enter your choice: ", 1, 5);
+      switch (ui) {
+        case 1:
+          notes.addAll(addNotes());
+          break;
+        case 2:
+          deleteNotes(key);
+          break;
+        case 3:
+          c.println("Coming soon!");
+          break;
+        case 4:
+          notes.clear();
+          break;
+        case 5:
+          c.println("Cancelled.");
+          break;
+      }
+      dvd.setNotes(notes);
+      confirm = c.gets("Would you like to continue editing (y/n)? ");
+    } while (confirm.equalsIgnoreCase("y"));
+  }
+
   public ArrayList<String> addNotes() {
     String answer;
-    int counter = 1;
     ArrayList<String> notes = new ArrayList<>();
     do {
       String note = c.gets("Note: ");
-      notes.add("Note " + counter + ": " + note);
+      notes.add(note);
       c.println();
 
       answer = c.gets("Would you like to add another note? (y/n):  ");
       c.println();
-      counter++;
 
     } while (answer.equalsIgnoreCase("y"));
     return notes;
   }
 
-  public void deleteNotes(String key) {
+  public ArrayList<String> deleteNotes(String key) {
     Dvd dvd = dvds.getDvd(key);
-    String choice;
+    int choice;
+    String answer;
     ArrayList<String> notes = dvd.getNotes();
-    c.println("Old notes:" + c.toString(dvd.getNotes(), "\n\t"));
-    choice = c.gets("Enter the note numbers you want to delete, "
-      + "separated by a comma, or 'all':\n ");
-    if (choice.contains("all")) {
-      if (c.gets("Are sure you want to permanently "
-        + "delete all notes (y/n)? ").equalsIgnoreCase("y")) {
-        notes.clear();
+    do {
+      c.println("Notes:" + c.toString(dvd.getNotes(), "\n\t", true));
+      choice = c.getsNum("Enter the note number you want to delete:\n ");
+      c.println(notes.get(choice - 1));
+      String confirm = c.gets("\nAre you sure you want to delete this note (y/n?");
+      if (confirm.contains("y")) {
+        notes.remove(choice - 1);
       } else {
-        c.println("Operation successfully quit.");
+        c.println("Operation successfully cancelled.");
       }
-    }
+      answer = c.gets("Would you like to delete another note? (y/n):  ");
+      c.println();
+    } while (answer.equalsIgnoreCase("y"));
+    return notes;
+  }
 
-    String[] choices = choice.split(",");
+  public void editor(String key, int ui) {
+    String currentKey = key;
+    Dvd dvd = dvds.getDvd(currentKey);
+    String tempVal;
+    String confirm;
+    int tempNum;
+    switch (ui) {
+      case 1:
+        tempVal = c.gets("Enter new title: ");
+        c.println("Old title: " + dvd.getTitle());
+        confirm = c.gets("Confirm change (y/n): ");
+        if (confirm.equalsIgnoreCase("y")) {
+          dvd.setTitle(tempVal);
+          dvds.add(dvd);
+          currentKey = tempVal;
+        } else {
+          c.println("No changes made.\n");
+        }
+
+        break;
+      case 2:
+        tempNum = c.getsNum("Enter new release year: ");
+        c.println("Old release year: " + dvd.getYear());
+        confirm = c.gets("Confirm change (y/n): ");
+        if (confirm.equalsIgnoreCase("y")) {
+          dvd.setYear(tempNum);
+        } else {
+          c.println("No changes made.\n");
+        }
+
+        break;
+      case 3:
+        tempVal = c.gets("Enter new rating: ");
+        c.println("Old rating: " + dvd.getMpaaRating());
+        confirm = c.gets("Confirm change (y/n): ");
+        if (confirm.equalsIgnoreCase("y")) {
+          dvd.setMpaaRating(tempVal);
+        } else {
+          c.println("No changes made.\n");
+        }
+        break;
+      case 4:
+        tempVal = c.gets("Enter new director: ");
+        c.println("Old director: " + dvd.getDirector());
+        confirm = c.gets("Confirm change (y/n): ");
+        if (confirm.equalsIgnoreCase("y")) {
+          dvd.setDirector(tempVal);
+        } else {
+          c.println("No changes made.\n");
+        }
+        break;
+      case 5:
+        tempVal = c.gets("Enter new studio: ");
+        c.println("Old studio: " + dvd.getStudio());
+        confirm = c.gets("Confirm change (y/n): ");
+        if (confirm.equalsIgnoreCase("y")) {
+          dvd.setStudio(tempVal);
+        } else {
+          c.println("No changes made.\n");
+        }
+        break;
+      case 6:
+        notesEditor(key);
+        break;
+      case 7:
+        c.println("Cancelled.");
+        break;
+      default:
+        break;
+    }
+    c.println("Updated record:");
+    find(currentKey);
   }
 }

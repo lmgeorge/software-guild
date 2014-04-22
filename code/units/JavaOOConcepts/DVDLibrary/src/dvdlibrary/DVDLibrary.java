@@ -62,9 +62,9 @@ public class DVDLibrary {
         + dvdLib.get(key).getYear() + DELIMITER 
         + dvdLib.get(key).getMpaaRating() + DELIMITER 
         + dvdLib.get(key).getDirector() + DELIMITER 
-        + dvdLib.get(key).getStudio() + DELIMITER);
+        + dvdLib.get(key).getStudio());
       
-      file.println(c.toString(dvdLib.get(key).getNotes(), DELIMITER));
+      file.println(c.toString(dvdLib.get(key).getNotes(), DELIMITER, false));
       file.flush();
     }
     file.close();

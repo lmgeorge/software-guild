@@ -72,18 +72,19 @@ public class ConsoleIO10 {
    * @return a parsed integer if in range, inclusive, includes try-catch
    */
   public int getsNum(int min, int max) {
-    int x = 0;
-    boolean badInput = true;
+    int x = max + 1;
+    boolean badInput;
     do {
+      badInput = false;
+  
+      str = gets();
       try {
-        print("Please enter a number between " + min + " and " + max + ":");
-        str = gets();
-        x = (Integer.parseInt(str));
-        badInput = false;
+        x = (Integer.parseInt(str));    
       } catch (NumberFormatException ex) {
+        badInput = true;
         println("ERROR: " + ex.getMessage() + "\n");
       }
-    } while (badInput && (x <= max && x >= min));
+    } while (badInput || x > max || x < min);
     return x;
   }
   /**
@@ -203,23 +204,26 @@ public class ConsoleIO10 {
    *
    * Includes a prompt for to enter a number within a certain range print to the console
    *
+   * @param prompt System.out.print(prompt) to user
    * @param min inclusive
    * @param max inclusive
    * @return a parsed float if in range, inclusive, includes try-catch
    */
-  public float getsNum(float min, float max) {
-    boolean badInput = true;
-    float x = 0;
+  public float getsNum(String prompt, float min, float max) {
+    float x = max + 1;
+    boolean badInput;
     do {
+      badInput = false;
+      print(prompt);
+      str = gets();
       try {
-        print("Please enter a number between " + min + " and " + max + ":");
-        str = gets();
-        x = (Float.parseFloat(str));
-        badInput = false;
+        x = (Float.parseFloat(str));    
       } catch (NumberFormatException ex) {
+        badInput = true;
         println("ERROR: " + ex.getMessage() + "\n");
       }
-    } while (badInput && (x <= max && x >= min));
+    } while (badInput || x > max || x < min);
+
     return x;
   }
 
@@ -317,19 +321,22 @@ public class ConsoleIO10 {
    * @param max inclusive
    * @return a parsed double if in range, inclusive, includes try-catch
    */
-  public double getsNum(double min, double max) {
-    boolean badInput = true;
-    double x = 0;
+  public double getsNum(String prompt, double min, double max) {
+    double x = max + 1;
+    
+    boolean badInput;
     do {
+      badInput = false;
+      print(prompt);
+      str = gets();
       try {
-        print("Please enter a number between " + min + " and " + max + ":");
-        str = gets();
-        x = (Double.parseDouble(str));
-        badInput = false;
+        x = (Double.parseDouble(str));    
       } catch (NumberFormatException ex) {
+        badInput = true;
         println("ERROR: " + ex.getMessage() + "\n");
       }
-    } while (badInput && (x <= max && x >= min));
+    } while (badInput || x > max || x < min);
+ 
     return x;
   }
 

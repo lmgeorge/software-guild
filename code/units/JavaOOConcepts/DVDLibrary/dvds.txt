@@ -1,3 +1,3 @@
-title3::6000::PG::director::studio::::note 1: stuff::note 2: things
-title::2001::R::director::studio::::note 1: stuff::note 2: things
-The Dark Crystal::1982::PG::Jim Henson::Jim Henson Productions::::Note 1: great dark fantasy movie::Note 2: Probably not best for young children
+The Matrix::2001::R::director::studio::things::Keanu Reeves tries to have emotions
+title3::6000::PG::director::studio::stuff::things
+The Dark Crystal::1982::PG::Jim Henson::Jim Henson Productions::great dark fantasy movie::Probably not best for young children

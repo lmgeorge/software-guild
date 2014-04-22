@@ -79,14 +79,14 @@ private ArrayList<String> notes = new ArrayList<>();
 
   public void setNote(String note, int counter) { 
     try{
-    notes.add("Note " + counter + ": " + note);
+    notes.add(note);
     } catch (NullPointerException ex){
       c.println("ERROR: " + ex.getMessage());
     }
   }
   public void setNote(String note) {
     try{
-    notes.add("Note: " + note);
+    notes.add(note);
     } catch (NullPointerException ex){
       c.println("ERROR: " + ex.getMessage());
     }
