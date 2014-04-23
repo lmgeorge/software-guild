@@ -5,6 +5,8 @@
  */
 package tictactoe;
 
+import com.swcguild.console.ConsoleIO;
+import com.swcguild.console.ConsoleIOImpl;
 import java.util.Scanner;
 
 /**
@@ -12,7 +14,7 @@ import java.util.Scanner;
  * @author lmgeorge <lauren.george@live.com>
  */
 public class TicTacToe {
-
+  ConsoleIO c = new ConsoleIOImpl();
   private static char[][] board = new char[3][3];
 
   /**

@@ -5,9 +5,6 @@
  */
 package serverlookup;
 
-import java.time.LocalDate;
-import java.time.Period;
-
 /**
  *
  * @author apprentice
@@ -19,7 +16,7 @@ public class Server {
   private String make = "Unknown";
   private String ram = "unknown";
   private String processors = "unknown";
-  private LocalDate purchaseDate;
+
 
   public String getName() {
     return name;
@@ -61,16 +58,4 @@ public class Server {
     this.processors = processors;
   }
 
-  public LocalDate getPurchaseDate() {
-    return purchaseDate;
-  }
-
-  public void setPurchaseDate(LocalDate purchaseDate) {
-    this.purchaseDate = purchaseDate;
-  }
-  
-  public long getServerAge(){
-    Period p = purchaseDate.until(LocalDate.now());
-    return p.getYears();
-  }
 }

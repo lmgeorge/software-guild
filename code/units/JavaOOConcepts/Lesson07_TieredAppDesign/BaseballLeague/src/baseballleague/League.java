@@ -13,7 +13,6 @@ import java.util.HashMap;
  */
 public class League {
   HashMap<String,Team> teams = new HashMap<>();
-  ConsoleIO c = new ConsoleIO();
 
   public Team addTeam(String teamName) {
     Team team = new Team();

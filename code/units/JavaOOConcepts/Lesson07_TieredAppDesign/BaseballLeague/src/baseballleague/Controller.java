@@ -5,13 +5,20 @@
  */
 package baseballleague;
 
+import com.swcguild.console.ConsoleIO;
+import com.swcguild.console.ConsoleIOImpl;
+
+
+
+
+
 /**
  *
  * @author lmgeorge <lauren.george@live.com>
  */
 public class Controller {
 
-  ConsoleIO c = new ConsoleIO();
+  ConsoleIO c = new ConsoleIOImpl();
   League league = new League();
 
   public void playBall() {

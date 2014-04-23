@@ -48,6 +48,7 @@ public class ConsoleIOImpl implements ConsoleIO {
    *
    * Includes a prompt for to enter a number within a certain range print to the console
    *
+   * @param prompt
    * @param min inclusive
    * @param max inclusive
    * @return a parsed integer if in range, inclusive, includes try-catch
@@ -189,6 +190,7 @@ public class ConsoleIOImpl implements ConsoleIO {
    *
    * Includes a prompt for to enter a number within a certain range print to the console
    *
+   * @param prompt
    * @param min inclusive
    * @param max inclusive
    * @return a parsed double if in range, inclusive, includes try-catch
@@ -306,12 +308,6 @@ public class ConsoleIOImpl implements ConsoleIO {
     return x;
   }
   
-  
-  
-  
-  
-  
-  
   //printing methods
   public void println(String str) {
     System.out.println(str);
@@ -372,9 +368,10 @@ public class ConsoleIOImpl implements ConsoleIO {
         word += delimiter + (1 + i) + ". " + aryL.get(i);
       }
     } else {
-      for (String aryL1 : aryL) {
-        word += delimiter + aryL1;
-      }
+      word = aryL.stream()
+        .map((aryL1) -> delimiter + aryL1)
+        .reduce(word,
+        String::concat);
     }
     return word;
   }
