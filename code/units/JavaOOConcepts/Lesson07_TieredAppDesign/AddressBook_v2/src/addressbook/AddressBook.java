@@ -19,9 +19,9 @@ public interface AddressBook {
   public List<Address> getByCity(String city);
   public Map<String, List<Address>> getByState(String state);
   public List<Address> getByZipcode(String zipcode);
-  public void loadAddressBook();
-  public void writeAddressBook();
+  public void loadAddressBook(String fileName);
+  public void writeAddressBook(String fileName);
   public int count();
   public void add(Address address);
-  public void remove(int index);
+  public void remove(Address address);
 }

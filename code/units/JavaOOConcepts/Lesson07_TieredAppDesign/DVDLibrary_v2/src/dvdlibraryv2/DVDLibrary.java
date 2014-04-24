@@ -32,4 +32,5 @@ public interface DVDLibrary {
   public String toStringWithIndex(ArrayList<String> al, String delimiter, int start, String del2);
   public List<Dvd> getAll();
   public List<Dvd> getSinceYear(int year);
+  public List<Dvd> getByKeyword(String keyword);
 }

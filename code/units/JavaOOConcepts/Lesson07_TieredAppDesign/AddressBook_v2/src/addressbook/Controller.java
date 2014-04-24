@@ -8,6 +8,7 @@ package addressbook;
 
 import com.swcguild.console.ConsoleIO;
 import com.swcguild.console.ConsoleIOImpl;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,26 +17,27 @@ import java.util.List;
  */
 public class Controller {
 
-  private ConsoleIO cio = new ConsoleIOImpl();
-  private AddressBook book = new AddressBookImpl();
+  private final ConsoleIO cio = new ConsoleIOImpl();
+  private final AddressBook book = new AddressBookImpl();
 
   public void runAddressBook() {
-    book.loadAddressBook();
+    book.loadAddressBook(cio.gets("Please enter a file to open: "));
 
     menu();
 
   }
 
   private void menu() {
-    int selection = 0;
+    int selection;
     cio.println("\nMain Menu:");
     cio.println("\n\t1.Add Address"
       + "\n\t2.Delete Address"
       + "\n\t3.Find Address"
       + "\n\t4.List Address Count"
       + "\n\t5.List All Addresses"
-      + "\n\t6.Exit\n");
-    selection = cio.getsNum("Please select an operation: ", 1, 6);
+      + "\n\t0.Exit\n");
+
+    selection = cio.getsNum("Please select an operation: ", 0, 5);
     cio.println();
 
     switch (selection) {
@@ -49,9 +51,9 @@ public class Controller {
         delete();
         menu();
         break;
-      case 3: 
+      case 3:
         cio.println("FIND ADDRESS:\n");
-        find();
+        findBy();
         menu();
         break;
       case 4:
@@ -59,15 +61,14 @@ public class Controller {
         menu();
         break;
       case 5:
-        displayAll();
+        displayAll(book.getAllAddresses());
         menu();
         break;
-      case 6:
-        break;
-      default:
+      case 0:
+        cio.println("\nSaved. Thank you!");
         break;
     }
-  } 
+  }
 
   private void addAddress() {
     Address newAddress = new Address();
@@ -80,80 +81,100 @@ public class Controller {
     newAddress.setZip(cio.gets("\tZIP code: "));
     book.add(newAddress);
 
-    book.writeAddressBook();
+    book.writeAddressBook(cio.gets("\nPlease enter file to save to: "));
 
   }
 
-  private void find() {
-    
-    String record = cio.gets("Please enter a last name: ");
-    List<Address> temp;
-    try {
-      temp = book.getByLastName(record);
+  private List<Address> findBy() {
+    List<Address> list = new ArrayList<>();
+    int choice = cio.getsNum(
+      "\n\t1. Search by Last Name"
+      + "\n\t2. Search by City"
+      + "\n\t3. Search by State"
+      + "\n\t4. Search by Zipcode"
+      + "\n\t0. Main menu"
+      + "\n\nPlease enter your choice: ", 0, 4);
+    String search;
+    switch (choice) {
+      case 1:
+        search = cio.gets("\n\tSEARCH BY LAST NAME"
+          + "\n\nPlease enter your choice: ");
+        list = book.getByLastName(search);
+        displayAll(list);
+        break;
+      case 2:
+        search = cio.gets("\n\nSEARCH BY CITY"
+          + "\n\nPlease enter your choice: ");
+        list = book.getByCity(search);
+        displayAll(list);
+        break;
+      case 3:
+        search = cio.gets("\n\nSEARCH BY STATE"
+          + "\n\nPlease enter your choice (ex. New York -> NY): ");
+        list = getByState(search);
+        break;
+      case 4:
+        search = cio.gets("\n\nSEARCH BY ZIPCODE"
+          + "\n\nPlease enter your choice: ");
+        list = book.getByZipcode(search);
+        displayAll(list);
+        break;
+      case 0:
+        menu();
+        break;
+    }
+    return list;
+  }
 
-      temp
+  private List<Address> getByState(String state) {
+    List<Address> allMatches = new ArrayList<>();
+    book.getByState(state)
+      .values()
+      .stream()
+      .forEach(list -> {
+        list
         .stream()
         .forEach(a -> {
-          cio.println("\nFirst Name: " + a.getFirstName());
-          cio.println("Last Name: " + a.getLastName());
-          cio.println("Street: " + a.getStreet());
-          cio.println("City: " + a.getCity());
-          cio.println("State: " + a.getState());
-          cio.println("Zipcode: " + a.getZip());
-          cio.println();
+          allMatches.add(a);
         });
-
-    } catch (NullPointerException np) {
-      cio.println("ERROR: " + np.getMessage());
-    }
+      });
+    displayAll(allMatches);
+    return allMatches;
   }
 
-  private void displayAll() {
-    book.getAllAddresses()
+  private void displayAll(List<Address> list) {
+    list
       .stream()
       .forEach(a -> {
-        cio.println("First Name: " + a.getFirstName());
-        cio.println("Last Name: " + a.getLastName());
-        cio.println("Street: " + a.getStreet());
-        cio.println("City: " + a.getCity());
-        cio.println("State: " + a.getState());
-        cio.println("Zipcode: " + a.getZip());
+        cio.println("\nAddress " + (list.indexOf(a) + 1));
+        cio.println("\tFirst Name: " + a.getFirstName());
+        cio.println("\tLast Name: " + a.getLastName());
+        cio.println("\tStreet: " + a.getStreet());
+        cio.println("\tCity: " + a.getCity());
+        cio.println("\tState: " + a.getState());
+        cio.println("\tZipcode: " + a.getZip());
         cio.println("==========================\n");
       });
-
   }
 
   private void delete() {
     Address delete;
-    
-    String recordKey = cio.gets("Please enter a last name: ");
-    cio.println();
     List<Address> temp;
-
-    temp = book.getByLastName(recordKey);
+    temp = findBy();
     try {
-      temp
-        .stream()
-        .forEach(a -> {
-          cio.println("Address " + (temp.indexOf(a) + 1) + ":");
-          cio.println("\tFirst Name: " + a.getFirstName());
-          cio.println("\tLast Name: " + a.getLastName());
-          cio.println("\tStreet: " + a.getStreet());
-          cio.println("\tCity: " + a.getCity());
-          cio.println("\tState: " + a.getState());
-          cio.println("\tZipcode: " + a.getZip());
-          cio.println();
-        });
-      int choice = cio.getsNum("Enter selection: ", 0, temp.size());
-      delete = temp.get(choice-1);
+      if (temp.size() > 1) {
+        int choice = cio.getsNum("Enter selection: ", 0, temp.size());
+        delete = temp.get(choice - 1);
+      } else {
+        delete = temp.get(0);
+      }
 
       String answer = cio.gets("Are you sure? (y/n) ");
       if (answer.equalsIgnoreCase("y")) {
-        int index = book.getAllAddresses().indexOf(delete);
-        book.remove(index);
+        book.remove(delete);
       }
 
-      book.writeAddressBook();
+      book.writeAddressBook(cio.gets("\nPlease enter file to save to: "));
     } catch (NullPointerException np) {
       cio.println("ERROR: " + np.getMessage());
     }

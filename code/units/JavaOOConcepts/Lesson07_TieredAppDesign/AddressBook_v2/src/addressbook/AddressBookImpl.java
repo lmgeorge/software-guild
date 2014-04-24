@@ -77,15 +77,15 @@ public class AddressBookImpl implements AddressBook {
 
   }
 
-  public void remove(int index) {
-    list.remove(index);
+  public void remove(Address address) {
+    list.remove(address);
   }
 
-  public void writeAddressBook() {
+  public void writeAddressBook(String fileName) {
 
     PrintWriter out;
     try {
-      out = new PrintWriter(new FileWriter(BOOK_FILE));
+      out = new PrintWriter(new FileWriter(fileName));
 
       list
         .stream()
@@ -106,9 +106,9 @@ public class AddressBookImpl implements AddressBook {
       }
   }
 
-  public void loadAddressBook() {
+  public void loadAddressBook(String fileName) {
     try {
-      Scanner reader = new Scanner(new BufferedReader(new FileReader(BOOK_FILE)));
+      Scanner reader = new Scanner(new BufferedReader(new FileReader(fileName)));
       String currentLine;
       String[] addressarray;
 

@@ -124,6 +124,7 @@ public class DVDLibraryImpl implements DVDLibrary {
       .filter(d -> d.getTitle().equalsIgnoreCase(dvdTitle))
       .collect(Collectors.toList());
   }
+
   public List<Dvd> getByDirector(String director) {
     return dvdLib
       .stream()
@@ -203,11 +204,20 @@ public class DVDLibraryImpl implements DVDLibrary {
       .mapToInt(Dvd::getNotesSize)
       .average().getAsDouble();
   }
-  
-  public List<Dvd> getSinceYear(int year){
+
+  public List<Dvd> getSinceYear(int year) {
     return dvdLib
       .stream()
       .filter(d -> d.getYear() >= year)
       .collect(Collectors.toList());
+  }
+
+  public List<Dvd> getByKeyword(String keyword) {
+    List<Dvd> allMatches = new ArrayList<>();
+    allMatches.addAll(getByTitle(keyword));
+    allMatches.addAll(getByMpaa(keyword));
+    allMatches.addAll(getByStudio(keyword));
+    allMatches.addAll(getByDirector(keyword)); 
+    return allMatches;
   }
 }
