@@ -101,12 +101,9 @@ public class AddressBookImpl implements AddressBook {
           out.flush();
         });
       out.close();
-    } catch (IOException ex) {
+    } catch (IOException | NullPointerException ex) {
       Logger.getLogger(AddressBookImpl.class.getName()).log(Level.FINER, null, ex);
-    } catch (NullPointerException ex) {
-      Logger.getLogger(AddressBookImpl.class.getName()).log(Level.FINEST, null, ex);
-    }
-
+      }
   }
 
   public void loadAddressBook() {

@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dvdlibrary;
+package dvdlibraryv2;
 
-
-import java.io.IOException;
+import com.swcguild.console.ConsoleIO;
+import com.swcguild.console.ConsoleIOImpl;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
 
 /**
  *
@@ -17,9 +19,11 @@ import java.util.logging.Logger;
  */
 public class DvdLibController {
 
-  private final ConsoleIO c = new ConsoleIO();
-  private DVDLibrary dvds = new DVDLibrary();
-
+  private final ConsoleIO c = new ConsoleIOImpl();
+  private DVDLibrary dvds = new DVDLibraryImpl();
+  private NumberFormat n;
+  private DecimalFormat d = new DecimalFormat("#.##");
+  
   public void run() throws Exception {
 
     dvds.loadDvds("dvds.txt");
@@ -38,8 +42,9 @@ public class DvdLibController {
       + "\n\t3. Edit a DVD record"
       + "\n\t4. Find a DVD"
       + "\n\t5. List all DVDs"
-      + "\n\t6. Exit"
-      + "\n\nPlease enter your choice: ");
+      + "\n\t6. Library Stats"
+      + "\n\t7. Exit"
+      + "\n\nPlease enter your choice: ", 1, 7);
 
     switch (ui) {
       case 1:
@@ -50,31 +55,34 @@ public class DvdLibController {
       case 2:
         c.println("\nDELETE DVD:\n");
         key = c.gets("Please enter a dvd title: ");
-        deleteDvd(key);
+        //deleteDvd(key);
         menu();
         break;
       case 3:
         c.println("\nEDIT DVD:\n");
         key = c.gets("Please enter a dvd title: ");
-        edit(key);
+        //edit(key);
         menu();
         break;
       case 4:
         c.println("\nFIND DVD:\n");
-        key = c.gets("Please enter a dvd title: ");
-        find(key);
+        key = c.gets("Please enter a keyword: ");
+        findBy(key);
         menu();
         break;
       case 5:
         c.println("\nLIST ALL DVDs:\n");
-        listAll();
+        listAll(dvds.getAll());
         menu();
         break;
       case 6:
+        c.println("\nLIBRARY STATS:");
+        getStats();
+        menu();
+        break;
+      case 7:
         c.println("\nEXIT:");
         c.println("Saving....Thank you!\n");
-        break;
-      default:
         break;
     }
 
@@ -98,35 +106,24 @@ public class DvdLibController {
       c.println();
     } while (more.equalsIgnoreCase("y"));
 
-    try {
-      dvds.writeDvdLib("dvds.txt");
-    } catch (IOException ex) {
-      Logger.getLogger(DvdLibController.class.getName()).log(Level.SEVERE, null, ex);
-    }
+    dvds.writeDvdLib("dvds.txt");
 
   }
 
-  public void deleteDvd(String key) {
-    try {
-      find(key);
-
-      String confirm = c.gets("Delete " + key + " (y/n)? ");
-      if (confirm.equalsIgnoreCase("y")) {
-        dvds.remove(key);
-        c.println("DVD removed successfully.");
-      } else {
-        c.println("Operation successfully stopped.");
-      }
-
-      dvds.writeDvdLib("dvds.txt");
-    } catch (IOException ex) {
-      Logger.getLogger(DvdLibController.class.getName()).log(Level.SEVERE, null, ex);
+  public void deleteDvd(Dvd dvd) {
+    Dvd temp = find(dvd);
+    String confirm = c.gets("Delete " + key + " (y/n)? ");
+    if (confirm.equalsIgnoreCase("y")) {
+      dvds.remove(key);
+      c.println("DVD removed successfully.");
+    } else {
+      c.println("Operation successfully stopped.");
     }
+    dvds.writeDvdLib("dvds.txt");
 
   }
 
   public void edit(String key) {
-    //what dvd would you like to edit
     String confirm;
     find(key);
     try {
@@ -148,50 +145,111 @@ public class DvdLibController {
     } catch (NullPointerException ex) {
       c.println("Error: no such record exists. Msg = " + ex.getMessage() + "\n");
     }
-    //save? 
-    try {
-      dvds.writeDvdLib("dvds.txt");
-    } catch (IOException ex) {
-      Logger.getLogger(DvdLibController.class.getName()).log(Level.SEVERE, null, ex);
+    dvds.writeDvdLib("dvds.txt");
+
+  }
+
+  public void findBy(String keyword) {
+    int choice = c.getsNum("\n\t1. Keyword search"
+      + "\n\t2. Search by Title"
+      + "\n\t3. Search by MPAA Rating"
+      + "\n\t4. Search by Director"
+      + "\n\t5. Search by Studio"
+      + "\n\t6. Search since Release Year"
+      + "\n\t7. List Newest Films"
+      + "\n\t8. List Oldest Films"
+      + "\n\t9. Main menu"
+      + "\n\nPlease enter your choice: ", 1, 9);
+    String search;
+    switch (choice) {
+      case 1:
+        c.println("\n\nKEYWORD SEARCH");
+        searchByKeyword();
+        break;
+      case 2:
+        search = c.gets("\n\nSEARCH BY TITLE"
+          + "\n\tPlease enter your choice: ");
+        listAll(dvds.getByTitle(search));
+        break;
+      case 3:
+        search = c.gets("\n\nSEARCH BY MPAA RATING"
+          + "\n\tPlease enter your choice: ");
+        listAll(dvds.getByMpaa(search));
+        break;
+      case 4:
+        search = c.gets("\n\nSEARCH BY DIRECTOR"
+          + "\n\tPlease enter your choice: ");
+        listByDirector(search);
+        break;
+      case 5:
+        search = c.gets("\n\nSEARCH BY STUDIO"
+          + "\n\tPlease enter your choice: ");
+        listAll(dvds.getByStudio(search));
+        break;
+      case 6:
+        choice = c.getsNum("\n\nSEARCH SINCE YEAR"
+          + "\n\tPlease enter your choice: ", 1850, LocalDate.now().getYear());
+        listAll(dvds.getSinceYear(choice));
+        break;
+      case 7:
+        c.println("\n\nLIST NEWEST FILMS");
+        listAll(dvds.getNewest());
+        break;
+      case 8:
+        c.println("\n\nLIST NEWEST FILMS");
+        listAll(dvds.getOldest());
+        break;
+      case 9:
+        menu();
+        break;
     }
 
   }
 
-  public void find(String key) {
-    try {
-      Dvd dvd = dvds.getDvd(key);
-      c.println(
-        "\nTitle: " + dvd.getTitle() + "\n"
-        + "Release Year: " + dvd.getYear() + "\n"
-        + "MPAA Rating: " + dvd.getMpaaRating() + "\n"
-        + "Director: " + dvd.getDirector() + "\n"
-        + "Studio: " + dvd.getStudio() + "\n"
-        + "Notes:"
-        + c.toString(dvd.getNotes(), "\n\t", true)
-        + "\n\n"
-      );
-    } catch (NullPointerException ex) {
-      c.println("Error: no such record exists. Msg = " + ex.getMessage() + "\n");
-    }
+  public List<Dvd> searchByKeyword() {
+    String keyword = c.gets("Please enter keyword: ");
+    List<Dvd> allMatches = new ArrayList<>();
+    allMatches.addAll(dvds.getByTitle(keyword));
+    allMatches.addAll(dvds.getByMpaa(keyword));
+    allMatches.addAll(dvds.getByStudio(keyword));
+    allMatches.addAll(dvds.getByDirector(keyword));
+    listAll(allMatches);
+    return allMatches;
   }
 
-  public void listAll() {
-    String[] keys = dvds.getKeys();
+  public void listByDirector(String keyword) {
+    dvds.getByDirectorSorted(keyword).values()
+      .stream()
+      .forEach(list -> {
+        listAll(list);
+      });
+  }
 
-    for (String key : keys) {
-      Dvd dvd = dvds.getDvd(key);
-      c.print(
-        "Title: " + dvd.getTitle() + "\n"
-        + "Release Year: " + dvd.getYear() + "\n"
-        + "MPAA Rating: " + dvd.getMpaaRating() + "\n"
-        + "Director: " + dvd.getDirector() + "\n"
-        + "Studio: " + dvd.getStudio() + "\n"
-        + "Notes:\t"
-        + c.toString(dvd.getNotes(), "\n\t", true)
-        + "\n================================================================\n\n"
-      );
-    }
+  public void listAll(List<Dvd> dvdList) {
+    dvdList
+      .stream()
+      .forEach(dvd -> {
+        c.print(
+          "Film " + (dvdList.indexOf(dvd) + 1)
+          + "\n\tTitle: " + dvd.getTitle()
+          + "\n\ttRelease Year: " + dvd.getYear()
+          + "\n\tMPAA Rating: " + dvd.getMpaaRating()
+          + "\n\tDirector: " + dvd.getDirector()
+          + "\n\tStudio: " + dvd.getStudio()
+          + "\n\tNotes:"
+          + dvds.toStringWithIndex(dvd.getNotes(), "\n\t  ", 1, ". ")
+          + "\n================================================================\n\n"
+        );
+      });
 
+  }
+
+  public void getStats() {
+    c.println(
+      "\n\tQuantity: " + dvds.numDvds()
+      + "\n\tAverage age: " + d.format(dvds.getAvgAge())
+      + "\n\tAverage Number of Notes: " + d.format(dvds.getAvgNumNotes())
+      + "\n");
   }
 
   public void notesEditor(String key) {
@@ -248,17 +306,23 @@ public class DvdLibController {
     String answer;
     ArrayList<String> notes = dvd.getNotes();
     do {
-      c.println("Notes:" + c.toString(dvd.getNotes(), "\n\t", true));
+      c.println("Notes:" + dvds.toStringWithIndex(notes, "\n\t", 1, ". "));
+
       choice = c.getsNum("Enter the note number you want to delete:\n ");
+
       c.println(notes.get(choice - 1));
+
       String confirm = c.gets("\nAre you sure you want to delete this note (y/n?");
+
       if (confirm.contains("y")) {
         notes.remove(choice - 1);
       } else {
         c.println("Operation successfully cancelled.");
       }
+
       answer = c.gets("Would you like to delete another note? (y/n):  ");
       c.println();
+
     } while (answer.equalsIgnoreCase("y"));
     return notes;
   }

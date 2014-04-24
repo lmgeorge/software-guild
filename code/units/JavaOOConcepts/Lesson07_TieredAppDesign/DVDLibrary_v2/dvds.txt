@@ -1,0 +1,7 @@
+The Matrix::2001::R::director::studio::things::Keanu Reeves tries to have emotions
+The Hobbit::2012::PG-13::Peter Jackson::studio::long
+title3::2003::PG::director::studio::stuff::things
+The Dark Crystal::1982::PG::Jim Henson::Jim Henson Productions::great dark fantasy movie::Probably not best for young children
+The Muppets::1985::G::Jim Henson::Jim Henson Productions
+Fellowship of the Ring::2008::R::Peter Jackson::LionsGate::good movie::First of three
+Twin Towers::2010::R::Peter jackson::LionsGate::second moview of the lord of the rings film trilogy

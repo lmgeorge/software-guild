@@ -6,7 +6,6 @@
 package dvdlibrary;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Scanner;
 
 /**
@@ -28,15 +27,6 @@ public class ConsoleIO {
     return str;
   }
 
-  /**
-   * Equivalent to Scanner.next()
-   *
-   * @return the user's input as a string
-   */
-  public String get() {
-    str = ui.next();
-    return str;
-  }
 
   /**
    * Equivalent to Scanner.nextLine()
@@ -50,50 +40,15 @@ public class ConsoleIO {
     return str;
   }
 
-  /**
-   * Equivalent to Scanner.next()
-   *
-   * @param prompt prints the prompt to the user = System.out.print();
-   * @return the user's input as a string
-   */
-  public String get(String prompt) {
-    print(prompt);
-    str = get();
-    return str;
-  }
 
   //integer methods
-  /**
-   * Equivalent to Scanner.nextLine() parsed using Integer.parseInt();
-   *
-   * Includes a prompt for to enter a number within a certain range print to the console
-   *
-   * @param min inclusive
-   * @param max inclusive
-   * @return a parsed integer if in range, inclusive, includes try-catch
-   */
-  public int getsNum(int min, int max) {
-    int x = max + 1;
-    boolean badInput;
-    do {
-      badInput = false;
-
-      str = gets();
-      try {
-        x = (Integer.parseInt(str));
-      } catch (NumberFormatException ex) {
-        badInput = true;
-        println("ERROR: " + ex.getMessage() + "\n");
-      }
-    } while (badInput || x > max || x < min);
-    return x;
-  }
 
   /**
    * Equivalent to Scanner.nextLine() parsed using Integer.parseInt();
    *
    * Includes a prompt for to enter a number within a certain range print to the console
    *
+   * @param prompt
    * @param min inclusive
    * @param max inclusive
    * @return a parsed integer if in range, inclusive, includes try-catch
@@ -149,48 +104,6 @@ public class ConsoleIO {
     do {
       try {
         str = gets();
-        x = (Integer.parseInt(str));
-        badInput = false;
-      } catch (NumberFormatException ex) {
-        println("ERROR: " + ex.getMessage() + "\n");
-      }
-    } while (badInput);
-    return x;
-  }
-
-  /**
-   * Equivalent to Scanner.nextInt();
-   *
-   * @param prompt for String to print to the console
-   * @return a parsed integer, includes try-catch
-   */
-  public int getNum(String prompt) {
-    int x = 0;
-    print(prompt);
-    boolean badInput = true;
-    do {
-      try {
-        str = get();
-        x = (Integer.parseInt(str));
-        badInput = false;
-      } catch (NumberFormatException ex) {
-        println("ERROR: " + ex.getMessage() + "\n");
-      }
-    } while (badInput);
-    return x;
-  }
-
-  /**
-   * Equivalent to Scanner.nextInt();
-   *
-   * @return a parsed integer, includes try-catch
-   */
-  public int getNum() {
-    int x = 0;
-    boolean badInput = true;
-    do {
-      try {
-        str = get();
         x = (Integer.parseInt(str));
         badInput = false;
       } catch (NumberFormatException ex) {
@@ -271,54 +184,13 @@ public class ConsoleIO {
     return x;
   }
 
-  /**
-   * Equivalent to Scanner.nextFloat();
-   *
-   * @param prompt for String to print to the console
-   * @return a parsed float, includes try-catch
-   */
-  public float getFloat(String prompt) {
-    float x = 0;
-    print(prompt);
-    boolean badInput = true;
-    do {
-      try {
-        str = get();
-        x = (Float.parseFloat(str));
-        badInput = false;
-      } catch (NumberFormatException ex) {
-        println("ERROR: " + ex.getMessage() + "\n");
-      }
-    } while (badInput);
-    return x;
-  }
-
-  /**
-   * Equivalent to Scanner.nextFloat();
-   *
-   * @return a parsed float, includes try-catch
-   */
-  public float getFloat() {
-    boolean badInput = true;
-    float x = 0;
-    do {
-      try {
-        str = get();
-        x = (Float.parseFloat(str));
-        badInput = false;
-      } catch (NumberFormatException ex) {
-        println("ERROR: " + ex.getMessage() + "\n");
-      }
-    } while (badInput);
-    return x;
-  }
-
   //Double methods
   /**
    * Equivalent to Scanner.nextLine() parsed using Double.parseDouble();
    *
    * Includes a prompt for to enter a number within a certain range print to the console
    *
+   * @param prompt
    * @param min inclusive
    * @param max inclusive
    * @return a parsed double if in range, inclusive, includes try-catch
@@ -384,20 +256,50 @@ public class ConsoleIO {
     return x;
   }
 
+    //Long methods
   /**
-   * Equivalent to Scanner.nextDouble();
+   * Equivalent to Scanner.nextLine() parsed using Long.parseLong();
    *
-   * @param prompt for String to print to the console
-   * @return a parsed double, includes try-catch
+   * Includes a prompt for to enter a number within a certain range print to the console
+   *
+   * @param prompt A message to print to the user;
+   * @param min inclusive
+   * @param max inclusive
+   * @return a parsed long if in range, inclusive, includes try-catch
    */
-  public double getDouble(String prompt) {
-    double x = 0;
+  public long getsNum(String prompt, long min, long max) {
+    long x = max + 1;
+
+    boolean badInput;
+    do {
+      badInput = false;
+      print(prompt);
+      str = gets();
+      try {
+        x = (Long.parseLong(str));
+      } catch (NumberFormatException ex) {
+        badInput = true;
+        println("ERROR: " + ex.getMessage() + "\n");
+      }
+    } while (badInput || x > max || x < min);
+
+    return x;
+  }
+
+  /**
+   * Equivalent to Scanner.nextLine() parsed using Long.parseLong();
+   *
+   * @param prompt prints the prompt to the user = System.out.print();
+   * @return a parsed long, includes try-catch
+   */
+  public long getsLong(String prompt) {
+    long x = 0;
     print(prompt);
     boolean badInput = true;
     do {
       try {
-        str = get();
-        x = (Double.parseDouble(str));
+        str = gets();
+        x = (Long.parseLong(str));
         badInput = false;
       } catch (NumberFormatException ex) {
         println("ERROR: " + ex.getMessage() + "\n");
@@ -405,27 +307,7 @@ public class ConsoleIO {
     } while (badInput);
     return x;
   }
-
-  /**
-   * Equivalent to Scanner.nextDouble();
-   *
-   * @return a parsed double, includes try-catch
-   */
-  public double getDouble() {
-    boolean badInput = true;
-    double x = 0;
-    do {
-      try {
-        str = get();
-        x = (Double.parseDouble(str));
-        badInput = false;
-      } catch (NumberFormatException ex) {
-        println("ERROR: " + ex.getMessage() + "\n");
-      }
-    } while (badInput);
-    return x;
-  }
-
+  
   //printing methods
   public void println(String str) {
     System.out.println(str);
@@ -486,9 +368,10 @@ public class ConsoleIO {
         word += delimiter + (1 + i) + ". " + aryL.get(i);
       }
     } else {
-      for (String aryL1 : aryL) {
-        word += delimiter + aryL1;
-      }
+      word = aryL.stream()
+        .map((aryL1) -> delimiter + aryL1)
+        .reduce(word,
+        String::concat);
     }
     return word;
   }
