@@ -3,5 +3,7 @@ The Hobbit::2012::PG-13::Peter Jackson::studio::long
 title3::2003::PG::director::studio::stuff::things
 The Dark Crystal::1982::PG::Jim Henson::Jim Henson Productions::great dark fantasy movie::Probably not best for young children
 The Muppets::1985::G::Jim Henson::Jim Henson Productions
-Fellowship of the Ring::2008::R::Peter Jackson::LionsGate::good movie::First of three
-Twin Towers::2010::R::Peter jackson::LionsGate::second moview of the lord of the rings film trilogy
+Fellowship of the Ring::2008::R::Peter Jackson::Lions Gate::good movie::First of three
+Twin Towers::2010::R::Peter Jackson::Lions Gate::second moview of the lord of the rings film trilogy
+Return of the King, Part 1::2013::R::Peter Jackson::Lions Gate::a 3 hour long part 1, enough said
+The Lion King::1994::G::Roger Allers::Walt Disney Pictures::Jeremy Irons is amazing as Scar

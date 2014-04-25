@@ -7,8 +7,6 @@ package dvdlibraryv2;
 
 import com.swcguild.console.ConsoleIO;
 import com.swcguild.console.ConsoleIOImpl;
-import java.time.LocalDate;
-import static java.time.LocalDate.now;
 import java.time.chrono.IsoChronology;
 import java.util.ArrayList;
 
@@ -21,31 +19,10 @@ public class Dvd {
   private final ConsoleIO c = new ConsoleIOImpl();
   private String title;
   private int year;
-  private int age;
   private String mpaaRating;
   private String director;
   private String studio;
   private ArrayList<String> notes = new ArrayList<>();
-
-  public enum mpaaRating {
-
-    G { public String toString() {
-          return "G";
-        }
-      },
-    PG{ public String toString() {
-          return "PG";
-        }
-      },
-    PG_13{ public String toString() {
-          return "PG-13";
-        }
-      },
-    R{ public String toString() {
-          return "R";
-        }
-      };
-  }
 
   public String getTitle() {
     return title;
@@ -123,7 +100,10 @@ public class Dvd {
   }
 
   public int getAge() {
-   return IsoChronology.INSTANCE.date(year, 1, 1).until(IsoChronology.INSTANCE.dateNow()).getYears();
+   return IsoChronology.INSTANCE
+     .date(year, 1, 1)
+     .until(IsoChronology.INSTANCE.dateNow())
+     .getYears();
   }
 
 }

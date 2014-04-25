@@ -76,19 +76,42 @@ public class DVDLibraryImpl implements DVDLibrary {
       dvdLib
         .stream()
         .forEach(dvd -> {
-          file.print(
+          file.println(
             dvd.getTitle() + DELIMITER
             + dvd.getYear() + DELIMITER
             + dvd.getMpaaRating() + DELIMITER
             + dvd.getDirector() + DELIMITER
-            + dvd.getStudio());
-          file.print(toString(dvd.getNotes(), DELIMITER) + "\n");
+            + dvd.getStudio()
+            + toString(dvd.getNotes(), DELIMITER));
           file.flush();
         });
       file.close();
     } catch (IOException | NullPointerException ex) {
       c.println("Error: " + ex.getMessage());
     }
+  }
+
+  public String toStringWithIndex(Dvd dvd) {
+    return "Film " + (dvdLib.indexOf(dvd) + 1)
+      + "\n\tTitle: " + dvd.getTitle()
+      + "\n\ttRelease Year: " + dvd.getYear()
+      + "\n\tMPAA Rating: " + dvd.getMpaaRating()
+      + "\n\tDirector: " + dvd.getDirector()
+      + "\n\tStudio: " + dvd.getStudio()
+      + "\n\tNotes:"
+      + toStringWithIndex(dvd.getNotes(), "\n\t  ", 1, ". ")
+      + "\n================================================================\n\n";
+  }
+
+  public String toString(Dvd dvd) {
+    return "\n\tTitle: " + dvd.getTitle()
+      + "\n\ttRelease Year: " + dvd.getYear()
+      + "\n\tMPAA Rating: " + dvd.getMpaaRating()
+      + "\n\tDirector: " + dvd.getDirector()
+      + "\n\tStudio: " + dvd.getStudio()
+      + "\n\tNotes:"
+      + toStringWithIndex(dvd.getNotes(), "\n\t  ", 1, ". ")
+      + "\n================================================================\n\n";
   }
 
   public String toString(ArrayList<String> al, String delimiter) {
@@ -125,13 +148,6 @@ public class DVDLibraryImpl implements DVDLibrary {
       .collect(Collectors.toList());
   }
 
-  public List<Dvd> getByDirector(String director) {
-    return dvdLib
-      .stream()
-      .filter(d -> d.getDirector().contains(director))
-      .collect(Collectors.toList());
-  }
-
   public int numDvds() {
     return dvdLib.size();
   }
@@ -151,6 +167,22 @@ public class DVDLibraryImpl implements DVDLibrary {
       .filter(d -> d.getDirector().equalsIgnoreCase(director))
       .collect(Collectors.groupingBy(Dvd::getMpaaRating));
 
+  }
+
+  public List<Dvd> listByDirector(String keyword) {
+
+    List<Dvd> allMatches = new ArrayList<>();
+    getByDirectorSorted(keyword).values()
+      .stream()
+      .forEach(list -> {
+        list
+        .stream()
+        .forEach(a -> {
+          allMatches.add(a);
+        });
+      });
+
+    return allMatches;
   }
 
   @Override
@@ -217,7 +249,7 @@ public class DVDLibraryImpl implements DVDLibrary {
     allMatches.addAll(getByTitle(keyword));
     allMatches.addAll(getByMpaa(keyword));
     allMatches.addAll(getByStudio(keyword));
-    allMatches.addAll(getByDirector(keyword)); 
+    allMatches.addAll(listByDirector(keyword));
     return allMatches;
   }
 }
