@@ -16,7 +16,9 @@ public class Loops {
    * @param args the command line arguments
    */
   public static void main(String[] args) {
+    LoopsDrills l = new LoopsDrills();
     
+    l.altPairs("Chocolate");
   }
   
 }
