@@ -14,14 +14,15 @@ public class Order {
   private long orderNum;
   private String customerName;
   private String state;
-  private float taxRate;
-  private float costPerSqft;
-  private float materialCost;
-  private float laborCost;
-  private float totalTax;
-  private float totalCost;
+  private double taxRate;
+  private double costPerSqft;
+  private double materialCost;
+  private double laborCost;
+  private double laborCostPerSqft;
+  private double totalTax;
+  private double totalCost;
   private String productType;
-  private float area;
+  private double area;
 
   public long getOrderNum() {
     return orderNum;
@@ -47,51 +48,51 @@ public class Order {
     this.state = state;
   }
 
-  public float getTaxRate() {
+  public double getTaxRate() {
     return taxRate;
   }
 
-  public void setTaxRate(float taxRate) {
+  public void setTaxRate(double taxRate) {
     this.taxRate = taxRate;
   }
 
-  public float getCostPerSqft() {
+  public double getCostPerSqft() {
     return costPerSqft;
   }
 
-  public void setCostPerSqft(float costPerSqft) {
+  public void setCostPerSqft(double costPerSqft) {
     this.costPerSqft = costPerSqft;
   }
 
-  public float getMaterialCost() {
+  public double getMaterialCost() {
     return materialCost;
   }
 
-  public void setMaterialCost(float materialCost) {
+  public void setMaterialCost(double materialCost) {
     this.materialCost = materialCost;
   }
 
-  public float getLaborCost() {
+  public double getLaborCost() {
     return laborCost;
   }
 
-  public void setLaborCost(float laborCost) {
+  public void setLaborCost(double laborCost) {
     this.laborCost = laborCost;
   }
 
-  public float getTotalTax() {
+  public double getTotalTax() {
     return totalTax;
   }
 
-  public void setTotalTax(float totalTax) {
+  public void setTotalTax(double totalTax) {
     this.totalTax = totalTax;
   }
 
-  public float getTotalCost() {
+  public double getTotalCost() {
     return totalCost;
   }
 
-  public void setTotalCost(float totalCost) {
+  public void setTotalCost(double totalCost) {
     this.totalCost = totalCost;
   }
 
@@ -103,12 +104,20 @@ public class Order {
     this.productType = productType;
   }
 
-  public float getArea() {
+  public double getArea() {
     return area;
   }
 
-  public void setArea(float area) {
+  public void setArea(double area) {
     this.area = area;
+  }
+
+  public double getLaborCostPerSqft() {
+    return laborCostPerSqft;
+  }
+
+  public void setLaborCostPerSqft(double laborCostPerSqft) {
+    this.laborCostPerSqft = laborCostPerSqft;
   }
   
 }

@@ -130,7 +130,7 @@ public class DVDLibraryImplTest extends DVDLibraryImpl {
   public void testToString_ArrayList_String() {
   }
 
-  @Test
+@Test
   public void testToStringWithIndex_4args() {
   }
 
