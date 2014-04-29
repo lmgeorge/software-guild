@@ -11,23 +11,23 @@ package flooringmastery;
  * @author lmgeorge <lauren.george@live.com>
  */
 public class Product {
-  private float costPerSqft;
-  private float laborPerSqft;
+  private double costPerSqft;
+  private double laborPerSqft;
   private String name;
 
-  public float getCostPerSqft() {
+  public double getCostPerSqft() {
     return costPerSqft;
   }
 
-  public void setCostPerSqft(float costPerSqft) {
+  public void setCostPerSqft(double costPerSqft) {
     this.costPerSqft = costPerSqft;
   }
 
-  public float getLaborPerSqft() {
+  public double getLaborPerSqft() {
     return laborPerSqft;
   }
 
-  public void setLaborPerSqft(float laborPerSqft) {
+  public void setLaborPerSqft(double laborPerSqft) {
     this.laborPerSqft = laborPerSqft;
   }
 

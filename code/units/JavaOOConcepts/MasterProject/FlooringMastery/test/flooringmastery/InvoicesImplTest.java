@@ -22,9 +22,6 @@ import static org.junit.Assert.*;
  */
 public class InvoicesImplTest {
 
-  InvoicesInterface impl = new InvoicesImpl();
-  InvoicesInterface impl2 = new InvoicesImpl();
-
   public boolean compareOrder(Order order1, Order order2) {
     return order1.getCustomerName().equals(order2.getCustomerName())
       && order1.getState().equals(order2.getState())
@@ -61,9 +58,33 @@ public class InvoicesImplTest {
   @After
   public void tearDown() {
   }
-
+    @Test
+  public void testAdd() {
+    InvoicesInterface impl = new InvoicesImpl();
+    Order test = new Order();
+    test.setOrderNum(203);
+    test.setCustomerName("Dan Sass");
+    test.setState("OH");
+    test.setTaxRate(5.0);
+    test.setProductType("Tile");
+    test.setArea(500.0);
+    test.setCostPerSqft(5.50);
+    test.setLaborCostPerSqft(2.50);
+    test.setMaterialCost(6.0);
+    test.setLaborCost(30.0);
+    test.setTotalTax(500.0);
+    test.setTotalCost(100000.0); 
+    
+    impl.add(test, "04252014");
+    Order test2 = impl.getOrder("04252014", 203);
+    assertTrue(compareOrder(test, test2));
+    
+  }
+  
   @Test
   public void testWriteFile() throws Exception {
+    InvoicesInterface impl = new InvoicesImpl();
+    
     Order order1 = new Order();
     order1.setOrderNum(201);
     order1.setCustomerName("Hunter Gervelis");
@@ -102,41 +123,75 @@ public class InvoicesImplTest {
   }
 
   @Test
-  public void testGetByDate() throws Exception {
-    impl.loadFile("04282014");
-    assertTrue(compareOrder(
-      impl.getByDate("04282014").get(0),
-      impl.getByDate("04282014").get(1)));
+  public void testGetOrder() {
+    InvoicesInterface impl2 = new InvoicesImpl();
+    
+    Order order1 = new Order();
+    order1.setOrderNum(201);
+    order1.setCustomerName("Hunter Gervelis");
+    order1.setState("OH");
+    order1.setTaxRate(5.0);
+    order1.setProductType("hardwood");
+    order1.setArea(10000.0);
+    order1.setCostPerSqft(5.50);
+    order1.setLaborCostPerSqft(2.50);
+    order1.setMaterialCost(6.0);
+    order1.setLaborCost(30.0);
+    order1.setTotalTax(500.0);
+    order1.setTotalCost(1000.0);
 
+    Order order2 = new Order();
+
+    order2.setOrderNum(202);
+    order2.setCustomerName("Hunter Gervelis");
+    order2.setState("OH");
+    order2.setTaxRate(5.0);
+    order2.setProductType("hardwood");
+    order2.setArea(10000.0);
+    order2.setCostPerSqft(5.50);
+    order2.setLaborCostPerSqft(2.50);
+    order2.setMaterialCost(6.0);
+    order2.setLaborCost(30.0);
+    order2.setTotalTax(500.0);
+    order2.setTotalCost(1000.0); 
+
+    impl2.add(order1, "04282014");
+    impl2.add(order2, "04282014");
+
+    impl2.getOrder("04282014", 201);
+    impl2.getOrder("04282014", 202);
+
+    assertEquals(201, order1.getOrderNum());
+    assertTrue(compareOrder(order1, order2));
   }
-
-//  @Test
-//  public void testLoadFile() throws Exception {
-//    impl2.loadFile("04282014");
-//
-//    assertTrue(compareOrder(
-//      impl2.getByDate("04282014").get(0),
-//      impl2.getByDate("04282014").get(1)));
-//  }
+  
   @Test
-  public void testAdd() {
-  }
+  public void testLoadFile() throws Exception {
+    InvoicesInterface impl3 = new InvoicesImpl();
+    impl3.loadFile("04282014");
+
+    assertTrue(compareOrder(
+      impl3.getOrder("04282014", 201),
+      impl3.getOrder("04282014", 202)));
+  }  
+//  @Test
+//  public void testGetByDate() throws Exception {
+//    assertTrue(compareOrder(
+//      impl.getByDate("04282014").get(0),
+//      impl.getByDate("04282014").get(1)));
+//
+//  }
+
 
   @Test
   public void testRemove() {
   }
 
   @Test
-  public void testGetByDate() {
-  }
-
-  @Test
   public void testGetOrderNum() {
   }
 
-  @Test
-  public void testGetOrder() {
-  }
+
 
   @Test
   public void testToString() {

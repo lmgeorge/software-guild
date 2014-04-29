@@ -7,6 +7,7 @@ package flooringmastery;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
@@ -15,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -23,8 +25,39 @@ import java.util.Scanner;
 public class InvoicesImpl implements InvoicesInterface {
 
   private Map<String, List<Order>> orderLists = new HashMap<>();
+  private Map<String, Product> productMap = new HashMap<>();
+  private Map<String, Double> taxMap = new HashMap<>();
   private final String DELIMITER = ",";
   private Order tempOrder = new Order();
+  private String printed = "";
+  private final String PRODUCTS = "Products.txt";
+  private final String TAXES = "Taxes.txt";
+
+  public String toString(Order order) {
+    return "\n\tOrder Number: " + order.getOrderNum()
+      + "\n\tName: " + order.getCustomerName()
+      + "\n\tState: " + order.getState()
+      + "\n\tTax Rate: " + order.getTaxRate()
+      + "\n\tProduct Type: " + order.getProductType()
+      + "\n\tArea: " + order.getArea()
+      + "\n\tCost per sqft: " + order.getCostPerSqft()
+      + "\n\tLabor per sqft: " + order.getLaborCostPerSqft()
+      + "\n\tTotal Material: " + order.getMaterialCost()
+      + "\n\tTotal Labor: " + order.getLaborCost()
+      + "\n\tTotal Tax: " + order.getTotalTax()
+      + "\n\tTotal Cost: " + order.getTotalCost()
+      + "\n================================================================\n\n";
+  }
+
+  public String toString(ArrayList<Order> al, String delimiter) {
+    printed = "";
+    al
+      .stream()
+      .forEach(order -> {
+        printed += (delimiter + toString(order));
+      });
+    return printed;
+  }
 
   @Override
   public void writeFile(String date) throws Exception {
@@ -101,7 +134,7 @@ public class InvoicesImpl implements InvoicesInterface {
   }
 
   @Override
-  public List<Order> getByDate(String date) throws NullPointerException{
+  public List<Order> getByDate(String date) throws NullPointerException {
     return orderLists.get(date);
   }
 
@@ -111,21 +144,14 @@ public class InvoicesImpl implements InvoicesInterface {
   }
 
   @Override
-  public Order getOrder(String date, long orderNum) throws NullPointerException{
-   tempOrder = null;
-    orderLists.get(date)
+  public Order getOrder(String date, long orderNum) throws NullPointerException {
+    tempOrder = new Order();
+    tempOrder = (orderLists.get(date)
       .stream()
-      .forEach(order -> {
-        if (order.getOrderNum() == orderNum){
-          tempOrder = order;
-        }
-          });
-    return tempOrder;
-  }
+      .filter(order -> order.getOrderNum() == orderNum)
+      .collect(Collectors.toList())).get(0);
 
-  @Override
-  public String toString(Order order) {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    return tempOrder;
   }
 
   @Override
@@ -134,18 +160,46 @@ public class InvoicesImpl implements InvoicesInterface {
   }
 
   @Override
-  public Map<String, Product> loadProducts(String fileName) {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  public Map<String, Product> loadProducts(String fileName) throws FileNotFoundException {
+    Scanner sc = new Scanner(new BufferedReader(new FileReader(PRODUCTS)));
+    String record;
+    String[] tempArray;
+
+    while (sc.hasNextLine()) {
+      record = sc.nextLine();
+      tempArray = record.split(DELIMITER);
+      Product tempProd = new Product();
+      tempProd.setName(tempArray[0]);
+      tempProd.setCostPerSqft(Double.parseDouble(tempArray[1]));
+      tempProd.setLaborPerSqft(Double.parseDouble(tempArray[2]));
+      productMap.put(tempProd.getName(), tempProd);
+    }
+    sc.close();
+
+    return productMap;
   }
 
   @Override
   public Product getProduct(String type) {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+    return productMap.get(type.toLowerCase());
+
   }
 
   @Override
-  public Map<String, Float> loadTaxes(String fileName) {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  public Map<String, Double> loadTaxes(String fileName) throws FileNotFoundException {
+    Scanner sc = new Scanner(new BufferedReader(new FileReader(TAXES)));
+    String record;
+    String[] tempArray;
+
+    while (sc.hasNextLine()) {
+      record = sc.nextLine();
+      tempArray = record.split(DELIMITER);
+      taxMap.put(tempArray[0], Double.parseDouble(tempArray[1]));
+    }
+    sc.close();
+
+    return taxMap;
   }
 
   @Override

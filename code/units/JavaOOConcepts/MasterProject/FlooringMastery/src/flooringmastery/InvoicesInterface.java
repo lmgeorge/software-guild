@@ -25,6 +25,6 @@ public interface InvoicesInterface{
   public double getTax(String state);
   public Map<String, Product> loadProducts(String fileName) throws Exception;
   public Product getProduct(String type);
-  public Map<String, Float> loadTaxes(String fileName)  throws Exception;
+  public Map<String, Double> loadTaxes(String fileName)  throws Exception;
   public boolean isTestMode(String fileName)  throws Exception;
 }

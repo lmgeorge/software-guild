@@ -28,7 +28,7 @@ public class Calculator {
   }
 
   public double calcTotalTax(double taxRate) {
-    totalTax = taxRate * (materialCost + laborCost);
+    totalTax = (taxRate/100) * (materialCost + laborCost);
     return totalTax;
   }
 
