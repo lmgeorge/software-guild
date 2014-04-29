@@ -12,7 +12,9 @@ import org.junit.AfterClass;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
+import static org.junit.internal.matchers.IsCollectionContaining.hasItems;
 import static org.junit.internal.matchers.IsCollectionContaining.hasItems;
 
 /**
@@ -21,173 +23,292 @@ import static org.junit.internal.matchers.IsCollectionContaining.hasItems;
  */
 public class DVDLibraryImplTest extends DVDLibraryImpl {
 
-  DVDLibraryImpl impl = new DVDLibraryImpl();
-  DVDLibraryImpl impl2 = new DVDLibraryImpl();
-  DVDLibraryImpl impl3 = new DVDLibraryImpl();
-  DVDLibraryImpl impl4 = new DVDLibraryImpl();
-  DVDLibraryImpl impl5 = new DVDLibraryImpl();
-  List<Dvd> dvds = new ArrayList<>();
-  List<Dvd> dvds2 = new ArrayList<>();
-  List<Dvd> dvds3 = new ArrayList<>();
-  List<Dvd> dvds4 = new ArrayList<>();
+	public boolean compareObject(Dvd dvd1, Dvd dvd2) {
+		return dvd1.getTitle().equals(dvd2.getTitle())
+			&& dvd1.getDirector().equals(dvd2.getDirector())
+			&& dvd1.getMpaaRating().equals(dvd2.getMpaaRating())
+			&& dvd1.getStudio().equals(dvd2.getStudio())
+			&& dvd1.getYear() == dvd2.getYear()
+			&& dvd1.getNotes().equals(dvd2.getNotes());
+	}
 
-  public DVDLibraryImplTest() {
-  }
+	public DVDLibraryImplTest() {
+	}
 
-  @BeforeClass
-  public static void setUpClass() {
-  }
+	@BeforeClass
+	public static void setUpClass() {
+	}
 
-  @AfterClass
-  public static void tearDownClass() {
-  }
+	@AfterClass
+	public static void tearDownClass() {
+	}
 
-  @Before
-  public void setUp() {
-  }
+	@Before
+	public void setUp() {
+	}
 
-  @After
-  public void tearDown() {
-  }
+	@After
+	public void tearDown() {
+	}
 
-  @Test
-  public void testGetAll() {
-    impl.getAll().clear();
-    
-    Dvd dvd = new Dvd();
-    dvd.setTitle("The Return of the King, Part 2");
-    dvd.setYear(2013);
-    dvd.setMpaaRating("PG-13");
-    dvd.setDirector("Peter Jackson");
-    dvd.setStudio("Lions Gate");
-    ArrayList<String> notes = new ArrayList<>();
-    notes.add("stuff for testing");
-    dvd.setNotes(notes);
-    
-    Dvd dvd2 = new Dvd();
-    dvd2.setTitle("The Nightmare Before Christmas");
-    dvd2.setYear(1993);
-    dvd2.setMpaaRating("PG-13");
-    dvd2.setDirector("Henry Selick");
-    dvd2.setStudio("Skellington Productions");
-    ArrayList<String> notes2 = new ArrayList<>();
-    notes2.add("Best movie of all time");
-    notes2.add("Perfect musical");
-    dvd2.setNotes(notes2);
-    
-    impl.add(dvd);
-    impl.add(dvd2);
-    int index = impl.getAll().indexOf(dvd);
-    assertEquals(2, impl.getAll().size());
-    assertThat(impl.getAll(), hasItems(dvd, dvd2));
-    assertEquals(dvd.getDirector(), impl.getAll().get(index).getDirector());
-  }
+	@Test
+	public void testAdd() {
+		DVDLibrary impl = new DVDLibraryImpl();
+		DVDLibrary impl2 = new DVDLibraryImpl();
 
-  @Test
-  public void testLoadDvds() {
-    impl.loadDvds("dvds.txt");
-    dvds = impl.getAll();
+		Dvd dvd = new Dvd();
+		dvd.setTitle("The Return of the King, Part 2");
+		dvd.setYear(2013);
+		dvd.setMpaaRating("PG-13");
+		dvd.setDirector("Peter Jackson");
+		dvd.setStudio("Lions Gate");
+		ArrayList<String> notes = new ArrayList<>();
+		notes.add("stuff for testing");
+		dvd.setNotes(notes);
 
-    assertEquals(9, dvds.size());
-    assertThat(dvds, hasItems(impl.getByStudio("Jim Henson Productions").get(0)));
-    assertThat(dvds, hasItems(impl.getByTitle("The Hobbit").get(0)));
-    assertThat(dvds, hasItems(impl.getByMpaa("R").get(0)));
+		impl.add(dvd);
 
-  }
+		Dvd dvd2 = new Dvd();
+		dvd2.setTitle("The Return of the King, Part 2");
+		dvd2.setYear(2013);
+		dvd2.setMpaaRating("PG-13");
+		dvd2.setDirector("Peter Jackson");
+		dvd2.setStudio("Lions Gate");
+		ArrayList<String> notes2 = new ArrayList<>();
+		notes2.add("stuff for testing");
+		dvd2.setNotes(notes2);
 
-  @Test
-  public void testWriteDvdLib() {
-    impl2.getAll().clear();
-    Dvd dvd = new Dvd();
-    dvd.setTitle("The Return of the King, Part 2");
-    dvd.setYear(2013);
-    dvd.setMpaaRating("PG-13");
-    dvd.setDirector("Peter Jackson");
-    dvd.setStudio("Lions Gate");
+		impl2.add(dvd2);
 
-    ArrayList<String> notes = new ArrayList<>();
-    notes.add("stuff for testing");
-    dvd.setNotes(notes);
+		assertTrue(compareObject(dvd, dvd2));
+		assertTrue(compareObject(impl.getAll().get(0), impl2.getAll().get(0)));
 
-    impl2.add(dvd);
+	}
 
-    impl2.writeDvdLib("test.txt");
-    impl2.loadDvds("test.txt");
+	@Test
+	public void testGetAll() {
+		DVDLibrary impl = new DVDLibraryImpl();
 
-    dvds2 = impl2.getAll();
-    assertThat(dvds2, hasItems(impl2.getByTitle("The Return of the King, Part 2").get(0)));
-  }
+		Dvd dvd = new Dvd();
+		dvd.setTitle("The Return of the King, Part 2");
+		dvd.setYear(2013);
+		dvd.setMpaaRating("PG-13");
+		dvd.setDirector("Peter Jackson");
+		dvd.setStudio("Lions Gate");
+		ArrayList<String> notes = new ArrayList<>();
+		notes.add("stuff for testing");
+		dvd.setNotes(notes);
 
-  @Test
-  public void testToStringWithIndex_Dvd() {
-  }
+		Dvd dvd2 = new Dvd();
+		dvd2.setTitle("The Nightmare Before Christmas");
+		dvd2.setYear(1993);
+		dvd2.setMpaaRating("PG-13");
+		dvd2.setDirector("Henry Selick");
+		dvd2.setStudio("Skellington Productions");
+		ArrayList<String> notes2 = new ArrayList<>();
+		notes2.add("Best movie of all time");
+		notes2.add("Perfect musical");
+		dvd2.setNotes(notes2);
 
-  @Test
-  public void testToString_Dvd() {
-  }
+		impl.add(dvd);
+		impl.add(dvd2);
+		int index = impl.getAll().indexOf(dvd);
 
-  @Test
-  public void testToString_ArrayList_String() {
-  }
+		assertEquals(2, impl.getAll().size());
+		assertThat(impl.getAll(), hasItems(dvd, dvd2));
+		assertEquals(dvd.getDirector(), impl.getAll().get(index).getDirector());
+	}
 
-@Test
-  public void testToStringWithIndex_4args() {
-  }
+	@Test
+	public void testLoadDvds() {
+		DVDLibrary impl = new DVDLibraryImpl();
+		List<Dvd> dvds;
 
-  @Test
-  public void testAdd() {
-  }
+		impl.loadDvds("dvds.txt");
+		dvds = impl.getAll();
 
-  @Test
-  public void testRemove() {
-  }
+		assertEquals(9, dvds.size());
+		assertThat(dvds, hasItems(impl.getByStudio("Jim Henson Productions").get(0)));
+		assertThat(dvds, hasItems(impl.getByTitle("The Hobbit").get(0)));
+		assertThat(dvds, hasItems(impl.getByMpaa("R").get(0)));
 
-  @Test
-  public void testGetByTitle() {
-  }
+	}
 
-  @Test
-  public void testNumDvds() {
-  }
+	@Test
+	public void testWriteDvdLib() {
+		DVDLibrary impl = new DVDLibraryImpl();
+		List<Dvd> dvds;
 
-  @Test
-  public void testGetByMpaa() {
-  }
+		impl.getAll().clear();
+		Dvd dvd = new Dvd();
+		dvd.setTitle("The Return of the King, Part 2");
+		dvd.setYear(2013);
+		dvd.setMpaaRating("PG-13");
+		dvd.setDirector("Peter Jackson");
+		dvd.setStudio("Lions Gate");
 
-  @Test
-  public void testGetByDirectorSorted() {
-  }
+		ArrayList<String> notes = new ArrayList<>();
+		notes.add("stuff for testing");
+		dvd.setNotes(notes);
 
-  @Test
-  public void testListByDirector() {
-  }
+		impl.add(dvd);
 
-  @Test
-  public void testGetByStudio() {
-  }
+		impl.writeDvdLib("test.txt");
+		impl.loadDvds("test.txt");
 
-  @Test
-  public void testGetAvgAge() {
-  }
+		dvds = impl.getAll();
+		assertThat(dvds, hasItems(impl.getByTitle("The Return of the King, Part 2").get(0)));
+		assertTrue(compareObject(dvd, impl.getAll().get(0)));
+	}
 
-  @Test
-  public void testGetNewest() {
-  }
+	@Test
+	public void testRemove() {
+		DVDLibrary impl = new DVDLibraryImpl();
+		List<Dvd> dvds;
 
-  @Test
-  public void testGetOldest() {
-  }
+		impl.getAll().clear();
+		Dvd dvd = new Dvd();
+		dvd.setTitle("The Return of the King, Part 2");
+		dvd.setYear(2013);
+		dvd.setMpaaRating("PG-13");
+		dvd.setDirector("Peter Jackson");
+		dvd.setStudio("Lions Gate");
 
-  @Test
-  public void testGetAvgNumNotes() {
-  }
+		ArrayList<String> notes = new ArrayList<>();
+		notes.add("stuff for testing");
+		dvd.setNotes(notes);
 
-  @Test
-  public void testGetSinceYear() {
-  }
+		Dvd dvd2 = new Dvd();
+		dvd2.setTitle("The Return of the King, Part 2");
+		dvd2.setYear(2013);
+		dvd2.setMpaaRating("PG-13");
+		dvd2.setDirector("Peter Jackson");
+		dvd2.setStudio("Lions Gate");
 
-  @Test
-  public void testGetByKeyword() {
-  }
+		ArrayList<String> notes2 = new ArrayList<>();
+		notes2.add("stuff for testing");
+		dvd2.setNotes(notes2);
+
+		impl.add(dvd);
+		impl.add(dvd2);
+
+		assertThat(impl.getAll(), hasItems(dvd, dvd2));
+		assertTrue(compareObject(dvd, dvd2));
+		
+		Dvd dvd3 = dvd;
+		
+		impl.remove(dvd);
+		dvd = dvd2;
+
+		impl.add(dvd);
+		Dvd testDvd = impl.getAll().get(impl.getAll().indexOf(dvd));
+		Dvd testDvd2 = impl.getAll().get(impl.getAll().indexOf(dvd2));
+		
+		assertNotSame(dvd3, testDvd);
+		assertSame(testDvd, testDvd2);
+
+	}
+
+	@Test
+	public void testGetByTitle() {
+		DVDLibrary impl = new DVDLibraryImpl();
+		
+		Dvd dvd = new Dvd();
+		dvd.setTitle("The Return of the King, Part 2");
+		dvd.setYear(2013);
+		dvd.setMpaaRating("PG-13");
+		dvd.setDirector("Peter Jackson");
+		dvd.setStudio("Lions Gate");
+		ArrayList<String> notes = new ArrayList<>();
+		notes.add("stuff for testing");
+		dvd.setNotes(notes);
+
+		Dvd dvd2 = new Dvd();
+		dvd2.setTitle("The Nightmare Before Christmas");
+		dvd2.setYear(1993);
+		dvd2.setMpaaRating("PG-13");
+		dvd2.setDirector("Henry Selick");
+		dvd2.setStudio("Skellington Productions");
+		ArrayList<String> notes2 = new ArrayList<>();
+		notes2.add("Best movie of all time");
+		notes2.add("Perfect musical");
+		dvd2.setNotes(notes2);
+
+		impl.add(dvd);
+		impl.add(dvd2);
+		
+		assertThat(impl.getByTitle("The Nightmare Before Christmas"), hasItems(dvd2));
+		assertTrue(compareObject(dvd2, impl.getByTitle("The Nightmare Before Christmas").get(0)));
+	}
+	
+	
+	@Test
+	public void testNumDvds() {
+		DVDLibrary impl = new DVDLibraryImpl();
+		
+		impl.loadDvds("dvds.txt");
+		
+		assertEquals(impl.getAll().size(), impl.numDvds());
+	}
+
+	@Test
+	public void testGetByMpaa() {
+		DVDLibrary impl = new DVDLibraryImpl();
+		impl.loadDvds("dvds.txt");
+		
+	}
+
+	@Test
+	public void testGetByDirectorSorted() {
+	}
+
+	@Test
+	public void testListByDirector() {
+	}
+
+	@Test
+	public void testGetByStudio() {
+	}
+
+	@Test
+	public void testGetAvgAge() {
+	}
+
+	@Test
+	public void testGetNewest() {
+	}
+
+	@Test
+	public void testGetOldest() {
+	}
+
+	@Test
+	public void testGetAvgNumNotes() {
+	}
+
+	@Test
+	public void testGetSinceYear() {
+	}
+
+	@Test
+	public void testGetByKeyword() {
+	}
+
+	@Test
+	public void testToStringWithIndex_Dvd() {
+	}
+
+	@Test
+	public void testToString_Dvd() {
+	}
+
+	@Test
+	public void testToString_ArrayList_String() {
+	}
+
+	@Test
+	public void testToStringWithIndex_4args() {
+	}
+
 
 }
