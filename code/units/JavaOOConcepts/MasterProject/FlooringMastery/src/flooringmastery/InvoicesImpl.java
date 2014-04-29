@@ -69,10 +69,13 @@ public class InvoicesImpl implements InvoicesInterface {
 	}
 
 	@Override
-	public void writeFile(String date) throws IOException {
+	public void writeFile(String date)  {
 		String fileName = "Order_" + date + ".txt";
+		
+		try{
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(fileName)));
-
+		
+		
 		orderLists.get(date)
 			.stream()
 			.forEach(order -> {
@@ -93,7 +96,9 @@ public class InvoicesImpl implements InvoicesInterface {
 				out.flush();
 			});
 		out.close();
-
+		}catch (IOException ex){
+			System.out.println("Error: No such file exists.\n");
+		}
 	}
 
 	@Override
@@ -165,10 +170,10 @@ public class InvoicesImpl implements InvoicesInterface {
 			Product tempProd = new Product();
 			tempProd.setName(tempArray[0]);
 			try {
-			double cost= Double.parseDouble(tempArray[1]);
-			tempProd.setCostPerSqft(cost);
-			double labor = Double.parseDouble(tempArray[2]);
-			tempProd.setLaborPerSqft(labor);
+				double cost = Double.parseDouble(tempArray[1]);
+				tempProd.setCostPerSqft(cost);
+				double labor = Double.parseDouble(tempArray[2]);
+				tempProd.setLaborPerSqft(labor);
 			} catch (NumberFormatException ex) {
 				System.out.println("Error: " + ex.getMessage());
 			}
@@ -196,19 +201,19 @@ public class InvoicesImpl implements InvoicesInterface {
 			record = sc.nextLine();
 			tempArray = record.split(DELIMITER);
 			try {
-			double tax = Double.parseDouble(tempArray[1]);
-			taxMap.put(tempArray[0], tax);
-			} catch(NumberFormatException ex) {
+				double tax = Double.parseDouble(tempArray[1]);
+				taxMap.put(tempArray[0], tax);
+			} catch (NumberFormatException ex) {
 				System.out.println("Error: " + ex.getMessage());
 			}
-			
+
 		}
 		sc.close();
 
 		return taxMap;
 	}
 
-	public Set<String> getTaxKeys()  throws NullPointerException{
+	public Set<String> getTaxKeys() throws NullPointerException {
 		return taxMap.keySet();
 	}
 
@@ -221,9 +226,9 @@ public class InvoicesImpl implements InvoicesInterface {
 	public long getGlobalOrderNum() throws NullPointerException {
 		return Long.parseLong(config[1]);
 	}
-	
+
 	public void setGlobalOrderNum() {
-		config[1] = (getGlobalOrderNum()+1) + "";
+		config[1] = (getGlobalOrderNum() + 1) + "";
 	}
 
 	@Override
@@ -243,7 +248,7 @@ public class InvoicesImpl implements InvoicesInterface {
 
 	public void writeConfig(String fileName) throws IOException {
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(fileName)));
-		
+
 		out.println(config[0]);
 		out.println(config[1]);
 		out.flush();
@@ -256,5 +261,14 @@ public class InvoicesImpl implements InvoicesInterface {
 		orderLists.get(date)
 			.remove(order);
 	}
+
+	public Set<String> getOrderKeys() throws NullPointerException {
+		return orderLists.keySet();
+	}
 	
+	public Set<String> getProdKeys() throws NullPointerException {
+		return productMap.keySet();
+	}
+	
+
 }

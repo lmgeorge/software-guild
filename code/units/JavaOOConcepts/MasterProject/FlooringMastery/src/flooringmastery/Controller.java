@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,13 +22,14 @@ import java.util.logging.Logger;
 public class Controller {
 
 	private final InvoicesInterface impl = new InvoicesImpl();
-	ConsoleIO c = new ConsoleIOImpl();
-	Calculator calc = new Calculator();
-    
-	public void run(){
+	private final ConsoleIO c = new ConsoleIOImpl();
+	private final Calculator calc = new Calculator();
+
+	public void run() {
 		initProgram();
 		menu();
 	}
+
 	public void menu() {
 		c.println("\nMENU\n");
 		int choice = c.getsNum("\t1. Display by Date "
@@ -60,11 +62,11 @@ public class Controller {
 				break;
 			case 5:
 				c.println("\nSAVE\n");
-				c.println("Coming soon!");
+				save();
+				menu();
 				break;
 			case 0:
-				c.println("\nQUIT\n");
-				//Are you sure you want to quit without saving?
+				quit();
 				c.println("Good bye.");
 				break;
 		}
@@ -117,14 +119,24 @@ public class Controller {
 			Order temp = new Order();
 			String date;
 			String state;
+			String matType;
 			date = convertDate();
 			temp.setCustomerName(c.gets("Customer Name: "));
-			do {
+
+			state = c.gets("State (Ohio -> OH): ");
+			while (!(impl.getTaxKeys().contains(state))) {
+				c.println("\nError: Invalid entry.");
 				state = c.gets("State (Ohio -> OH): ");
-			} while (!(impl.getTaxKeys().contains(state)));
+			}
 			temp.setState(state);
 
-			temp.setProductType(c.gets("Material Type: "));
+			matType = c.gets("Material Type: ");
+			while (!(impl.getProdKeys().contains(matType))) {
+				c.println("\nError: Invalid entry.");
+				matType = c.gets("Material Type: ");
+			}
+			temp.setProductType(matType);
+			
 			temp.setArea(c.getsDouble("Area (Sq. Ft.): "));
 
 			temp.setOrderNum(impl.getGlobalOrderNum());
@@ -162,7 +174,7 @@ public class Controller {
 
 	public void deleteOrder() {
 		Order tempOrder;
-		String date; 
+		String date;
 		do {
 			do {
 				date = convertDate();
@@ -173,7 +185,34 @@ public class Controller {
 
 			} while ((c.getsNum("Are you sure that you want to delete this order (Yes = 1 / No = 0)? ", 0, 1) == 0));
 			impl.remove(date, tempOrder);
-		}while((c.getsNum("Would you like to delete another order (Yes = 1 / No = 0)? ", 0, 1) == 1) );
+		} while ((c.getsNum("Would you like to delete another order (Yes = 1 / No = 0)? ", 0, 1) == 1));
+	}
+
+	public void quit() {
+
+		c.println("ATTENTION: Quitting without saving will discard any changes.\n");
+
+		if (c.getsNum("Are you sure you want to Quit? (Yes = 1 / No = 0) ", 0, 1) == 0) {
+			menu();
+		}
+	}
+
+	public void save() {
+
+		Set<String> keys = impl.getOrderKeys();
+		if (c.getsNum("ATTENTION: Are you sure you want to save (Yes = 1 / No = 0)?  ", 0, 1) == 1
+			&& !impl.isTestMode() && keys.size() > 0) {
+
+			keys
+				.stream()
+				.forEach(key -> {
+					impl.writeFile(key);
+				});
+		} else if (impl.isTestMode()) {
+			c.println("Error: In test mode. Cannot save.");
+		} else if (keys.isEmpty()) {
+			c.println("Error: there is nothing to save.");
+		}
 	}
 
 

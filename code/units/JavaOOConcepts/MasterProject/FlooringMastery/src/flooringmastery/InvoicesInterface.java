@@ -18,7 +18,7 @@ import java.util.Set;
  */
 public interface InvoicesInterface {
 
-	public void writeFile(String fileName) throws IOException;
+	public void writeFile(String fileName) ;
 
 	public void loadFile(String fileName) throws FileNotFoundException;
 
@@ -53,6 +53,9 @@ public interface InvoicesInterface {
 	public boolean isTestMode() throws NullPointerException;
 
 	public Set<String> getTaxKeys() throws NullPointerException;
-
+	
+	public Set<String> getOrderKeys() throws NullPointerException ;
+	
+	public Set<String> getProdKeys() throws NullPointerException;
 
 }

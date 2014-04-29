@@ -5,12 +5,15 @@
  */
 package flooringmastery;
 
+import java.io.FileNotFoundException;
+import java.util.Set;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.internal.matchers.IsCollectionContaining.hasItems;
 
 /**
  *
@@ -171,65 +174,140 @@ public class InvoicesImplTest {
 			impl3.getOrder("04282014", 201),
 			impl3.getOrder("04282014", 202)));
 	}
-//  @Test
-//  public void testGetByDate() throws Exception {
-//    assertTrue(compareOrder(
-//      impl.getByDate("04282014").get(0),
-//      impl.getByDate("04282014").get(1)));
-//
-//  }
+
+	@Test
+	public void testGetByDate() throws Exception {
+		InvoicesInterface impl = new InvoicesImpl();
+
+		Order order1 = new Order();
+		order1.setOrderNum(201);
+		order1.setCustomerName("Hunter Gervelis");
+		order1.setState("OH");
+		order1.setTaxRate(5.0);
+		order1.setProductType("hardwood");
+		order1.setArea(10000.0);
+		order1.setCostPerSqft(5.50);
+		order1.setLaborCostPerSqft(2.50);
+		order1.setMaterialCost(6.0);
+		order1.setLaborCost(30.0);
+		order1.setTotalTax(500.0);
+		order1.setTotalCost(1000.0);
+
+		Order order2 = new Order();
+
+		order2.setOrderNum(202);
+		order2.setCustomerName("Hunter Gervelis");
+		order2.setState("OH");
+		order2.setTaxRate(5.0);
+		order2.setProductType("hardwood");
+		order2.setArea(10000.0);
+		order2.setCostPerSqft(5.50);
+		order2.setLaborCostPerSqft(2.50);
+		order2.setMaterialCost(6.0);
+		order2.setLaborCost(30.0);
+		order2.setTotalTax(500.0);
+		order2.setTotalCost(1000.0);
+
+		impl.add(order1, "04282014");
+		impl.add(order2, "04292014");
+
+		assertThat(impl.getByDate("04282014"), hasItems(order1));
+		assertThat(impl.getByDate("04292014"), hasItems(order2));
+
+	}
 
 	@Test
 	public void testRemove() {
+		InvoicesInterface impl = new InvoicesImpl();
+
+		Order order1 = new Order();
+		order1.setOrderNum(201);
+		order1.setCustomerName("Hunter Gervelis");
+		order1.setState("OH");
+		order1.setTaxRate(5.0);
+		order1.setProductType("hardwood");
+		order1.setArea(10000.0);
+		order1.setCostPerSqft(5.50);
+		order1.setLaborCostPerSqft(2.50);
+		order1.setMaterialCost(6.0);
+		order1.setLaborCost(30.0);
+		order1.setTotalTax(500.0);
+		order1.setTotalCost(1000.0);
+
+		Order order2 = new Order();
+
+		order2.setOrderNum(202);
+		order2.setCustomerName("Hunter Gervelis");
+		order2.setState("OH");
+		order2.setTaxRate(5.0);
+		order2.setProductType("hardwood");
+		order2.setArea(10000.0);
+		order2.setCostPerSqft(5.50);
+		order2.setLaborCostPerSqft(2.50);
+		order2.setMaterialCost(6.0);
+		order2.setLaborCost(30.0);
+		order2.setTotalTax(500.0);
+		order2.setTotalCost(1000.0);
+
+		impl.add(order1, "04282014");
+		impl.add(order2, "04282014");
+
+		assertThat(impl.getByDate("04282014"), hasItems(order1, order2));
+
+		impl.remove("04282014", order1);
+
+		assertEquals(1, impl.getByDate("04282014").size());
+		assertFalse(impl.getByDate("04282014").contains(order1));
+		assertThat(impl.getByDate("04282014"), hasItems(order2));
+
 	}
 
 	@Test
-	public void testGetOrderNum() {
-	}
+	public void testLoadGetProducts() throws FileNotFoundException {
+		InvoicesInterface impl = new InvoicesImpl();
 
+		impl.loadProducts("Products.txt");
 
-	@Test
-	public void testGetTax() {
-	}
+		Product tile = impl.getProduct("tile");
+		Product carpet = impl.getProduct("carpet");
+		Product laminate = impl.getProduct("laminate");
+		Product wood = impl.getProduct("wood");
 
-	@Test
-	public void testLoadProducts() {
-	}
+		assertFalse(tile.getCostPerSqft() == 2.25);
+		assertTrue(carpet.getCostPerSqft() == 2.25);
+		assertTrue(laminate.getCostPerSqft() == 1.75);
+		assertTrue(wood.getCostPerSqft() == 5.15);
 
-	@Test
-	public void testGetProduct() {
-	}
-
-	@Test
-	public void testLoadTaxes() {
-	}
-
-	@Test
-	public void testIsTestMode() {
+		assertTrue(tile.getLaborPerSqft() == 4.15);
+		assertFalse(carpet.getLaborPerSqft() == 2.25);
+		assertTrue(laminate.getLaborPerSqft() == 2.10);
+		assertTrue(wood.getLaborPerSqft() == 4.75);
 	}
 
 	@Test
-	public void testToString_Order() {
+	public void testLoadGetTaxes() throws FileNotFoundException {
+		InvoicesInterface impl = new InvoicesImpl();
+
+		impl.loadTaxes("Taxes.txt");
+
+		assertEquals(6.25, impl.getTax("OH"), 0);
+		assertEquals(6.75, impl.getTax("PA"), 0);
+		assertEquals(5.75, impl.getTax("MI"), 0);
+		assertEquals(6, impl.getTax("IN"), 0);
 	}
 
 	@Test
-	public void testToString_List_String() {
-	}
+	public void testGetTaxKeys() throws FileNotFoundException {
+		InvoicesInterface impl = new InvoicesImpl();
+		impl.loadTaxes("Taxes.txt");
 
-	@Test
-	public void testGetByDate() {
-	}
+		Set<String> keys = impl.getTaxKeys();
 
-	@Test
-	public void testGetTaxKeys() {
-	}
-
-	@Test
-	public void testGetGlobalOrderNum() {
-	}
-
-	@Test
-	public void testSetGlobalOrderNum() {
+		assertTrue(keys.contains("OH"));
+		assertTrue(keys.contains("PA"));
+		assertTrue(keys.contains("MI"));
+		assertTrue(keys.contains("IN"));
+		assertEquals(4, keys.size());
 	}
 
 	@Test
@@ -237,7 +315,15 @@ public class InvoicesImplTest {
 	}
 
 	@Test
+	public void testIsTestMode() {
+	}
+
+	@Test
 	public void testWriteConfig() throws Exception {
+	}
+
+	@Test
+	public void testGetOrderNum() {
 	}
 
 
