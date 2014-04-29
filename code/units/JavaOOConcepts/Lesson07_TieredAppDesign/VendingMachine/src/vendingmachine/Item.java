@@ -14,7 +14,7 @@ public class Item {
   
   private String name;
   private int quantity;
-  private float cost;
+  private double cost;
 
   public String getName() {
     return name;
@@ -32,11 +32,11 @@ public class Item {
     this.quantity = quantity;
   }
 
-  public float getCost() {
+  public double getCost() {
     return cost;
   }
 
-  public void setCost(float cost) {
+  public void setCost(double cost) {
     this.cost = cost;
   }
   

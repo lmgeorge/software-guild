@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package vendingmachine;
 
 /**
@@ -12,13 +11,14 @@ package vendingmachine;
  */
 public class Main {
 
-  /**
-   * @param args the command line arguments
-   */
-  public static void main(String[] args) throws Exception {
-    VMController controller = new VMController();
-    
-    controller.vend();
-  }
-  
+	/**
+	 * @param args the command line arguments
+	 */
+	public static void main(String[] args) throws Exception {
+		VMController controller = new VMController();
+
+		controller.vend();
+	}
+
+
 }
