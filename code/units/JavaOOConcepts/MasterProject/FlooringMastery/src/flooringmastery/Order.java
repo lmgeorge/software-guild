@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package flooringmastery;
 
 /**
@@ -11,113 +10,116 @@ package flooringmastery;
  * @author lmgeorge <lauren.george@live.com>
  */
 public class Order {
-  private long orderNum;
-  private String customerName;
-  private String state;
-  private double taxRate;
-  private double costPerSqft;
-  private double materialCost;
-  private double laborCost;
-  private double laborCostPerSqft;
-  private double totalTax;
-  private double totalCost;
-  private String productType;
-  private double area;
 
-  public long getOrderNum() {
-    return orderNum;
-  }
+	private long orderNum;
+	private String customerName;
+	private String state;
+	private double taxRate;
+	private double costPerSqft;
+	private double materialCost;
+	private double laborCost;
+	private double laborCostPerSqft;
+	private double totalTax;
+	private double totalCost;
+	private String productType;
+	private double area;
 
-  public void setOrderNum(long orderNum) {
-    this.orderNum = orderNum;
-  }
+	
+	public long getOrderNum() {
+		return orderNum;
+	}
 
-  public String getCustomerName() {
-    return customerName;
-  }
+	public void setOrderNum(long orderNum) {
+		this.orderNum = orderNum;
+	}
 
-  public void setCustomerName(String customerName) {
-    this.customerName = customerName;
-  }
+	public String getCustomerName() {
+		return customerName;
+	}
 
-  public String getState() {
-    return state;
-  }
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
 
-  public void setState(String state) {
-    this.state = state;
-  }
+	public String getState() {
+		return state;
+	}
 
-  public double getTaxRate() {
-    return taxRate;
-  }
+	public void setState(String state) {
+		this.state = state;
+	}
 
-  public void setTaxRate(double taxRate) {
-    this.taxRate = taxRate;
-  }
+	public double getTaxRate() {
+		return taxRate;
+	}
 
-  public double getCostPerSqft() {
-    return costPerSqft;
-  }
+	public void setTaxRate(double taxRate) {
+		this.taxRate = taxRate;
+	}
 
-  public void setCostPerSqft(double costPerSqft) {
-    this.costPerSqft = costPerSqft;
-  }
+	public double getCostPerSqft() {
+		return costPerSqft;
+	}
 
-  public double getMaterialCost() {
-    return materialCost;
-  }
+	public void setCostPerSqft(double costPerSqft) {
+		this.costPerSqft = costPerSqft;
+	}
 
-  public void setMaterialCost(double materialCost) {
-    this.materialCost = materialCost;
-  }
+	public double getMaterialCost() {
+		return materialCost;
+	}
 
-  public double getLaborCost() {
-    return laborCost;
-  }
+	public void setMaterialCost(double materialCost) {
+		this.materialCost = materialCost;
+	}
 
-  public void setLaborCost(double laborCost) {
-    this.laborCost = laborCost;
-  }
+	public double getLaborCost() {
+		return laborCost;
+	}
 
-  public double getTotalTax() {
-    return totalTax;
-  }
+	public void setLaborCost(double laborCost) {
+		this.laborCost = laborCost;
+	}
 
-  public void setTotalTax(double totalTax) {
-    this.totalTax = totalTax;
-  }
+	public double getTotalTax() {
+		return totalTax;
+	}
 
-  public double getTotalCost() {
-    return totalCost;
-  }
+	public void setTotalTax(double totalTax) {
+		this.totalTax = totalTax;
+	}
 
-  public void setTotalCost(double totalCost) {
-    this.totalCost = totalCost;
-  }
+	public double getTotalCost() {
+		return totalCost;
+	}
 
-  public String getProductType() {
-    return productType;
-  }
+	public void setTotalCost(double totalCost) {
+		this.totalCost = totalCost;
+	}
 
-  public void setProductType(String productType) {
-    this.productType = productType;
-  }
+	public String getProductType() {
+		return productType;
+	}
 
-  public double getArea() {
-    return area;
-  }
+	public void setProductType(String productType) {
+		this.productType = productType;
+	}
 
-  public void setArea(double area) {
-    this.area = area;
-  }
+	public double getArea() {
+		return area;
+	}
 
-  public double getLaborCostPerSqft() {
-    return laborCostPerSqft;
-  }
+	public void setArea(double area) {
+		this.area = area;
+	}
 
-  public void setLaborCostPerSqft(double laborCostPerSqft) {
-    this.laborCostPerSqft = laborCostPerSqft;
-  }
-  
+	public double getLaborCostPerSqft() {
+		return laborCostPerSqft;
+	}
+
+	public void setLaborCostPerSqft(double laborCostPerSqft) {
+		this.laborCostPerSqft = laborCostPerSqft;
+	}
+
+
 }
