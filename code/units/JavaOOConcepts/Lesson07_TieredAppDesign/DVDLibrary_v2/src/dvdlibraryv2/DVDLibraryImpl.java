@@ -30,7 +30,7 @@ public class DVDLibraryImpl implements DVDLibrary {
 	private final ConsoleIO c = new ConsoleIOImpl();
 	private String notes;
 
-  public void loadDvds(String fileName) {
+	public void loadDvds(String fileName) {
 		Scanner file;
 		try {
 			file = new Scanner(new BufferedReader(new FileReader(fileName)));
@@ -62,13 +62,13 @@ public class DVDLibraryImpl implements DVDLibrary {
 		}
 	}
 
-  public List<Dvd> getAll() {
+	public List<Dvd> getAll() {
 		return dvdLib
 			.stream()
 			.collect(Collectors.toList());
 	}
 
-  public void writeDvdLib(String fileName) {
+	public void writeDvdLib(String fileName) {
 		PrintWriter file;
 		try {
 			file = new PrintWriter(new FileWriter(fileName));
@@ -91,7 +91,7 @@ public class DVDLibraryImpl implements DVDLibrary {
 		}
 	}
 
-  public String toStringWithIndex(Dvd dvd) {
+	public String toStringWithIndex(Dvd dvd) {
 		return "Film " + (dvdLib.indexOf(dvd) + 1)
 			+ "\n\tTitle: " + dvd.getTitle()
 			+ "\n\ttRelease Year: " + dvd.getYear()
@@ -103,7 +103,7 @@ public class DVDLibraryImpl implements DVDLibrary {
 			+ "\n================================================================\n\n";
 	}
 
-  public String toString(Dvd dvd) {
+	public String toString(Dvd dvd) {
 		return "\n\tTitle: " + dvd.getTitle()
 			+ "\n\ttRelease Year: " + dvd.getYear()
 			+ "\n\tMPAA Rating: " + dvd.getMpaaRating()
@@ -114,7 +114,7 @@ public class DVDLibraryImpl implements DVDLibrary {
 			+ "\n================================================================\n\n";
 	}
 
-  public String toString(ArrayList<String> al, String delimiter) {
+	public String toString(ArrayList<String> al, String delimiter) {
 		notes = "";
 		al
 			.stream()
@@ -124,7 +124,7 @@ public class DVDLibraryImpl implements DVDLibrary {
 		return notes;
 	}
 
-  public String toStringWithIndex(ArrayList<String> al, String delimiter, int start, String del2) {
+	public String toStringWithIndex(ArrayList<String> al, String delimiter, int start, String del2) {
 		notes = "";
 		al.stream()
 			.forEach(str -> {
@@ -133,7 +133,7 @@ public class DVDLibraryImpl implements DVDLibrary {
 		return notes;
 	}
 
-  public void add(Dvd dvd) {
+	public void add(Dvd dvd) {
 		dvdLib.add(dvd);
 	}
 
@@ -153,7 +153,7 @@ public class DVDLibraryImpl implements DVDLibrary {
 	}
 
 	@Override
-  public List<Dvd> getByMpaa(String mpaa) {
+	public List<Dvd> getByMpaa(String mpaa) {
 		return dvdLib
 			.stream()
 			.filter(d -> d.getMpaaRating().matches(mpaa))
@@ -161,7 +161,7 @@ public class DVDLibraryImpl implements DVDLibrary {
 	}
 
 	@Override
-  public Map<String, List<Dvd>> getByDirectorSorted(String director) {
+	public Map<String, List<Dvd>> getByDirectorSorted(String director) {
 		return dvdLib
 			.stream()
 			.filter(d -> d.getDirector().equalsIgnoreCase(director))
@@ -169,7 +169,7 @@ public class DVDLibraryImpl implements DVDLibrary {
 
 	}
 
-  public List<Dvd> listByDirector(String keyword) {
+	public List<Dvd> listByDirector(String keyword) {
 
 		List<Dvd> allMatches = new ArrayList<>();
 		getByDirectorSorted(keyword).values()
@@ -186,7 +186,7 @@ public class DVDLibraryImpl implements DVDLibrary {
 	}
 
 	@Override
-  public List<Dvd> getByStudio(String studio) {
+	public List<Dvd> getByStudio(String studio) {
 		return dvdLib
 			.stream()
 			.filter(d -> d.getStudio().equalsIgnoreCase(studio))
@@ -194,7 +194,7 @@ public class DVDLibraryImpl implements DVDLibrary {
 	}
 
 	@Override
-  public double getAvgAge() {
+	public double getAvgAge() {
 		return dvdLib
 			.stream()
 			.mapToInt(Dvd::getAge)
@@ -203,7 +203,7 @@ public class DVDLibraryImpl implements DVDLibrary {
 	}
 
 	@Override
-  public List<Dvd> getNewest() {
+	public List<Dvd> getNewest() {
 		int young = dvdLib
 			.stream()
 			.mapToInt(Dvd::getAge)
@@ -217,7 +217,7 @@ public class DVDLibraryImpl implements DVDLibrary {
 	}
 
 	@Override
-  public List<Dvd> getOldest() {
+	public List<Dvd> getOldest() {
 		int old = dvdLib
 			.stream()
 			.mapToInt(Dvd::getAge)
@@ -230,21 +230,21 @@ public class DVDLibraryImpl implements DVDLibrary {
 	}
 
 	@Override
-  public double getAvgNumNotes() {
+	public double getAvgNumNotes() {
 		return dvdLib
 			.stream()
 			.mapToInt(Dvd::getNotesSize)
 			.average().getAsDouble();
 	}
 
-  public List<Dvd> getSinceYear(int year) {
+	public List<Dvd> getSinceYear(int year) {
 		return dvdLib
 			.stream()
 			.filter(d -> d.getYear() >= year)
 			.collect(Collectors.toList());
 	}
 
-  public List<Dvd> getByKeyword(String keyword) {
+	public List<Dvd> getByKeyword(String keyword) {
 		List<Dvd> allMatches = new ArrayList<>();
 		allMatches.addAll(getByTitle(keyword));
 		allMatches.addAll(getByMpaa(keyword));
@@ -252,4 +252,6 @@ public class DVDLibraryImpl implements DVDLibrary {
 		allMatches.addAll(listByDirector(keyword));
 		return allMatches;
 	}
+
+
 }
