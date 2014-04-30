@@ -24,7 +24,6 @@ public interface InvoicesInterface {
 
 	public void add(Order order, String date);
 	
-
 	public void remove(String date, Order order);
 
 	public List<Order> getByDate(String date);
@@ -34,10 +33,6 @@ public interface InvoicesInterface {
 	public void setGlobalOrderNum();
 
 	public Order getOrder(String date, long orderNum) throws NullPointerException;
-
-	public String toString(Order order);
-
-	public String toString(List<Order> al, String delimiter);
 
 	public double getTax(String state) throws NullPointerException;
 
@@ -58,5 +53,9 @@ public interface InvoicesInterface {
 	public Set<String> getOrderKeys() throws NullPointerException ;
 	
 	public Set<String> getProdKeys() throws NullPointerException;
+	
+	public Order completeOrder(Order order) ;
+	
+	public boolean orderExists(long orderNum);
 
 }

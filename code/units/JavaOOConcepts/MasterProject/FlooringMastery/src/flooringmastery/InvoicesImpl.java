@@ -12,12 +12,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
@@ -39,64 +36,37 @@ public class InvoicesImpl implements InvoicesInterface {
 	private final String PRODUCTS = "Products.txt";
 	private final String TAXES = "Taxes.txt";
 	private final String CONFIG = "config.txt";
-	private final NumberFormat n = NumberFormat.getCurrencyInstance(Locale.US);
-	private final DecimalFormat d = new DecimalFormat("#.##");
-
-	public String toString(Order order) {
-		return "\n\tOrder Number: " + order.getOrderNum()
-			+ "\n\tName: " + order.getCustomerName()
-			+ "\n\tState: " + order.getState()
-			+ "\n\tTax Rate: " + d.format(order.getTaxRate()) + "%"
-			+ "\n\tProduct Type: " + order.getProductType()
-			+ "\n\tArea: " + d.format(order.getArea())
-			+ "\n\tCost per sqft: " + n.format(order.getCostPerSqft())
-			+ "\n\tLabor per sqft: " + n.format(order.getLaborCostPerSqft())
-			+ "\n\tTotal Material: " + n.format(order.getMaterialCost())
-			+ "\n\tTotal Labor: " + n.format(order.getLaborCost())
-			+ "\n\tTotal Tax: " + n.format(order.getTotalTax())
-			+ "\n\tTotal Cost: " + n.format(order.getTotalCost())
-			+ "\n================================================================\n\n";
-	}
-
-	public String toString(List<Order> al, String delimiter) {
-		printed = "";
-		al
-			.stream()
-			.forEach(order -> {
-				printed += (delimiter + toString(order));
-			});
-		return printed;
-	}
+	private Calculator calc = new Calculator();
+	private long count = 0;
 
 	@Override
-	public void writeFile(String date)  {
+	public void writeFile(String date) {
 		String fileName = "Order_" + date + ".txt";
-		
-		try{
-		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(fileName)));
-		
-		
-		orderLists.get(date)
-			.stream()
-			.forEach(order -> {
-				out.println(
-					order.getOrderNum() + DELIMITER
-					+ order.getCustomerName() + DELIMITER
-					+ order.getState() + DELIMITER
-					+ order.getTaxRate() + DELIMITER
-					+ order.getProductType() + DELIMITER
-					+ order.getArea() + DELIMITER
-					+ order.getCostPerSqft() + DELIMITER
-					+ order.getLaborCostPerSqft() + DELIMITER
-					+ order.getMaterialCost() + DELIMITER
-					+ order.getLaborCost() + DELIMITER
-					+ order.getTotalTax() + DELIMITER
-					+ order.getTotalCost()
-				);
-				out.flush();
-			});
-		out.close();
-		}catch (IOException ex){
+
+		try {
+			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(fileName)));
+
+			orderLists.get(date)
+				.stream()
+				.forEach(order -> {
+					out.println(
+						order.getOrderNum() + DELIMITER
+						+ order.getCustomerName() + DELIMITER
+						+ order.getState() + DELIMITER
+						+ order.getTaxRate() + DELIMITER
+						+ order.getProductType() + DELIMITER
+						+ order.getArea() + DELIMITER
+						+ order.getCostPerSqft() + DELIMITER
+						+ order.getLaborCostPerSqft() + DELIMITER
+						+ order.getMaterialCost() + DELIMITER
+						+ order.getLaborCost() + DELIMITER
+						+ order.getTotalTax() + DELIMITER
+						+ order.getTotalCost()
+					);
+					out.flush();
+				});
+			out.close();
+		} catch (IOException ex) {
 			System.out.println("Error: No such file exists.\n");
 		}
 	}
@@ -258,10 +228,10 @@ public class InvoicesImpl implements InvoicesInterface {
 
 	@Override
 	public void remove(String date, Order order) {
-		try{
-		orderLists.get(date)
-			.remove(order);
-		}catch(NullPointerException ex){
+		try {
+			orderLists.get(date)
+				.remove(order);
+		} catch (NullPointerException ex) {
 			System.out.println("Error: " + ex.getMessage());
 		}
 	}
@@ -269,11 +239,56 @@ public class InvoicesImpl implements InvoicesInterface {
 	public Set<String> getOrderKeys() throws NullPointerException {
 		return orderLists.keySet();
 	}
-	
+
 	public Set<String> getProdKeys() throws NullPointerException {
 		return productMap.keySet();
 	}
-	
+
+	public Order completeOrder(Order temp) {
+
+		temp.setTaxRate(
+			getTax(temp.getState()));
+
+		temp.setCostPerSqft(
+			getProduct(
+				temp.getProductType()).getCostPerSqft());
+
+		temp.setLaborCostPerSqft(
+			getProduct(
+				temp.getProductType()).getLaborPerSqft());
+
+		temp.setMaterialCost(
+			calc.calcMaterialCost(
+				temp.getArea(), temp.getCostPerSqft()
+			));
+
+		temp.setLaborCost(
+			calc.calcLaborCost(
+				temp.getArea(), temp.getLaborCostPerSqft()
+			));
+
+		temp.setTotalTax(
+			calc.calcTotalTax(temp.getTaxRate()));
+
+		temp.setTotalCost(calc.calcTotalCost());
+
+		return temp;
+	}
+
+	public boolean orderExists(long orderNum){
+		count = 0;
+		getOrderKeys()
+			.stream()
+			.forEach(key -> {
+				count += orderLists.get(key)
+					.stream()
+					.mapToLong(Order::getOrderNum)
+					.filter(num -> num == orderNum)
+					.count();
+			});
+		
+		
+	return count == 1 ;
+	}
 
 }
- 
