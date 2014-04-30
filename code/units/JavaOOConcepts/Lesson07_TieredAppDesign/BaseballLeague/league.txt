@@ -1,0 +1,2 @@
+mets.txt::New York::NY
+angels.txt::Los Angeles::CA
