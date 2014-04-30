@@ -23,6 +23,7 @@ public interface InvoicesInterface {
 	public void loadFile(String fileName) throws FileNotFoundException;
 
 	public void add(Order order, String date);
+	
 
 	public void remove(String date, Order order);
 

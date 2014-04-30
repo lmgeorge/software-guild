@@ -20,44 +20,69 @@ import java.util.logging.Logger;
  *
  * @author lmgeorge <lauren.george@live.com>
  */
-public class Controller {
+public class FlooringGooeyImpl {
 
 	private final InvoicesInterface impl = new InvoicesImpl();
 	private final ConsoleIO c = new ConsoleIOImpl();
 	private final Calculator calc = new Calculator();
-	private final FlooringGooeyImpl gui = new FlooringGooeyImpl();
 
 	public void run() {
 		initProgram();
 		menu();
 	}
 
+	public int mainMenu() {
+		c.println("\nMENU\n");
+		int choice = c.getsNum("\t1. Display by Date "
+			+ "\n\t2. Add an order"
+			+ "\n\t3. Edit an order"
+			+ "\n\t4. Remove an order"
+			+ "\n\t5. Save"
+			+ "\n\t0. Quit"
+			+ "\n\nPlease enter your choice: ", 0, 5);
+
+		return choice;
+	}
+
 	public void menu() {
-		int choice = gui.mainMenu();
+		c.println("\nMENU\n");
+		int choice = c.getsNum("\t1. Display by Date "
+			+ "\n\t2. Add an order"
+			+ "\n\t3. Edit an order"
+			+ "\n\t4. Remove an order"
+			+ "\n\t5. Save"
+			+ "\n\t0. Quit"
+			+ "\n\nPlease enter your choice: ", 0, 5);
 
 		switch (choice) {
 			case 1:
+				c.println("\nDISPLAY BY DATE\n");
 				displayByDate();
 				menu();
 				break;
 			case 2:
+				c.println("\nADD ORDER\n");
 				addOrder();
 				menu();
 				break;
 			case 3:
+				c.println("\nEDIT ORDER\n");
 				edit();
 				menu();
 				break;
 			case 4:
+				c.println("\nDELETE ORDER\n");
 				deleteOrder();
 				menu();
 				break;
 			case 5:
+				c.println("\nSAVE\n");
 				save();
 				menu();
 				break;
 			case 0:
 				quit();
+				c.println("Good bye.");
 				break;
 		}
 
@@ -91,8 +116,6 @@ public class Controller {
 	}
 
 	public void displayByDate() {
-		c.println("\nDISPLAY BY DATE\n");
-
 		String date;
 		date = convertDate();
 		try {
@@ -102,30 +125,74 @@ public class Controller {
 			c.println(impl.toString(impl.getByDate(date), ""));
 
 		} catch (NullPointerException | FileNotFoundException ex) {
-			Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(FlooringGooeyImpl.class.getName()).log(Level.SEVERE, null, ex);
 		}
 
 	}
 
+	public String getUserState() {
+		String state;
+		state = c.gets("State (Ohio -> OH): ");
+		while (!(impl.getTaxKeys().contains(state))) {
+			c.println("\nError: Invalid entry.");
+			state = c.gets("State (Ohio -> OH): ");
+		}
+		return state;
+	}
+
+	public String getUserMatType() {
+		String matType;
+		matType = c.gets("Material Type: ");
+		while (!(impl.getProdKeys().contains(matType))) {
+			c.println("\nError: Invalid entry.");
+			matType = c.gets("Material Type: ");
+		}
+		return matType;
+	}
+
+	public double getUserArea() {
+		double area;
+
+		area = c.getsDouble("Area (Sq. Ft.): ");
+		while (area < 1) {
+			c.println("Error: Invalid entry.\n");
+			area = c.getsDouble("Area (Sq. Ft.): ");
+		}
+		return area;
+	}
+	
+	public String getUserCustName(){
+		return c.gets("Customer Name: ");
+	}
+	
+	public boolean confirm(String prompt){
+		return c.getsNum(prompt + " (1 = Yes /  0 = No)? ", 0, 1) == 0;
+	}
+ 
 	public void addOrder() {
-		c.println("\nADD ORDER\n");
 		do {
 			Order temp = new Order();
 			String date;
 			String state;
 			String matType;
-			double area;
 			date = convertDate();
-			temp.setCustomerName(gui.getUserCustName());
+			temp.setCustomerName(c.gets("Customer Name: "));
 
-			state = gui.getUserState();
+			state = c.gets("State (Ohio -> OH): ");
+			while (!(impl.getTaxKeys().contains(state))) {
+				c.println("\nError: Invalid entry.");
+				state = c.gets("State (Ohio -> OH): ");
+			}
 			temp.setState(state);
 
-			matType = gui.getUserMatType();
+			matType = c.gets("Material Type: ");
+			while (!(impl.getProdKeys().contains(matType))) {
+				c.println("\nError: Invalid entry.");
+				matType = c.gets("Material Type: ");
+			}
 			temp.setProductType(matType);
-			
-			area = gui.getUserArea();
-			temp.setArea(area);
+
+			temp.setArea(c.getsDouble("Area (Sq. Ft.): "));
 
 			temp.setOrderNum(impl.getGlobalOrderNum());
 			impl.setGlobalOrderNum();
@@ -157,12 +224,10 @@ public class Controller {
 			temp.setTotalCost(calc.calcTotalCost());
 
 			impl.add(temp, date);
-		} while (gui.confirm("Would you like to add another order"));
+		} while ((c.getsNum("Would you like to add another order (Yes = 1 / No = 0)? ", 0, 1) == 1));
 	}//close addOrder
 
 	public void deleteOrder() {
-		c.println("\nDELETE ORDER\n");
-
 		Order tempOrder;
 		String date;
 		do {
@@ -174,7 +239,7 @@ public class Controller {
 					try {
 						impl.loadFile(date);
 					} catch (FileNotFoundException ex) {
-						Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+						Logger.getLogger(FlooringGooeyImpl.class.getName()).log(Level.SEVERE, null, ex);
 					}
 				}
 				tempOrder = impl.getOrder(date, response);
@@ -191,13 +256,10 @@ public class Controller {
 
 		if (c.getsNum("Are you sure you want to Quit? (Yes = 1 / No = 0) ", 0, 1) == 0) {
 			menu();
-		}else{
-			c.println("Good bye.");
 		}
 	}
 
 	public void save() {
-		c.println("\nSAVE\n");
 
 		Set<String> keys = impl.getOrderKeys();
 		if (c.getsNum("ATTENTION: Are you sure you want to save (Yes = 1 / No = 0)?  ", 0, 1) == 1
@@ -211,7 +273,7 @@ public class Controller {
 			try {
 				impl.writeConfig("config.txt");
 			} catch (IOException ex) {
-				Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+				Logger.getLogger(FlooringGooeyImpl.class.getName()).log(Level.SEVERE, null, ex);
 			}
 		} else if (impl.isTestMode()) {
 			c.println("Error: In test mode. Cannot save.");
@@ -221,7 +283,6 @@ public class Controller {
 	}
 
 	public void edit() {
-		c.println("\nEDIT ORDER\n");
 		long orderNum = c.getsLong("Enter Order Number: ");
 		String date = convertDate();
 		try {
@@ -229,7 +290,7 @@ public class Controller {
 				impl.loadFile(date);
 			}
 		} catch (FileNotFoundException ex) {
-			Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(FlooringGooeyImpl.class.getName()).log(Level.SEVERE, null, ex);
 		}
 
 		Order toEdit = impl.getOrder(date, orderNum);

@@ -311,20 +311,21 @@ public class InvoicesImplTest {
 	}
 
 	@Test
-	public void testLoadConfig() throws Exception {
+	public void testLoadWriteConfig() throws Exception {
+		InvoicesInterface impl = new InvoicesImpl();
+		impl.loadConfig("configTest.txt");
+		
+		assertFalse(impl.isTestMode()); //configTest.txt set to "prod" mode
+		assertEquals(1000, impl.getGlobalOrderNum());
+		
+		impl.setGlobalOrderNum();
+		assertEquals(1001, impl.getGlobalOrderNum());
+		
+		impl.writeConfig("configTest2.txt");
+		impl.loadConfig("configTest2.txt");
+		
+		assertFalse(impl.isTestMode());
+		assertEquals(1001, impl.getGlobalOrderNum());
 	}
-
-	@Test
-	public void testIsTestMode() {
-	}
-
-	@Test
-	public void testWriteConfig() throws Exception {
-	}
-
-	@Test
-	public void testGetOrderNum() {
-	}
-
 
 }

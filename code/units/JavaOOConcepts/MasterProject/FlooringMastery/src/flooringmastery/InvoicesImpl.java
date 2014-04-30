@@ -258,8 +258,12 @@ public class InvoicesImpl implements InvoicesInterface {
 
 	@Override
 	public void remove(String date, Order order) {
+		try{
 		orderLists.get(date)
 			.remove(order);
+		}catch(NullPointerException ex){
+			System.out.println("Error: " + ex.getMessage());
+		}
 	}
 
 	public Set<String> getOrderKeys() throws NullPointerException {
@@ -272,3 +276,4 @@ public class InvoicesImpl implements InvoicesInterface {
 	
 
 }
+ 
