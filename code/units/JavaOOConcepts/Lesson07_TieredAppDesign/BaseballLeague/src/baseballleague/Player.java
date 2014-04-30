@@ -10,7 +10,7 @@ package baseballleague;
  * @author lmgeorge <lauren.george@live.com>
  */
 public class Player {
-
+	
 	private String jerseyNumber;
 	private String firstName;
 	private String lastName;
@@ -19,6 +19,7 @@ public class Player {
 	private int careerGames;
 	private String birthday;
 
+	
 	public String getJerseyNumber() {
 		return jerseyNumber;
 	}
@@ -74,6 +75,7 @@ public class Player {
 	public void setBirthday(String birthday) {
 		this.birthday = birthday;
 	}
+
 
 
 

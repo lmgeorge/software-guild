@@ -20,7 +20,7 @@ import java.util.Set;
  *
  * @author lmgeorge <lauren.george@live.com>
  */
-public class FlooringGooeyImpl {
+public class FlooringGooeyImpl implements FlooringGUI{
 	private String printed = "";
 	private final NumberFormat n = NumberFormat.getCurrencyInstance(Locale.US);
 	private final DecimalFormat d = new DecimalFormat("#.##");

@@ -13,10 +13,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -25,94 +27,133 @@ import java.util.stream.Collectors;
  */
 public class League {
 
-	private HashMap<String, Team> teams = new HashMap<>();
-	private Set<String> teamNames = teams.keySet();
+	private Map<String, List<Player>> league = new HashMap<>();
+	private Set<String> teamNames = league.keySet();
 	private final String LEAGUE = "league.txt";
-	private List <Player> team =  new ArrayList<>();
+	private Map<String, String> teams = new HashMap<>();
 	private final String DELIMITER = "::";
 
+	public void loadLeague() {
+		try {
 
-	public void loadLeague() throws FileNotFoundException {
-		Scanner leagueFile = new Scanner(new BufferedReader(new FileReader(LEAGUE)));
-		
-		while(leagueFile.hasNextLine()){
-			String teamFile = leagueFile.nextLine();
-			loadTeam(teamFile);
+			Scanner leagueFile = new Scanner(new BufferedReader(new FileReader(LEAGUE)));
+
+			while (leagueFile.hasNextLine()) {
+				String[] line = leagueFile.nextLine().split(DELIMITER);
+				String fileName = line[0];
+				String teamName = line[1];
+
+				teams.put(teamName, line[2]);
+				league.put(teamName, loadTeam(fileName));
+			}
+			leagueFile.close();
+		} catch (FileNotFoundException ex) {
+			Logger.getLogger(League.class.getName()).log(Level.OFF, ("ERROR: " + ex.getMessage()));
 		}
+
 	}
 
 	public void saveLeague() throws IOException {
 		PrintWriter file = new PrintWriter(new FileWriter(LEAGUE));
-
 		teamNames
 			.stream()
-			.forEach(teamName -> {
-				file.println(fileNameGen(teamName) + DELIMITER
-				+ teams.get(teamName).getCity() + DELIMITER
-				+ teams.get(teamName).getState()
-				);
+			.forEach(name -> {
+				file.println(fileNameGen(name) + DELIMITER
+					+ name + DELIMITER
+					+ teams.get(name));
 				file.flush();
+
+				try {
+					saveTeam(name);
+				} catch (IOException ex) {
+
+				}
 			});
 		file.close();
+
 	}
 
-	public void loadTeam(String teamFile) throws FileNotFoundException {
-		Scanner file = new Scanner(new BufferedReader(new FileReader(teamFile)));
-		
-		while(file.hasNextLine()){
-			String[] playerStats = file.nextLine().split(DELIMITER);
+	public Map<String, List<Player>> getLeague(){
+		return league;
+	}
+	
+	public List<Player> loadTeam(String fileName) throws FileNotFoundException {
+		Scanner teamFile = new Scanner(new BufferedReader(new FileReader(fileName)));
+		List<Player> team = new ArrayList<>();
+
+		while (teamFile.hasNextLine()) {
+			String[] line = teamFile.nextLine().split(DELIMITER);
 			Player player = new Player();
-			
+
+			player.setJerseyNumber(line[0]);
+			player.setFirstName(line[1]);
+			player.setLastName(line[2]);
+			player.setPosition(line[3]);
+			try {
+				player.setCareerBattingAvg(Double.parseDouble(line[4]));
+				player.setCareerGames(Integer.parseInt(line[5]));
+			} catch (NumberFormatException ex) {
+				Logger.getLogger(League.class.getName()).log(Level.OFF, ("ERROR: " + ex.getMessage()));
+			}
+			player.setBirthday(line[6]);
+			team.add(player);
 		}
+		teamFile.close();
+		return team;
 	}
 
 	public void saveTeam(String teamName) throws IOException {
 		String fileName = fileNameGen(teamName);
 		PrintWriter file = new PrintWriter(new FileWriter(fileName));
 
-	}
-	public Team addTeam(String teamName, Team team) {
-		team.setTeamName(teamName);
-		return teams.put(keyGen(teamName), team);
+		league.get(teamName)
+			.stream()
+			.forEach(player -> {
+				file.println(player.toString());
+				file.flush();
+			});
+		file.close();
 	}
 
-	public void removeTeam(String teamName) {
-		teams.remove(keyGen(teamName));
+	public List<Player> getTeam(String teamName) throws NullPointerException {
+		return league.get(teamName);
 	}
-	
-	public void addPlayer(Player player){
-		team
+
+	public void addTeam(String teamName, ArrayList<Player> team) {
+		league.put(teamName, team);
+	}
+
+	public void removeTeam(String teamName) throws NullPointerException {
+		league.remove(teamName);
+	}
+
+	public void addPlayer(Player player, String teamName) throws NullPointerException {
+		league.get(teamName).add(player);
+	}
+
+	public void removePlayer(Player player) {
+		teamNames
 			.stream()
-			.filter(currPlayer -> currPlayer.getJerseyNumber().equals(player.getJerseyNumber()))
-			.collect(Collectors.toList());
-		
-		team.add(player);
+			.forEach(key -> {
+				league.get(key)
+				.remove(player);
+			});
 	}
-	
-	public  void removePlayer(String jerseyNumber){
-	
+
+	public Player getPlayer(String teamName, String jerseyNumber) throws NullPointerException {
+		return league.get(teamName)
+			.stream()
+			.filter(player -> player.getJerseyNumber().equals(jerseyNumber))
+			.collect(Collectors.toList()).get(0);
 	}
-	
-	public void tradePlayer(String teamNameOld, String teamNameNew ){
-		
-		
-	}
-	
-	public String keyGen(String teamName){
+
+	public String fileNameGen(String teamName) {
 		String temp;
-		
 		temp = teamName.replaceAll("[ \\t\\n\\x0B\\f\\r]", "");
 		temp = temp.toLowerCase();
-		
+		temp += ".txt";
 		return temp;
 	}
-	
-	public String fileNameGen(String teamName){
-		String temp;
-		
-		temp = keyGen(teamName) + ".txt";
-		
-		return temp;
-	}
-}
 
+
+}
