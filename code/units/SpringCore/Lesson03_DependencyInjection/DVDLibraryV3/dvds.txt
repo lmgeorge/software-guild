@@ -1,0 +1,9 @@
+The Matrix::02/05/2001::R::director::studio::Keanu Reeves tries to have emotions
+The Hobbit::12/31/2012::PG-13::Peter Jackson::Lions Gate::long
+title3::2003::PG::director::studio::stuff::things
+The Dark Crystal::11/15/1982::PG::Jim Henson::Jim Henson Productions::great dark fantasy movie
+The Muppets::03/14/1985::G::Jim Henson::Jim Henson Productions
+Fellowship of the Ring::06/04/2008::R::Peter Jackson::Lions Gate::good movie
+Twin Towers::02/11/2010::R::Peter Jackson::Lions Gate::second movie of the lord of the rings film trilogy
+Return of the King, Part 1::12/25/2013::R::Peter Jackson::Lions Gate::a 3 hour long part 1, enough said
+The Lion King::09/27/1994::G::Roger Allers::Walt Disney Pictures::Jeremy Irons is amazing as Scar
