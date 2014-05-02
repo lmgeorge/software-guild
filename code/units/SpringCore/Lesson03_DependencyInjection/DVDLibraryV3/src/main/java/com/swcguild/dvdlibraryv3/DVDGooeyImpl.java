@@ -126,18 +126,19 @@ public class DVDGooeyImpl implements DvdGUI{
 			+ "\n\tMPAA Rating: " + dvd.getMpaaRating()
 			+ "\n\tDirector: " + dvd.getDirector()
 			+ "\n\tStudio: " + dvd.getStudio()
-			+ "\n\tNote:" + dvd.getNote()
+			+ "\n\tNote: " + dvd.getNote()
 			+ "\n\n================================================================\n";
 	}
 
 	public String toString(Dvd dvd) {
+
 		return "\n================================================================\n\n"
 			+ "\n\tTitle: " + dvd.getTitle()
-			+ "\n\ttRelease Date: " + dvd.getReleaseDate().format(format)
+			+ "\n\tRelease Date: " + dvd.getReleaseDate().format(format)
 			+ "\n\tMPAA Rating: " + dvd.getMpaaRating()
 			+ "\n\tDirector: " + dvd.getDirector()
 			+ "\n\tStudio: " + dvd.getStudio()
-			+ "\n\tNote:" + dvd.getNote()
+			+ "\n\tNote: " + dvd.getNote()
 			+ "\n\n================================================================\n";
 	}
 
@@ -228,7 +229,7 @@ public class DVDGooeyImpl implements DvdGUI{
 		}
 
 		c.print("\nUpdated record:\n");
-		toString(dvd);
+		c.println(toString(dvd));
 		
 		return dvd;
 	}

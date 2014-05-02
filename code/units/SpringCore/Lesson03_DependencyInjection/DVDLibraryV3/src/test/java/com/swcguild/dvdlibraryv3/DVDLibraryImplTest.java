@@ -10,14 +10,17 @@ import com.swcguild.dvdlibrary.model.Dvd;
 import java.time.LocalDate;
 import java.time.chrono.IsoChronology;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import static org.hamcrest.CoreMatchers.hasItems;
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 
 /**
  *
@@ -25,15 +28,16 @@ import static org.junit.Assert.*;
  */
 public class DVDLibraryImplTest {
 
-	DVDLibraryImpl testImpl = new DVDLibraryImpl();
-	DvdLibraryDao impl = new DVDLibraryImpl();
-	DvdLibraryDao impl2 = new DVDLibraryImpl();
-	Dvd king1 = new Dvd();
-	Dvd king2 = new Dvd();
-	Dvd xmas = new Dvd();
-	Dvd mermaid = new Dvd();
-	Dvd mermaidCopy = new Dvd();
-	DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+	private DvdLibraryDao impl = new DVDLibraryImpl();
+	private DvdLibraryDao impl2 = new DVDLibraryImpl();
+	private Dvd king1 = new Dvd();
+	private Dvd king2 = new Dvd();
+	private Dvd xmas = new Dvd();
+	private Dvd mermaid = new Dvd();
+	private Dvd mermaidCopy = new Dvd();
+	private final DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+	private int counter = 0;
+	private boolean bool = false;
 
 	public DVDLibraryImplTest() {
 	}
@@ -44,6 +48,7 @@ public class DVDLibraryImplTest {
 
 	@AfterClass
 	public static void tearDownClass() {
+
 	}
 
 	@Before
@@ -98,8 +103,9 @@ public class DVDLibraryImplTest {
 		mermaid = new Dvd();
 		mermaidCopy = new Dvd();
 
-		impl.listAll().clear();
-		impl2.listAll().clear();
+		impl = new DVDLibraryImpl();
+		impl2 = new DVDLibraryImpl();
+		counter = 0;
 	}
 
 	public boolean compareObject(Dvd dvd1, Dvd dvd2) {
@@ -107,8 +113,7 @@ public class DVDLibraryImplTest {
 			&& dvd1.getDirector().equals(dvd2.getDirector())
 			&& dvd1.getMpaaRating().equals(dvd2.getMpaaRating())
 			&& dvd1.getStudio().equals(dvd2.getStudio())
-			&& (dvd1.getReleaseDate().compareTo(dvd2.getReleaseDate()) == 0)
-			&& dvd1.getNote().equals(dvd2.getNote());
+			&& (dvd1.getReleaseDate().compareTo(dvd2.getReleaseDate()) == 0);
 	}
 
 	@Test
@@ -135,7 +140,9 @@ public class DVDLibraryImplTest {
 
 	@Test
 	public void testCheckDate() {
-		assertEquals(IsoChronology.INSTANCE.date(1989, 2, 23), LocalDate.parse("02/23/1989", format));
+		DVDLibraryImpl testImpl = new DVDLibraryImpl();
+		assertEquals(IsoChronology.INSTANCE.date(1989, 2, 23), LocalDate.parse("1989-02-23"));
+		assertEquals(IsoChronology.INSTANCE.date(1989, 2, 23), testImpl.checkDate("1989-02-23"));
 	}
 
 	@Test
@@ -145,18 +152,22 @@ public class DVDLibraryImplTest {
 		List<Dvd> dvds = impl.listAll();
 		List<Dvd> dvds2 = impl2.listAll();
 
-		assertEquals(9, dvds.size());
-		assertThat(dvds, hasItems(impl.getByStudio("Jim Henson Productions").get(0)));
-		assertThat(dvds, hasItems(impl.getByTitle("The Hobbit").get(0)));
-		assertThat(dvds, hasItems(impl.getByRating("R").get(0)));
+		dvds
+			.stream()
+			.forEach(d -> {
+				dvds2
+				.stream()
+				.forEach(d2 -> {
+					bool = compareObject(d, d2);
+					if (bool) {
+						counter++;
+					}
+				});
+			});
 
-		assertTrue(compareObject(impl.getByTitle("The Hobbit").get(0), impl2.getByTitle("The Hobbit").get(0)));
-		assertTrue(compareObject(impl.getByTitle("Twin Towers").get(0), impl2.getByTitle("Twin Towers").get(0)));
-
-	}
-
-	@Test
-	public void testWriteToFile() {
+		assertTrue(bool);
+		assertEquals(counter, dvds.size());
+		assertEquals(counter, dvds2.size());
 	}
 
 	@Test
@@ -228,12 +239,33 @@ public class DVDLibraryImplTest {
 	public void testGetReleasesInLastNYears() {
 		impl.add(king2);
 		impl.add(xmas);
-		
+
 		assertEquals(1, impl.getReleasesInLastNYears(1995).size());
 		assertThat(impl.getReleasesInLastNYears(1995), hasItems(king2));
-		
+
 		assertEquals(2, impl.getReleasesInLastNYears(1990).size());
 		assertThat(impl.getReleasesInLastNYears(1990), hasItems(king2, xmas));
+	}
+
+
+	@Test
+	public void testWriteToFile() {
+		impl.loadFromFile();
+		impl.add(mermaid);
+
+		impl.writeToFile();
+
+		impl2.loadFromFile();
+		
+		Dvd dvd = impl2.getByTitle("The Little Mermaid").get(0);
+		assertTrue(compareObject(mermaidCopy, dvd));
+
+		//reset data
+		impl = new DVDLibraryImpl();
+		
+		impl.loadFromFile();
+		impl.remove(impl.getByTitle("The Little Mermaid").get(0));
+		impl.writeToFile();
 	}
 
 

@@ -5,8 +5,6 @@
  */
 package com.swcguild.dvdlibraryv3;
 
-import com.swcguild.consoleio.ConsoleIO;
-import com.swcguild.consoleio.ConsoleIOImpl;
 import com.swcguild.dvdlibrary.dao.DvdLibraryDao;
 import com.swcguild.dvdlibrary.model.Dvd;
 import java.util.List;
@@ -17,9 +15,13 @@ import java.util.List;
  */
 public class DvdLibController {
 
-	private final DVDGooeyImpl gui = new DVDGooeyImpl();
-	private final ConsoleIO c = new ConsoleIOImpl();
-	private DvdLibraryDao dvds = new DVDLibraryImpl();
+	private final DvdGUI gui = new DVDGooeyImpl();
+	private DvdLibraryDao dvds;
+	
+	
+	public DvdLibController(DvdLibraryDao dvds){
+		this.dvds = dvds;
+	}
 
 	public void run() {
 		dvds.loadFromFile();
@@ -154,7 +156,7 @@ public class DvdLibController {
 		dvdList
 			.stream()
 			.forEach(dvd -> {
-				gui.toString(dvd);
+				gui.print(gui.toString(dvd));
 			});
 	}
 
@@ -164,7 +166,7 @@ public class DvdLibController {
 		dvdList
 			.stream()
 			.forEach(dvd -> {
-				gui.toStringWithIndex(dvd, dvdList.indexOf(dvd));
+				gui.print(gui.toStringWithIndex(dvd, dvdList.indexOf(dvd)));
 			});
 		returnObj = gui.getObj(dvdList);
 		return returnObj;
@@ -182,11 +184,10 @@ public class DvdLibController {
 					+ "\n\t6. Edit Note"
 					+ "\n\t0. Cancel"
 					+ "\n\nPlease enter your choice: ", 0, 6);
-				c.println();
 
 				dvd = gui.editor(dvd, ui);
 
-			} while (gui.confirm("Would you like to continue editing "));
+			} while (gui.confirm("\nWould you like to continue editing "));
 		} catch (NullPointerException ex) {
 			gui.print("\nError: no such record exists. Msg = " + ex.getMessage() + "\n");
 		}

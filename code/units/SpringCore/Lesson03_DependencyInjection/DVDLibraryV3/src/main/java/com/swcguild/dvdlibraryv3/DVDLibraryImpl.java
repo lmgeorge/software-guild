@@ -14,7 +14,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.time.chrono.IsoChronology;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,10 +29,10 @@ import java.util.stream.Collectors;
  */
 public class DVDLibraryImpl implements DvdLibraryDao {
 
+	private String notes;
 	private List<Dvd> dvdLib = new ArrayList<>();
 	private final String DELIMITER = "::";
 	private final String DVDS = "dvds.txt";
-	private final DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 
 	public void loadFromFile() {
 		Scanner file;
@@ -46,12 +46,17 @@ public class DVDLibraryImpl implements DvdLibraryDao {
 
 				Dvd dvd = new Dvd();
 				dvd.setTitle(dvdInfo[0]);
-				dvd.setReleaseDate(checkDate(dvdInfo[1]));
+				LocalDate date = LocalDate.parse(dvdInfo[1]);
+				dvd.setReleaseDate(date);
 				dvd.setMpaaRating(dvdInfo[2]);
 				dvd.setDirector(dvdInfo[3]);
 				dvd.setStudio(dvdInfo[4]);
 				if (dvdInfo.length > 5) {
-					dvd.setNote(dvdInfo[5]);
+					if (dvdInfo[5].equals("null")) {
+						dvd.setNote("");
+					} else {
+						dvd.setNote(dvdInfo[5]);
+					}
 				}
 				dvdLib.add(dvd);
 			}
@@ -141,16 +146,28 @@ public class DVDLibraryImpl implements DvdLibraryDao {
 			.collect(Collectors.toList());
 	}
 
+	//Utility method for loadFromFile
 	public LocalDate checkDate(String str) {
-		LocalDate date = null;
+		LocalDate date = IsoChronology.INSTANCE.dateNow();
 		try {
-			date = LocalDate.parse(str, format);
+			date = LocalDate.parse(str);
 		} catch (DateTimeParseException | NullPointerException ex) {
 			Logger
 				.getLogger(DVDLibraryImpl.class.getName())
 				.log(Level.OFF, ("Error: " + ex.getMessage()));
 		}
 		return date;
+	}
+
+	//Utility method for loadFromFile
+	public String toString(ArrayList<String> al, String delimiter) {
+		notes = "";
+		al
+			.stream()
+			.forEach(str -> {
+				notes += (delimiter + str);
+			});
+		return notes;
 	}
 
 
