@@ -16,7 +16,7 @@
   http://www.springframework.org/schema/aop/spring-aop-3.2.xsd"> 
 
   <!-- Bean definitions go here -->
-  
+      
   <bean id="skiJumping" class="com.swcguild.olympian.SkiJumpEvent"/>
   <bean id="superSkiJumper" class="com.swcguild.olympian.SkiJumper"/>
   <bean id="usaSkiJumper" class="com.swcguild.olympian.Olympian">
@@ -25,5 +25,23 @@
   <bean id="canadianSkiJumper" class="com.swcguild.olympian.Olympian">
     <constructor-arg ref="skiJumping"/>
     <property name="country" value="Canada"/>
-</bean>
+  </bean>
+  <bean id="olympicOfficial" class="com.swcguild.olympian.OlympicOfficial"/>
+  <bean id="simpleTimer" class="com.swcguild.olympian.SimpleTimerAspect"/>
+  
+  <aop:config>
+    <aop:aspect ref="olympicOfficial">
+      <aop:before method="inspectEquipment" 
+                  pointcut="execution(* com.swcguild.olympian.Event.compete(..))"/>
+      <!-- * = wildcard return type, .. all methods in this class -->
+      
+      <aop:after method="testPED"
+      pointcut="execution(* com.swcguild.olympian.SkiJumpEvent.compete(..))"/>
+    </aop:aspect>
+    <aop:aspect ref="simpleTimer">
+      <aop:around 
+        method="timeMethod"
+        pointcut="execution(* com.swcguild.olympian.SkiJumpEvent.compete(..))"/>
+    </aop:aspect>
+  </aop:config>
 </beans>

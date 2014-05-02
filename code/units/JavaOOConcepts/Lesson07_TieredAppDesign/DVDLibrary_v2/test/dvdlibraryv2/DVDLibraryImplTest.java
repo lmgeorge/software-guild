@@ -125,7 +125,7 @@ public class DVDLibraryImplTest extends DVDLibraryImpl {
 		impl.loadDvds("dvds.txt");
 		dvds = impl.getAll();
 
-		assertEquals(9, dvds.size());
+
 		assertThat(dvds, hasItems(impl.getByStudio("Jim Henson Productions").get(0)));
 		assertThat(dvds, hasItems(impl.getByTitle("The Hobbit").get(0)));
 		assertThat(dvds, hasItems(impl.getByMpaa("R").get(0)));

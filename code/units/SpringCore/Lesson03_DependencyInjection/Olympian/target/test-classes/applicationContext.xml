@@ -22,5 +22,26 @@
   <bean id="usaSkiJumper" class="com.swcguild.olympian.Olympian">
     <constructor-arg ref="skiJumping"/>
   </bean>
-    
+  <bean id="canadianSkiJumper" class="com.swcguild.olympian.Olympian">
+    <constructor-arg ref="skiJumping"/>
+    <property name="country" value="Canada"/>
+  </bean>
+  <bean id="olympicOfficial" class="com.swcguild.olympian.OlympicOfficial"/>
+  <bean id="simpleTimer" class="com.swcguild.olympian.SimpleTimerAspect"/>
+  
+  <aop:config>
+    <aop:aspect ref="olympicOfficial">
+      <aop:before method="inspectEquipment" 
+                  pointcut="execution(* com.swcguild.olympian.Event.compete(..))"/>
+      <!-- * = wildcard return type, .. all methods in this class -->
+      
+      <aop:after method="testPED"
+      pointcut="execution(* com.swcguild.olympian.SkiJumpEvent.compete(..))"/>
+    </aop:aspect>
+    <aop:aspect ref="simpleTimer">
+      <aop:around 
+        method="timeMethod"
+        pointcut="execution(* com.swcguild.olympian.SkiJumpEvent.compete(..))"/>
+    </aop:aspect>
+  </aop:config>
 </beans>
