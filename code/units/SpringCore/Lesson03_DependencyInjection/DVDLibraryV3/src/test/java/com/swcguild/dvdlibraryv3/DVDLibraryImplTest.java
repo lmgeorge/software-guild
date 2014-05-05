@@ -10,17 +10,17 @@ import com.swcguild.dvdlibrary.model.Dvd;
 import java.time.LocalDate;
 import java.time.chrono.IsoChronology;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import static org.hamcrest.CoreMatchers.hasItems;
 import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Ignore;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
@@ -28,8 +28,8 @@ import org.junit.Ignore;
  */
 public class DVDLibraryImplTest {
 
-	private DvdLibraryDao impl = new DVDLibraryImpl();
-	private DvdLibraryDao impl2 = new DVDLibraryImpl();
+	private DvdLibraryDao impl;
+	private DvdLibraryDao impl2;
 	private Dvd king1 = new Dvd();
 	private Dvd king2 = new Dvd();
 	private Dvd xmas = new Dvd();
@@ -53,6 +53,15 @@ public class DVDLibraryImplTest {
 
 	@Before
 	public void setUp() {
+
+		ApplicationContext ctx
+			= new ClassPathXmlApplicationContext("applicationContext.xml");
+
+		impl = (DvdLibraryDao) ctx.getBean("dao");
+
+		ApplicationContext ctx2
+			= new ClassPathXmlApplicationContext("applicationContext.xml");
+		impl2 = (DvdLibraryDao) ctx2.getBean("dao");
 
 		king1.setTitle("The Return of the King, Part 1");
 		LocalDate date1 = IsoChronology.INSTANCE.date(2010, 5, 20);
@@ -103,8 +112,6 @@ public class DVDLibraryImplTest {
 		mermaid = new Dvd();
 		mermaidCopy = new Dvd();
 
-		impl = new DVDLibraryImpl();
-		impl2 = new DVDLibraryImpl();
 		counter = 0;
 	}
 
@@ -145,13 +152,15 @@ public class DVDLibraryImplTest {
 		assertEquals(IsoChronology.INSTANCE.date(1989, 2, 23), testImpl.checkDate("1989-02-23"));
 	}
 
+	//@Ignore
 	@Test
 	public void testLoadFromFile() {
 		impl2.loadFromFile();
 		impl.loadFromFile();
 		List<Dvd> dvds = impl.listAll();
 		List<Dvd> dvds2 = impl2.listAll();
-
+		dvds.size();
+		dvds2.size();
 		dvds
 			.stream()
 			.forEach(d -> {
@@ -247,7 +256,6 @@ public class DVDLibraryImplTest {
 		assertThat(impl.getReleasesInLastNYears(1990), hasItems(king2, xmas));
 	}
 
-
 	@Test
 	public void testWriteToFile() {
 		impl.loadFromFile();
@@ -256,13 +264,13 @@ public class DVDLibraryImplTest {
 		impl.writeToFile();
 
 		impl2.loadFromFile();
-		
+
 		Dvd dvd = impl2.getByTitle("The Little Mermaid").get(0);
 		assertTrue(compareObject(mermaidCopy, dvd));
 
 		//reset data
 		impl = new DVDLibraryImpl();
-		
+
 		impl.loadFromFile();
 		impl.remove(impl.getByTitle("The Little Mermaid").get(0));
 		impl.writeToFile();

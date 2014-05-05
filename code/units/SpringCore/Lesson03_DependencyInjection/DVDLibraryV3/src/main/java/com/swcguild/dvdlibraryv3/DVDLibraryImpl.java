@@ -8,6 +8,7 @@ package com.swcguild.dvdlibraryv3;
 import com.swcguild.dvdlibrary.dao.DvdLibraryDao;
 import com.swcguild.dvdlibrary.model.Dvd;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -32,11 +33,16 @@ public class DVDLibraryImpl implements DvdLibraryDao {
 	private String notes;
 	private List<Dvd> dvdLib = new ArrayList<>();
 	private final String DELIMITER = "::";
-	private final String DVDS = "dvds.txt";
+	private File DVDS;
 
 	public void loadFromFile() {
+		DVDS = new File("dvds.txt");
 		Scanner file;
 		try {
+			if (!DVDS.exists()){
+				DVDS.createNewFile();
+			}
+			
 			file = new Scanner(new BufferedReader(new FileReader(DVDS)));
 			String[] dvdInfo;
 
@@ -65,6 +71,8 @@ public class DVDLibraryImpl implements DvdLibraryDao {
 			Logger
 				.getLogger(DVDLibraryImpl.class.getName())
 				.log(Level.OFF, ("Error: " + ex.getMessage()));
+		} catch (IOException ex) {
+			Logger.getLogger(DVDLibraryImpl.class.getName()).log(Level.SEVERE, ex.getMessage());
 		}
 	}
 
