@@ -19,6 +19,6 @@
   <bean id="dao" class="com.swcguild.dvdlibraryv3.DVDLibraryImpl"/>
   <bean id="jx" class="com.swcguild.dvdlibraryv3.DvdLibraryImplJX"/>
   <bean id="controller" class="com.swcguild.dvdlibraryv3.DvdLibController">
-    <constructor-arg ref="jx"/>
+    <constructor-arg ref="dao"/>
   </bean>
 </beans>

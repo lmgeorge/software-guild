@@ -17,7 +17,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.Ignore;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
@@ -25,9 +26,9 @@ import org.junit.Ignore;
  */
 public class FlooringAppImplTest {
 
-	private FlooringAppDao impl = new FlooringAppImpl();
-	private FlooringAppDao implCopy = new FlooringAppImpl();
-	private FlooringAppDao implCopy2 = new FlooringAppImpl();
+	private FlooringAppDao impl;
+	private FlooringAppDao implCopy;
+	private FlooringAppDao implCopy2;
 	private Order sass = new Order();
 	private Order hunter = new Order();
 	private Order hunterCopy = new Order();
@@ -63,6 +64,18 @@ public class FlooringAppImplTest {
 
 	@Before
 	public void setUp() {
+		ApplicationContext ctx = 
+			new ClassPathXmlApplicationContext("appContext.xml");
+		impl = (FlooringAppDao) ctx.getBean("dao");
+		
+		ApplicationContext ctx2 = 
+			new ClassPathXmlApplicationContext("appContext.xml");
+		implCopy = (FlooringAppDao) ctx2.getBean("dao");
+
+		ApplicationContext ctx3 = 
+			new ClassPathXmlApplicationContext("appContext.xml");
+		implCopy2 = (FlooringAppDao) ctx3.getBean("dao");
+		
 		sass.setOrderNum(203);
 		sass.setCustomerName("Dan Sass");
 		sass.setState("OH");
@@ -128,9 +141,6 @@ public class FlooringAppImplTest {
 
 	@After
 	public void tearDown() {
-		impl = new FlooringAppImpl();
-		implCopy = new FlooringAppImpl();
-		implCopy2 = new FlooringAppImpl();
 		sass = new Order();
 		hunter = new Order();
 		hunterCopy = new Order();
