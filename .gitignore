@@ -150,3 +150,6 @@ hs_err_pid*
 /code/units/JavaOOConcepts/Lesson02_JUnit_and_Drills/FlooringAppGui/target/
 /code/units/SpringCore/Lesson03_DependencyInjection/FlooringApp/target/
 /code/units/SpringCore/FlooringAppGui/target/
+/code/units/WebApps_SpringMVC/RSVP/target/
+/code/units/WebApps_SpringMVC/EmpContactInfo/target/
+/code/units/WebApps_SpringMVC/testArcheType/target/
