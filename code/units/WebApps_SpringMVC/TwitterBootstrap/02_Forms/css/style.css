@@ -1,0 +1,17 @@
+body {
+	margin: auto;
+	width: 99%;
+
+}
+
+h2{
+	text-align: center;
+}
+
+h3{
+	text-align: center;
+}
+
+div.row > div.col-md-12 > hr {
+	margin-top: 100px;
+}
