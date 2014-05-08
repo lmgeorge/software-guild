@@ -4,6 +4,26 @@
 		"selected_items":
 		[
 			[
+				"m",
+				"margin-bottom"
+			],
+			[
+				"b",
+				"button	Tag"
+			],
+			[
+				"in",
+				"input	Tag"
+			],
+			[
+				"l",
+				"label	Tag"
+			],
+			[
+				"h",
+				"h3	Tag"
+			],
+			[
 				"bac",
 				"background-color"
 			],
@@ -31,7 +51,7 @@
 			"file": "index.html",
 			"settings":
 			{
-				"buffer_size": 1156,
+				"buffer_size": 5484,
 				"line_ending": "Unix"
 			}
 		},
@@ -39,7 +59,7 @@
 			"file": "css/style.css",
 			"settings":
 			{
-				"buffer_size": 0,
+				"buffer_size": 147,
 				"line_ending": "Unix"
 			}
 		}
@@ -72,9 +92,9 @@
 	},
 	"file_history":
 	[
+		"/home/apprentice/Documents/GitHub/LaurenGeorge/code/units/WebApps_SpringMVC/TwitterBootstrap/01_Layout/index.html",
 		"/home/apprentice/Documents/GitHub/LaurenGeorge/code/units/WebApps_SpringMVC/TwitterBootstrap/web/css/bootstrap/bootstrap.css",
 		"/home/apprentice/Documents/GitHub/LaurenGeorge/code/units/WebApps_SpringMVC/TwitterBootstrap/01_Layout/css/style.css",
-		"/home/apprentice/Documents/GitHub/LaurenGeorge/code/units/WebApps_SpringMVC/TwitterBootstrap/01_Layout/index.html",
 		"/home/apprentice/Documents/GitHub/LaurenGeorge/code/units/WebApps_SpringMVC/TwitterBootstrap/web/css/bootstrap/bootstrap-theme.css",
 		"/home/apprentice/.config/sublime-text-2/Packages/Default/Preferences.sublime-settings",
 		"/home/apprentice/.config/sublime-text-2/Packages/User/Preferences.sublime-settings",
@@ -99,6 +119,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"%;",
 			"h>"
 		],
 		"highlight": true,
@@ -118,7 +139,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -126,15 +147,15 @@
 					"file": "index.html",
 					"settings":
 					{
-						"buffer_size": 1156,
+						"buffer_size": 5484,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								834,
-								834
+								1011,
+								1011
 							]
 						],
 						"settings":
@@ -144,7 +165,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 204.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -154,7 +175,7 @@
 					"file": "css/style.css",
 					"settings":
 					{
-						"buffer_size": 0,
+						"buffer_size": 147,
 						"regions":
 						{
 						},
@@ -234,6 +255,6 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 226.0,
+	"side_bar_width": 53.0,
 	"status_bar_visible": true
 }
