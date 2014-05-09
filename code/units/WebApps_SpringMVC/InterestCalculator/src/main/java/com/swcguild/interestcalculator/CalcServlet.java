@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.swcguild.luckysevens;
+package com.swcguild.interestcalculator;
 
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author lmgeorge <lauren.george@live.com>
  */
-@WebServlet(name = "EngineServlet", urlPatterns = {"/EngineServlet"})
-public class EngineServlet extends HttpServlet {
+@WebServlet(name = "CalcServlet", urlPatterns = {"/CalcServlet"})
+public class CalcServlet extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -30,23 +30,28 @@ public class EngineServlet extends HttpServlet {
 	 */
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
-		int betLimit = Integer.parseInt(request.getParameter("betLimit"));
-			LuckySevensGameEngine ls = new LuckySevensGameEngine();
-
-			Game game = ls.gamble(betLimit);
-
-			int rollCounter = game.getRollCounter();
-			int maxAmountRoll = game.getMaxAmountRoll();
-			int maxAmountBet = game.getMaxAmountBet();
-
-			request.setAttribute("rolls", rollCounter);
-			request.setAttribute("maxRoll", maxAmountRoll);
-			request.setAttribute("maxBet", maxAmountBet);
 		
-
-		RequestDispatcher rd = request.getRequestDispatcher("results.jsp");
+		float principal = Float.parseFloat(request.getParameter("principal"));
+		float annualRate = Float.parseFloat(request.getParameter("annualRate"));
+		float compoundRate = Float.parseFloat(request.getParameter("compoundRate"));
+		int years = Integer.parseInt(request.getParameter("years"));
+		Machine icm = new Machine();
+		
+		Investment investment = new Investment();
+		
+		investment.setAnnualInterestRate(annualRate);
+		investment.setPrincipal(principal);
+		investment.setYears(years);
+		investment.setCompoundRate(compoundRate);
+		
+		investment = icm.caclulateInvestment(investment);
+		
+		
+		request.setAttribute("investment", investment);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("display.jsp");
+		
 		rd.forward(request, response);
-
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -61,7 +66,8 @@ public class EngineServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
-		processRequest(request, response);
+			processRequest(request, response);
+
 	}
 
 	/**
@@ -75,7 +81,8 @@ public class EngineServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
-		processRequest(request, response);
+			processRequest(request, response);
+
 	}
 
 	/**

@@ -3,10 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.swcguild.luckysevens;
+package com.swcguild.contactlist.controller;
 
+import com.swcguild.contactlist.dao.ContactListDao;
+import com.swcguild.contactlist.dao.DaoFactory;
+import com.swcguild.contactlist.model.Contact;
 import java.io.IOException;
-import javax.servlet.RequestDispatcher;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,37 +20,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author lmgeorge <lauren.george@live.com>
  */
-@WebServlet(name = "EngineServlet", urlPatterns = {"/EngineServlet"})
-public class EngineServlet extends HttpServlet {
-
-	/**
-	 * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-	 *
-	 * @param request servlet request
-	 * @param response servlet response
-	 * @throws ServletException if a servlet-specific error occurs
-	 * @throws IOException if an I/O error occurs
-	 */
-	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-		throws ServletException, IOException {
-		int betLimit = Integer.parseInt(request.getParameter("betLimit"));
-			LuckySevensGameEngine ls = new LuckySevensGameEngine();
-
-			Game game = ls.gamble(betLimit);
-
-			int rollCounter = game.getRollCounter();
-			int maxAmountRoll = game.getMaxAmountRoll();
-			int maxAmountBet = game.getMaxAmountBet();
-
-			request.setAttribute("rolls", rollCounter);
-			request.setAttribute("maxRoll", maxAmountRoll);
-			request.setAttribute("maxBet", maxAmountBet);
-		
-
-		RequestDispatcher rd = request.getRequestDispatcher("results.jsp");
-		rd.forward(request, response);
-
-	}
+@WebServlet(name = "DisplayServlet", urlPatterns = {"/DisplayServlet"})
+public class DisplayServlet extends HttpServlet {
 
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 	/**
@@ -61,7 +35,13 @@ public class EngineServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
-		processRequest(request, response);
+		ContactListDao dao = DaoFactory.getDao();
+
+		List<Contact> contacts = dao.getAll();
+		
+		request.setAttribute("contacts", contacts);
+		
+		request.getRequestDispatcher("displayContacts.jsp").forward(request, response);
 	}
 
 	/**
@@ -75,7 +55,7 @@ public class EngineServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
-		processRequest(request, response);
+
 	}
 
 	/**
