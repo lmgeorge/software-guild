@@ -20,24 +20,29 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="index.jsp">Contact List</a>
+          <a class="navbar-brand" href="#">Contact List</a>
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="index.jsp">Home</a></li>
-            <li><a href="spring/displayNewForm">Add Contact</a></li>
+            <!--<li><a href="displayContacts.jsp">Display</a></li>
+            <li><a href="#contact">Contact</a></li>-->
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </div>
 
     <div class="container-fluid">
-      <a href="spring/displayNewForm" class="btn btn-info btn-lg btn-block" role="button">Contact List</a>
+
+      <h1 action="AddServlet">
+        <a href="AddServlet">Contact List</a>
+      </h1>
+
     </div>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="../web/js/bootstrap.min.js"></script>
-    <script src="../web/jquery-1.11.1.min.js"></script>
+    <script src="web/js/bootstrap.min.js"></script>
+    <script src="web/jquery-1.11.1.min.js"></script>
   </body>
 </html>
