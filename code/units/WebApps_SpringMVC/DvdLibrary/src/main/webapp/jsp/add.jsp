@@ -33,12 +33,11 @@
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="../index.jsp">Home</a></li>
-            <li><a href="#">See All</a></li>
-            <li><a href="#">Add</a></li>
-            <li><a href="#">Edit</a></li>
-            <li><a href="#">Delete</a></li>
-            <li><a href="#">Find</a></li>
-            <li><a href="#">Stats!</a></li>
+            <li><a href="dvds">See All</a></li>
+            <li><a href="displayEditForm">Edit</a></li>
+            <li><a href="dvds">Delete</a></li>
+            <li><a href="dvds">Find</a></li>
+            <li><a href="displayStats">Stats!</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -72,8 +71,21 @@
           </div>
 
           <div class="form-group">
-            <label class="control-label">MPAA Rating: </label>
-            <input type="text" name="rating" pattern="G|PG|PG-13|R|NC-17|Not rated" required class="form-control">
+            <label for="select" class="control-label">MPAA Rating: </label>  
+            
+            <select name="mpaaRating" class="form-control">
+              <option value="G">G</option>
+              <option value="PG">PG</option>
+              <option value="PG-13">PG-13</option>
+              <option value="R">R</option>
+              <option value="NC-17">NC-17</option>
+              <option value="NR">Not Rated</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="control-label">Note: </label>
+            <input type="text" name="note" required class="form-control">
           </div>
 
           <div class="form-group">

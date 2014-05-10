@@ -30,13 +30,14 @@ public class DvdLibraryDaoImplTest {
 
 	private DvdLibraryDao impl;
 	private DvdLibraryDao impl2;
+
 	private Dvd king1 = new Dvd();
 	private Dvd king2 = new Dvd();
 	private Dvd xmas = new Dvd();
 	private Dvd mermaid = new Dvd();
 	private Dvd mermaidCopy = new Dvd();
-	private final DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-	private int counter = 0;
+
+	private int counter;
 	private boolean bool = false;
 
 	public DvdLibraryDaoImplTest() {
@@ -53,7 +54,6 @@ public class DvdLibraryDaoImplTest {
 
 	@Before
 	public void setUp() {
-
 		ApplicationContext ctx
 			= new ClassPathXmlApplicationContext("test-applicationContext.xml");
 
@@ -111,7 +111,6 @@ public class DvdLibraryDaoImplTest {
 		xmas = new Dvd();
 		mermaid = new Dvd();
 		mermaidCopy = new Dvd();
-
 		counter = 0;
 	}
 
@@ -124,7 +123,7 @@ public class DvdLibraryDaoImplTest {
 	}
 
 	@Test
-	public void testListAll() {
+	public void testAdd_ListAll() {
 
 		impl.add(king1);
 		impl.add(xmas);
@@ -137,15 +136,6 @@ public class DvdLibraryDaoImplTest {
 	}
 
 	@Test
-	public void testAdd() {
-		impl.add(mermaid);
-		impl2.add(mermaidCopy);
-
-		assertTrue(compareObject(mermaid, mermaidCopy));
-		assertTrue(compareObject(impl.listAll().get(0), impl2.listAll().get(0)));
-	}
-
-	@Test
 	public void testCheckDate() {
 		DvdLibraryDaoImpl testImpl = new DvdLibraryDaoImpl();
 		assertEquals(IsoChronology.INSTANCE.date(1989, 2, 23), LocalDate.parse("1989-02-23"));
@@ -153,7 +143,7 @@ public class DvdLibraryDaoImplTest {
 	}
 
 	@Test
-	public void testLoadWriteAddRemove() {
+	public void testLoad() {
 		impl.loadFromFile();
 		impl.add(mermaid);
 
@@ -164,43 +154,63 @@ public class DvdLibraryDaoImplTest {
 		Dvd dvd = impl2.getByTitle("The Little Mermaid").get(0);
 		assertTrue(compareObject(mermaidCopy, dvd));
 
-		impl.remove(impl.getByTitle("The Little Mermaid").get(0));
+		impl2.remove(impl2.getByTitle("The Little Mermaid").get(0));
+		impl2.writeToFile();
+	}
+
+	@Test
+	public void testWrite() {
+		impl.add(xmas);
+		impl.add(king1);
+		impl.add(king2);
+		impl.add(mermaid);
 		impl.writeToFile();
-
-		ApplicationContext ctx
-			= new ClassPathXmlApplicationContext("test-applicationContext.xml");
-
-		impl = (DvdLibraryDao) ctx.getBean("dao");
-
-		ApplicationContext ctx2
-			= new ClassPathXmlApplicationContext("test-applicationContext.xml");
-		impl2 = (DvdLibraryDao) ctx2.getBean("dao");
 
 		impl2.loadFromFile();
 		impl.loadFromFile();
-		
 		List<Dvd> dvds = impl.listAll();
 		List<Dvd> dvds2 = impl2.listAll();
-		dvds.size();
-		dvds2.size();
+
+		assertEquals(4, dvds.size());
+		assertEquals(4, dvds2.size());
+
 		dvds
 			.stream()
-			.forEach(d -> {
-				dvds2
-				.stream()
-				.forEach(d2 -> {
-					bool = compareObject(d, d2);
-					if (bool) {
-						counter++;
-					}
-				});
+			.forEach(dvd -> {
+				if (compareObject(dvd, xmas)) {
+					counter++;
+				}
+				if (compareObject(dvd, king1)) {
+					counter++;
+				}
+				if (compareObject(dvd, king2)) {
+					counter++;
+				}
+				if (compareObject(dvd, mermaid)) {
+					counter++;
+				}
 			});
+		assertEquals(4, counter);
 
-		assertTrue(bool);
-		assertEquals(counter, dvds.size());
-		assertEquals(counter, dvds2.size());
-		assertTrue(impl.getByTitle("The Little Mermaid").isEmpty());
-		assertTrue(impl2.getByTitle("The Little Mermaid").isEmpty());
+		counter = 0;
+		dvds2
+			.stream()
+			.forEach(dvd -> {
+				if (compareObject(dvd, xmas)) {
+					counter++;
+				}
+				if (compareObject(dvd, king1)) {
+					counter++;
+				}
+				if (compareObject(dvd, king2)) {
+					counter++;
+				}
+				if (compareObject(dvd, mermaid)) {
+					counter++;
+				}
+			});
+		assertEquals(4, counter);
+
 	}
 
 	@Test

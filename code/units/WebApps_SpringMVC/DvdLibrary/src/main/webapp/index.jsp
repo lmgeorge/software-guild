@@ -41,21 +41,21 @@
         <a class=" list-group-item list-group-item-info">
           <h4 class="list-group-item-heading">Please choose one: </h4>
         </a>
-        <a href="/displayDvds"class="list-group-item-danger list-group-item">
+        <a href="spring/dvds"class="list-group-item-danger list-group-item">
           See all DVDs</a>
-        <a href="/add"class="list-group-item-danger list-group-item">
+        <a href="spring/displayAddForm"class="list-group-item-danger list-group-item">
           Add a DVD
         </a>
-        <a href="/delete" class="list-group-item-danger list-group-item">
+        <a href="spring/dvds" class="list-group-item-danger list-group-item">
           Delete a DVD
         </a>
-        <a href="/edit" class="list-group-item-danger list-group-item">
+        <a href="spring/dvds" class="list-group-item-danger list-group-item">
           Edit a DVD
         </a>
-        <a href="/find" class="list-group-item-danger list-group-item">
+        <a href="spring/dvds" class="list-group-item-danger list-group-item">
           Find a DVD
         </a>
-        <a href="/stats" class="list-group-item-danger list-group-item">
+        <a href="spring/displayStats" class="list-group-item-danger list-group-item">
           See the Library Stats
         </a>
       </div>

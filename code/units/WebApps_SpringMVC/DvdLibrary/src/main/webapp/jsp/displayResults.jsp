@@ -36,7 +36,8 @@
             <li class="active"><a href="../index.jsp">Home</a></li>
             <li><a href="dvds">See All</a></li>
             <li><a href="displayAddForm">Add</a></li>
-            <li><a href="dvds">Find</a></li>
+            <li><a href="dvds">Edit</a></li>
+            <li><a href="dvds">Delete</a></li>
             <li><a href="displayStats">Stats!</a></li>
           </ul>
         </div><!--/.nav-collapse -->
@@ -60,10 +61,10 @@
 
   <div class="container-fluid" id="container-results">
 
-    <h1 class="text-center" style="font-size: 5em; margin-bottom: 2%">Library:</h1>
+    <h1 class="text-center" style="font-size: 5em; margin-bottom: 2%">Results:</h1>
     <hr class="row col-md-0">
-    <c:forEach var="dvd" items="${dvds}">
-      <c:set value="${dvds.indexOf(dvd)}" var="index"/>
+    <c:forEach var="dvd" items="${results}">
+      <c:set value="${results.indexOf(dvd)}" var="index"/>
 
       <div class="row">
         <p class="col-md-7">Title: ${dvd.title}  </p>      

@@ -6,221 +6,161 @@
 package com.swcguild.dvdlibrary.controller;
 
 import com.swcguild.dvdlibrary.dao.DvdLibraryDao;
-import com.swcguild.dvdlibrary.gui.DVDGooeyImpl;
-import com.swcguild.dvdlibrary.gui.DvdGUI;
 import com.swcguild.dvdlibrary.model.Dvd;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
  * @author lmgeorge <lauren.george@live.com>
  */
-
 @Controller
 public class DvdLibraryController {
 
-	private final DvdGUI gui = new DVDGooeyImpl();
-	private DvdLibraryDao dvds;
-	
+	private List<Dvd> list = new ArrayList<>();
+	private Dvd old;
+	private DvdLibraryDao dao;
+
 	@Inject
-	public DvdLibraryController(DvdLibraryDao dvds){
-		this.dvds = dvds;
+	public DvdLibraryController(DvdLibraryDao dao) {
+		this.dao = dao;
 	}
 
-	public void run() {
-		dvds.loadFromFile();
-		gui.print("\tWelcome to DVD Library\n"
-			+ "===========================================\n\n");
-		menu();
+	//what the user will see in the url bar
+	@RequestMapping(value = "/displayAddForm", method = RequestMethod.GET)
+	public String displayAddForm() {
+		return "add"; //return the desired jsp file
 	}
 
-	public void menu() {
-		int ui = gui.printMenu("\nMain Menu:\n"
-			+ "\n\t1. Add a DVD"
-			+ "\n\t2. Remove a DVD"
-			+ "\n\t3. Edit a DVD record"
-			+ "\n\t4. Find a DVD"
-			+ "\n\t5. List all DVDs"
-			+ "\n\t6. Library Stats"
-			+ "\n\t0. Exit"
-			+ "\n\nPlease enter your choice: ", 0, 6);
-		gui.printMenuTitle(ui);
-		switch (ui) {
-			case 1:
-				addDvd();
-				menu();
-				break;
-			case 2:
-				deleteDvd();
-				menu();
-				break;
-			case 3:
-				editMenu();
-				menu();
-				break;
-			case 4:
-				findBy(false);
-				menu();
-				break;
-			case 5:
-				listAll(dvds.listAll());
-				menu();
-				break;
-			case 6:
-				gui.printStats(dvds.getAverageAge());
-				menu();
-				break;
-			case 0:
-				break;
-		}
+	//should be called from add.jsp
+	@RequestMapping(value = "/addDvd", method = RequestMethod.POST)
+	public String addDvd(HttpServletRequest req, HttpServletResponse resp) {
+		dao.loadFromFile();
+		String title = req.getParameter("title");
+		String studio = req.getParameter("studio");
+		String director = req.getParameter("director");
+		String mpaaRating = req.getParameter("mpaaRating");
+		LocalDate releaseDate = LocalDate.parse(req.getParameter("releaseDate"));
+		String note = req.getParameter("note");
 
-	}
-
-	public void addDvd() {
-
-		do {
-			Dvd dvd = gui.createDvd();
-			dvds.add(dvd);
-		} while (gui.confirm("Would you like to add another DVD"));
-
-		allowSave();
-
-	}
-
-	public void deleteDvd() {
-		do {
-			Dvd dvd = findBy(true);
-
-			if (gui.confirm("Delete \"" + dvd.getTitle() + "\"")) {
-				dvds.remove(dvd);
-				gui.print("\nDVD removed successfully.\n");
-			} else {
-				gui.print("\nOperation successfully stopped.\n");
-			}
-		} while (gui.confirm("Would you like to delete another DVD"));
-
-		allowSave();
-
-	}
-
-	public Dvd findBy(boolean makeSelection) {
-		int choice = gui.printMenu("\n\t1. Search by Title"
-			+ "\n\t2. Search by MPAA Rating"
-			+ "\n\t3. Search by Studio"
-			+ "\n\t4. Search since Release Year"
-			+ "\n\t0. Main menu"
-			+ "\n\nPlease enter your choice: ", 0, 4);
-		String search = gui.getSearchParam(choice);
 		Dvd dvd = new Dvd();
+		dvd.setTitle(title);
+		dvd.setReleaseDate(releaseDate);
+		dvd.setMpaaRating(mpaaRating);
+		dvd.setDirector(director);
+		dvd.setStudio(studio);
+		dvd.setNote(note);
 
-		if (makeSelection) {
-			switch (choice) {
-				case 1:
-					dvd = chooseOne(dvds.getByTitle(search));
-					break;
-				case 2:
-					dvd = chooseOne(dvds.getByRating(search));
-					break;
-				case 3:
-					dvd = chooseOne(dvds.getByStudio(search));
-					break;
-				case 4:
-					int year = Integer.parseInt(search);
-					dvd = chooseOne(dvds.getReleasesInLastNYears(year));
-					break;
-				case 0:
-					menu();
-					break;
-			}
-		} else {
-			switch (choice) {
-				case 1:
-					listAll(dvds.getByTitle(search));
-					break;
-				case 2:
-					listAll(dvds.getByRating(search));
-					break;
-				case 3:
-					listAll(dvds.getByStudio(search));
-					break;
-				case 4:
-					int year = Integer.parseInt(search);
-					listAll(dvds.getReleasesInLastNYears(year));
-					break;
-				case 0:
-					menu();
-					break;
-			}
-		}
-		return dvd;
+		dao.add(dvd);
+		dao.writeToFile();
+
+		return "redirect:dvds";
 	}
 
-	public void listAll(List<Dvd> dvdList) {
-		gui.print("\nResults:\n");
-		dvdList
-			.stream()
-			.forEach(dvd -> {
-				gui.print(gui.toString(dvd));
-			});
+	@RequestMapping(value = "/dvds", method = RequestMethod.GET)
+	public String displayDvds(Model model) {
+		dao.loadFromFile();
+		list = new ArrayList<>();
+		list = dao.listAll();
+		model.addAttribute("dvds", list);
+		dao.writeToFile();
+		return "displayDvds";
 	}
 
-	public Dvd chooseOne(List<Dvd> dvdList) {
-		Dvd returnObj;
-		gui.print("\nResults:\n");
-		dvdList
-			.stream()
-			.forEach(dvd -> {
-				gui.print(gui.toStringWithIndex(dvd, dvdList.indexOf(dvd)));
-			});
-		returnObj = gui.getObj(dvdList);
-		return returnObj;
-	}
-
-	public void editMenu() {
-		Dvd dvd = findBy(true);
+	@RequestMapping(value = "/deleteDvd", method = RequestMethod.GET)
+	public String deleteDvd(@RequestParam("index") int index) {
+		dao.loadFromFile();
 		try {
-			do {
-				int ui = gui.printMenu("\n\t1. Edit Title"
-					+ "\n\t2. Edit Release Year"
-					+ "\n\t3. Edit MPAA Rating"
-					+ "\n\t4. Edit Director"
-					+ "\n\t5. Edit Studio"
-					+ "\n\t6. Edit Note"
-					+ "\n\t0. Cancel"
-					+ "\n\nPlease enter your choice: ", 0, 6);
+			Dvd temp = list.get(index);
+			Dvd temp2 = dao.listAll()
+				.stream()
+				.filter(dvd -> compareObject(dvd, temp))
+				.collect(Collectors.toList()).get(0);
+			dao.remove(temp2);
+			dao.writeToFile();
+		} catch (NullPointerException | IndexOutOfBoundsException ex) {
 
-				dvd = gui.editor(dvd, ui);
-
-			} while (gui.confirm("\nWould you like to continue editing "));
-		} catch (NullPointerException ex) {
-			gui.print("\nError: no such record exists. Msg = " + ex.getMessage() + "\n");
+		} finally {
+			return "redirect:dvds";
 		}
-		allowSave();
+	}
+
+	@RequestMapping(value = "/displayEditForm", method = RequestMethod.GET)
+	public String displayEditForm(@RequestParam("index") int index, Model model) {
+		dao.loadFromFile();
+		try {
+			Dvd temp = list.get(index);
+			Dvd temp2 = dao.listAll()
+				.stream()
+				.filter(dvd -> compareObject(dvd, temp))
+				.collect(Collectors.toList()).get(0);
+			old = temp2;
+			model.addAttribute("dvd", temp2);
+			dao.writeToFile();
+		} catch (NullPointerException | IndexOutOfBoundsException ex) {
+			dao.writeToFile();
+			return "redirect:dvds";
+		}
+		return "edit";
+	}
+
+	@RequestMapping(value = "/updateDvd", method = RequestMethod.POST)
+	public String updateDvd(@ModelAttribute("dvd") Dvd dvd, Model model) {
+		dao.loadFromFile();
+		dao.remove(old);
+
+		dao.add(dvd);
+		dao.writeToFile();
+
+		return "redirect:dvds";
 
 	}
 
-	public void allowSave() {
-		int choice = gui.printMenu("\nSAVE"
-			+ "\n\t1. Save changes"
-			+ "\n\t2. Cancel"
-			+ "\n\t0. Main Menu"
-			+ "\n\nPlease enter your choice: ", 0, 2);
+	@RequestMapping(value = "/findDvd", method = RequestMethod.POST)
+	public String findDvd(HttpServletRequest req, HttpServletResponse resp) {
+		dao.loadFromFile();
+		String keyword = req.getParameter("keyword");
 
-		switch (choice) {
-			case 1:
-				dvds.writeToFile();
-				gui.print("\nSaved.\n");
-				break;
-			case 2:
-				gui.print("\nOperation successfully stopped.\n");
-				break;
-			case 0:
-				menu();
-				break;
+		list = new ArrayList<>();
+		list.addAll(dao.getByRating(keyword));
+		list.addAll(dao.getByStudio(keyword));
+		list.addAll(dao.getByTitle(keyword));
+
+		try {
+			int years = Integer.parseInt(keyword);
+			list.addAll(dao.getReleasesInLastNYears(years));
+			dao.writeToFile();
+		} catch (NumberFormatException ex) {
+			dao.writeToFile();
+			return "redirect:results";
 		}
+		
+		return "redirect:results";
+	}
 
+	@RequestMapping(value = "/results", method = RequestMethod.GET)
+	public String displayResults(Model model) {
+		model.addAttribute("results", list);
+		return "displayResults";
+	}
+
+	public boolean compareObject(Dvd dvd1, Dvd dvd2) {
+		return dvd1.getTitle().equals(dvd2.getTitle())
+			&& dvd1.getDirector().equals(dvd2.getDirector())
+			&& dvd1.getMpaaRating().equals(dvd2.getMpaaRating())
+			&& dvd1.getStudio().equals(dvd2.getStudio())
+			&& (dvd1.getReleaseDate().compareTo(dvd2.getReleaseDate()) == 0);
 	}
 
 

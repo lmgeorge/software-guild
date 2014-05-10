@@ -16,7 +16,5 @@
 
     <!-- Bean definitions go here -->
   <bean id="dao" class="com.swcguild.dvdlibrary.dao.DvdLibraryDaoImpl"/>
-  <bean id="controller" class="com.swcguild.dvdlibrary.controller.DvdLibraryController">
-    <constructor-arg ref="dao"/>
-  </bean>    
+
 </beans>

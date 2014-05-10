@@ -34,12 +34,11 @@
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="../index.jsp">Home</a></li>
-            <li><a href="#">See All</a></li>
-            <li><a href="#">Add</a></li>
-            <li><a href="#">Edit</a></li>
-            <li><a href="#">Delete</a></li>
-            <li><a href="#">Find</a></li>
-            <li><a href="#">Stats!</a></li>
+            <li><a href="dvds">See All</a></li>
+            <li><a href="displayAddForm">Add</a></li>
+            <li><a href="dvds">Delete</a></li>
+            <li><a href="dvds">Find</a></li>
+            <li><a href="displayStats">Stats!</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -52,7 +51,7 @@
 
 
       <div class="row  col-md-12 col-sm-12 col-xs-12">
-        <sf:form method='POST' modelAttribute="contact" action="updateContact"
+        <sf:form method='POST' modelAttribute="dvd" action="updateDvd"
                  role="form" class="form-horizontal">
           <div class="form-group"> 
             <sf:label path="title" class="control-label">Title: </sf:label>
@@ -71,17 +70,22 @@
 
           <div class="form-group">
             <sf:label path="releaseDate" class="control-label">Release Date: </sf:label>
-            <sf:input path="releaseDate" type="date" class="form-control"/>
+            <sf:input path="releaseDate" type="text" class="form-control" />
           </div>
 
           <div class="form-group">
-            <sf:label path="rating" class="control-label">MPAA Rating: </sf:label>
-            <sf:input path="rating" type="text" class="form-control"/>
+            <sf:label path="mpaaRating" class="control-label">MPAA Rating: </sf:label>
+            <sf:input path="mpaaRating" type="text" class="form-control"/>
           </div>
-          
+
           <div class="form-group">
-            <div class="col-md-offset-11 col-sm-offset-10 col-sm-11">
-              <button type="submit" value="Update Contact" class="btn btn-primary btn-lg">Submit</button>
+            <sf:label path="note" class="control-label">Note: </sf:label>
+            <sf:input path="note" type="text" class="form-control"/>
+          </div>
+
+          <div class="form-group">
+            <div class="col-md-0 col-sm-0">
+              <button type="submit" value="Update DVD" class="btn btn-primary btn-lg">Submit</button>
             </div>
           </div>
         </sf:form>

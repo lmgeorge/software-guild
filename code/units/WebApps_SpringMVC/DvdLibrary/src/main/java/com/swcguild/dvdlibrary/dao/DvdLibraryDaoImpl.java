@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.chrono.IsoChronology;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,17 +33,16 @@ public class DvdLibraryDaoImpl implements DvdLibraryDao {
 	private String notes;
 	private List<Dvd> dvdLib = new ArrayList<>();
 	private final String DELIMITER = "::";
-	private File DVDS;
+	private final String dvdFile = "dvds.txt";
 
 	public void loadFromFile() {
-		DVDS = new File("dvds.txt");
 		Scanner file;
 		try {
-			if (!DVDS.exists()){
-				DVDS.createNewFile();
+			File DVDS = new File("dvds.txt");
+			if (!DVDS.exists()) {
+				FileWriter creator = new FileWriter(dvdFile);
 			}
-			
-			file = new Scanner(new BufferedReader(new FileReader(DVDS)));
+			file = new Scanner(new BufferedReader(new FileReader(dvdFile)));
 			String[] dvdInfo;
 
 			while (file.hasNextLine()) {
@@ -66,12 +66,15 @@ public class DvdLibraryDaoImpl implements DvdLibraryDao {
 				dvdLib.add(dvd);
 			}
 			file.close();
+
 		} catch (FileNotFoundException | NullPointerException ex) {
 			Logger
 				.getLogger(DvdLibraryDaoImpl.class.getName())
 				.log(Level.OFF, ("Error: " + ex.getMessage()));
 		} catch (IOException ex) {
-			Logger.getLogger(DvdLibraryDaoImpl.class.getName()).log(Level.SEVERE, ex.getMessage());
+			Logger
+				.getLogger(DvdLibraryDaoImpl.class.getName())
+				.log(Level.SEVERE, ex.getMessage());
 		}
 	}
 
@@ -82,9 +85,11 @@ public class DvdLibraryDaoImpl implements DvdLibraryDao {
 	}
 
 	public void writeToFile() {
+
 		PrintWriter file;
-		try {
-			file = new PrintWriter(new FileWriter(DVDS));
+		try{ 
+
+		file = new PrintWriter(new FileWriter(dvdFile));
 
 			dvdLib
 				.stream()
@@ -99,6 +104,7 @@ public class DvdLibraryDaoImpl implements DvdLibraryDao {
 					file.flush();
 				});
 			file.close();
+			dvdLib = new ArrayList<>();
 		} catch (IOException | NullPointerException ex) {
 			Logger
 				.getLogger(DvdLibraryDaoImpl.class.getName())
