@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
@@ -47,7 +48,7 @@
 
     <div class="container-fluid">
 
-      <h1 class="row col-md-12 col-sm-12 col-xs-12">Edit Form</h1>
+      <h1 class="text-center row col-md-12 col-sm-12 col-xs-12">Edit Form</h1>
 
 
       <div class="row  col-md-12 col-sm-12 col-xs-12">
@@ -69,8 +70,14 @@
           </div>
 
           <div class="form-group">
-            <sf:label path="releaseDate" class="control-label">Release Date: </sf:label>
-            <sf:input path="releaseDate" type="text" class="form-control" />
+            <sf:label path="releaseDate" class="control-label">
+              Release Date: </sf:label>
+         
+              <c:set property="" var="month" value="${releaseDate.getMonthValue()}"/>
+            <c:set var="day" value="${releaseDate.getDayOfMonth()}"/>
+            <c:set var="year" value="${releaseDate.getYear()}"/>
+            <c:set var="date" value="${year}-${month}-${day}"/>
+            <sf:input path="releaseDate" type="date" placeholder="1988-02-11"  class="form-control" />
           </div>
 
           <div class="form-group">

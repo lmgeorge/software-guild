@@ -61,7 +61,7 @@
   <div class="container-fluid" id="container-results">
 
     <h1 class="text-center" style="font-size: 5em; margin-bottom: 2%">Library:</h1>
-    <hr class="row col-md-0">
+    <hr class="row col-md-12">
     <c:forEach var="dvd" items="${dvds}">
       <c:set value="${dvds.indexOf(dvd)}" var="index"/>
 
@@ -75,11 +75,15 @@
       </div>
       <p class="row col-md-12">Director: ${dvd.director}</p>
       <p class="row col-md-12">Studio: ${dvd.studio}</p>
-      <p class="row col-md-12">Release Date: ${dvd.releaseDate}
+      <c:set var="month" value="${dvd.releaseDate.getMonthValue()}"/>
+      <c:set var="day" value="${dvd.releaseDate.getDayOfMonth()}"/>
+      <c:set var="year" value="${dvd.releaseDate.getYear()}"/>
+      <c:set var="date" value="${month}/${day}/${year}"/>
+      <p class="row col-md-12">Release Date: ${date}
       </p>
       <p class="row col-md-12">Rating: ${dvd.mpaaRating}</p>
       <p class="row col-md-12">Note: ${dvd.note}</p>
-      <hr class="row col-md-0">
+      <hr class="row col-md-12">
     </c:forEach>
   </div>
 

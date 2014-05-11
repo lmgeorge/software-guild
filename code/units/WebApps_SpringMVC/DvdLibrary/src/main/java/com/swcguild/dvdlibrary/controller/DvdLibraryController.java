@@ -105,8 +105,8 @@ public class DvdLibraryController {
 				.stream()
 				.filter(dvd -> compareObject(dvd, temp))
 				.collect(Collectors.toList()).get(0);
-			old = temp2;
 			model.addAttribute("dvd", temp2);
+			dao.remove(temp2);
 			dao.writeToFile();
 		} catch (NullPointerException | IndexOutOfBoundsException ex) {
 			dao.writeToFile();
@@ -115,11 +115,10 @@ public class DvdLibraryController {
 		return "edit";
 	}
 
-	@RequestMapping(value = "/updateDvd", method = RequestMethod.POST)
+	@RequestMapping(value="/updateDvd", method=RequestMethod.POST)
 	public String updateDvd(@ModelAttribute("dvd") Dvd dvd, Model model) {
 		dao.loadFromFile();
-		dao.remove(old);
-
+	
 		dao.add(dvd);
 		dao.writeToFile();
 

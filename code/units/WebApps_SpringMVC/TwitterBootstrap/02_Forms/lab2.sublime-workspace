@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"f",
+				"function"
+			],
+			[
 				"m",
 				"margin-bottom"
 			],
@@ -92,6 +96,9 @@
 	},
 	"file_history":
 	[
+		"/home/apprentice/Documents/GitHub/LaurenGeorge/code/units/WebApps_SpringMVC/TwitterBootstrap/02_Forms/script.js",
+		"/home/apprentice/Documents/GitHub/LaurenGeorge/code/units/WebApps_SpringMVC/TwitterBootstrap/web/js/bootstrap.js",
+		"/home/apprentice/.config/sublime-text-2/Packages/User/JavaScript.sublime-settings",
 		"/home/apprentice/Documents/GitHub/LaurenGeorge/code/units/WebApps_SpringMVC/TwitterBootstrap/01_Layout/index.html",
 		"/home/apprentice/Documents/GitHub/LaurenGeorge/code/units/WebApps_SpringMVC/TwitterBootstrap/web/css/bootstrap/bootstrap.css",
 		"/home/apprentice/Documents/GitHub/LaurenGeorge/code/units/WebApps_SpringMVC/TwitterBootstrap/01_Layout/css/style.css",
@@ -165,7 +172,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 816.0,
+						"translation.y": 1377.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -255,6 +262,6 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 50.0,
+	"side_bar_width": 363.0,
 	"status_bar_visible": true
 }

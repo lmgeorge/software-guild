@@ -10,29 +10,33 @@ import com.swcguild.consoleio.ConsoleIOImpl;
 import com.swcguild.dvdlibrary.model.Dvd;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.time.chrono.IsoChronology;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.format.TextStyle;
 import java.util.List;
+import java.util.Locale;
 
 /**
  *
  * @author lmgeorge <lauren.george@live.com>
  */
-public class DVDGooeyImpl implements DvdGUI{
+public class DVDGooeyImpl implements DvdGUI {
 
 	private final ConsoleIO c = new ConsoleIOImpl();
 	private String note;
 	private final DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 	private DecimalFormat d = new DecimalFormat("#.##");
 
+
+
 	public void print(String str) {
 		c.print(str);
 	}
-	
-	public int printMenu(String str, int min, int max){
+
+	public int printMenu(String str, int min, int max) {
 		return c.getsNum(str, min, max);
 	}
-
 
 	public void printMenuTitle(int choice) {
 		switch (choice) {
@@ -58,7 +62,6 @@ public class DVDGooeyImpl implements DvdGUI{
 		}
 	}
 
-
 	public Dvd createDvd() {
 		Dvd dvd = new Dvd();
 		dvd.setTitle(c.gets("\tTitle: "));
@@ -69,8 +72,8 @@ public class DVDGooeyImpl implements DvdGUI{
 		dvd.setNote(c.gets("\tNote: "));
 		return dvd;
 	}
-	
-	public boolean confirm(String prompt){
+
+	public boolean confirm(String prompt) {
 		return c.getsNum(prompt + " (1 = Yes /  0 = No)?:  ", 0, 1) == 1;
 	}
 
@@ -150,21 +153,20 @@ public class DVDGooeyImpl implements DvdGUI{
 				date = LocalDate.parse(c.gets(prompt), format);
 				badInput = false;
 			} catch (DateTimeParseException ex) {
-				c.println("ERROR: Invalid entry. " + ex.getMessage()+"\n");
+				c.println("ERROR: Invalid entry. " + ex.getMessage() + "\n");
 			}
 		} while (badInput);
 		return date;
 	}
 
-	
 	public Dvd editor(Dvd dvd, int ui) {
 		String tempVal;
 		switch (ui) {
 			case 1:
 				c.println("Old title: " + dvd.getTitle());
 				tempVal = c.gets("Enter new title: ");
-				
-				if (confirm("\nConfirm change "))  {
+
+				if (confirm("\nConfirm change ")) {
 					dvd.setTitle(tempVal);
 				} else {
 					c.println("No changes made.\n");
@@ -185,7 +187,7 @@ public class DVDGooeyImpl implements DvdGUI{
 				c.println("Old rating: " + dvd.getMpaaRating());
 				tempVal = c.gets("Enter new rating: ");
 
-				if (confirm("\nConfirm change ")){
+				if (confirm("\nConfirm change ")) {
 					dvd.setMpaaRating(tempVal);
 				} else {
 					c.println("\nNo changes made.\n");
@@ -195,7 +197,7 @@ public class DVDGooeyImpl implements DvdGUI{
 				c.println("Old director: " + dvd.getDirector());
 				tempVal = c.gets("Enter new director: ");
 
-			if (confirm("\nConfirm change ")) {
+				if (confirm("\nConfirm change ")) {
 					dvd.setDirector(tempVal);
 				} else {
 					c.println("\nNo changes made.\n");
@@ -205,7 +207,7 @@ public class DVDGooeyImpl implements DvdGUI{
 				c.println("Old studio: " + dvd.getStudio());
 				tempVal = c.gets("Enter new studio: ");
 
-				if (confirm("\nConfirm change ")){
+				if (confirm("\nConfirm change ")) {
 					dvd.setStudio(tempVal);
 				} else {
 					c.println("\nNo changes made.\n");
@@ -215,7 +217,7 @@ public class DVDGooeyImpl implements DvdGUI{
 				c.println("Old note: " + dvd.getNote());
 				tempVal = c.gets("Enter new note: ");
 
-				if (confirm("\nConfirm change ")){
+				if (confirm("\nConfirm change ")) {
 					dvd.setNote(tempVal);
 				} else {
 					c.println("\nNo changes made.\n");
@@ -230,8 +232,9 @@ public class DVDGooeyImpl implements DvdGUI{
 
 		c.print("\nUpdated record:\n");
 		c.println(toString(dvd));
-		
+
 		return dvd;
 	}
+
 
 }
