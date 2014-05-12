@@ -38,7 +38,6 @@
             <li><a href="displayAddForm">Add</a></li>
             <li><a href="dvds">Edit</a></li>
             <li><a href="dvds">Delete</a></li>
-            <li><a href="displayStats">Stats!</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -62,7 +61,7 @@
   <div class="container-fluid" id="container-results">
 
     <h1 class="text-center" style="font-size: 5em; margin-bottom: 2%">Results:</h1>
-    <hr class="row col-md-0">
+    <hr class="row col-md-12">
     <p class="row col-md-12 lead" style="font-size: 2em">
       <span class="text-danger">Average age of the library:</span> 
       <fmt:formatNumber 
@@ -72,7 +71,7 @@
     <p class="row col-md-12 lead"  style="font-size: 2em">
       <span class="text-danger">Number of DVDs:</span> ${size}
     </p>
-    <hr class="row col-md-0">
+    <hr class="row col-md-12">
 
   </div>
 

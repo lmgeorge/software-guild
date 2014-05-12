@@ -76,7 +76,8 @@
             <c:set var="day" value="${dvd.releaseDate.getDayOfMonth()}"/>
             <c:set var="year" value="${dvd.releaseDate.getYear()}-"/>
             <c:set var="date" value="${year}${month}${day}"/>
-            <sf:input path="releaseDate" type="text" class="form-control" />
+            <sf:input path="releaseDate" type="date" class="form-control"
+                      value="${releaseDate}"/>
           </div>
 
           <div class="form-group">
