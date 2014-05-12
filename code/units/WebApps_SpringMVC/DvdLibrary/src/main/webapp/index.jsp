@@ -55,7 +55,7 @@
         <a href="spring/dvds" class="list-group-item-danger list-group-item">
           Find a DVD
         </a>
-        <a href="spring/displayStats" class="list-group-item-danger list-group-item">
+        <a href="spring/stats" class="list-group-item-danger list-group-item">
           See the Library Stats
         </a>
       </div>

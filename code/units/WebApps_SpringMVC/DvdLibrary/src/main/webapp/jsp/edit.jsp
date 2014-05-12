@@ -64,7 +64,7 @@
             <sf:input path="director" type="text" class="form-control"/>
           </div>
 
-          <div class="form-group">
+          <div class="form-group ">
             <sf:label path="studio" class="control-label">Studio: </sf:label>
             <sf:input path="studio" type="text" class="form-control"/>
           </div>
@@ -72,12 +72,11 @@
           <div class="form-group">
             <sf:label path="releaseDate" class="control-label">
               Release Date: </sf:label>
-         
-              <c:set property="" var="month" value="${releaseDate.getMonthValue()}"/>
-            <c:set var="day" value="${releaseDate.getDayOfMonth()}"/>
-            <c:set var="year" value="${releaseDate.getYear()}"/>
-            <c:set var="date" value="${year}-${month}-${day}"/>
-            <sf:input path="releaseDate" type="date" placeholder="1988-02-11"  class="form-control" />
+            <c:set var="month" value="${dvd.releaseDate.getMonthValue()}-"/>
+            <c:set var="day" value="${dvd.releaseDate.getDayOfMonth()}"/>
+            <c:set var="year" value="${dvd.releaseDate.getYear()}-"/>
+            <c:set var="date" value="${year}${month}${day}"/>
+            <sf:input path="releaseDate" type="text" class="form-control" />
           </div>
 
           <div class="form-group">

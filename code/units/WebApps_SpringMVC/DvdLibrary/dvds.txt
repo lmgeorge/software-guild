@@ -1,4 +1,2 @@
 The Nightmare Before Christmas::1993-10-31::PG::Henry Selick::Skellington Productions::Perfect musical
-The Return of the King, Part 1::2010-05-20::R::Peter Jackson::Lions Gate::more testing
-The Return of the King, Part 2::2013-12-25::PG-13::Peter Jackson::Lions Gate::stuff for testing
 The Little Mermaid::1989-02-11::PG::Ron Clements::Walt Disney Pictures::null

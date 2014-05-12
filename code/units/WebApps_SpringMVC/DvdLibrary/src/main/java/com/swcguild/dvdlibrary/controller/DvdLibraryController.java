@@ -105,6 +105,7 @@ public class DvdLibraryController {
 				.stream()
 				.filter(dvd -> compareObject(dvd, temp))
 				.collect(Collectors.toList()).get(0);
+
 			model.addAttribute("dvd", temp2);
 			dao.remove(temp2);
 			dao.writeToFile();
@@ -115,10 +116,11 @@ public class DvdLibraryController {
 		return "edit";
 	}
 
-	@RequestMapping(value="/updateDvd", method=RequestMethod.POST)
-	public String updateDvd(@ModelAttribute("dvd") Dvd dvd, Model model) {
+	@RequestMapping(value = "/updateDvd", method = RequestMethod.POST)
+	public String updateDvd(@ModelAttribute("dvd") Dvd dvd, Model model, HttpServletRequest req, HttpServletResponse resp) {
 		dao.loadFromFile();
-	
+		LocalDate releaseDate = LocalDate.parse(req.getParameter("releaseDate"));
+		dvd.setReleaseDate(releaseDate);
 		dao.add(dvd);
 		dao.writeToFile();
 
@@ -144,8 +146,18 @@ public class DvdLibraryController {
 			dao.writeToFile();
 			return "redirect:results";
 		}
-		
+
 		return "redirect:results";
+	}
+
+	@RequestMapping(value = "/stats", method = RequestMethod.GET)
+	public String displayStats(Model model) {
+
+		dao.loadFromFile();
+		model.addAttribute("averageAge", dao.getAverageAge());
+		model.addAttribute("size", dao.listAll().size());
+		dao.writeToFile();
+		return "displayStats";
 	}
 
 	@RequestMapping(value = "/results", method = RequestMethod.GET)
