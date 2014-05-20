@@ -46,7 +46,7 @@ public class DvdLibraryController {
 	//should be called from add.jsp
 	@RequestMapping(value = "/addDvd", method = RequestMethod.POST)
 	public String addDvd(HttpServletRequest req, HttpServletResponse resp) {
-		dao.loadFromFile();
+		
 		String title = req.getParameter("title");
 		String studio = req.getParameter("studio");
 		String director = req.getParameter("director");
@@ -63,24 +63,21 @@ public class DvdLibraryController {
 		dvd.setNote(note);
 
 		dao.add(dvd);
-		dao.writeToFile();
+		
 
 		return "redirect:dvds";
 	}
 
 	@RequestMapping(value = "/dvds", method = RequestMethod.GET)
 	public String displayDvds(Model model) {
-		dao.loadFromFile();
-		list = new ArrayList<>();
-		list = dao.listAll();
-		model.addAttribute("dvds", list);
-		dao.writeToFile();
+		model.addAttribute("dvds", dao.listAll());
+		
 		return "displayDvds";
 	}
 
 	@RequestMapping(value = "/deleteDvd", method = RequestMethod.GET)
 	public String deleteDvd(@RequestParam("index") int index) {
-		dao.loadFromFile();
+		
 		try {
 			Dvd temp = list.get(index);
 			Dvd temp2 = dao.listAll()
@@ -88,7 +85,7 @@ public class DvdLibraryController {
 				.filter(dvd -> compareObject(dvd, temp))
 				.collect(Collectors.toList()).get(0);
 			dao.remove(temp2);
-			dao.writeToFile();
+			
 		} catch (NullPointerException | IndexOutOfBoundsException ex) {
 
 		} finally {
@@ -97,8 +94,11 @@ public class DvdLibraryController {
 	}
 
 	@RequestMapping(value = "/displayEditForm", method = RequestMethod.GET)
-	public String displayEditForm(@RequestParam("index") int index, Model model) {
-		dao.loadFromFile();
+	public String displayEditForm(
+		@RequestParam("title") String title, 
+		@RequestParam("release_date") LocalDate releaseDate, 
+		Model model) {
+		
 		try {
 			Dvd temp = list.get(index);
 			Dvd temp2 = dao.listAll()
@@ -108,9 +108,9 @@ public class DvdLibraryController {
 
 			model.addAttribute("dvd", temp2);
 			dao.remove(temp2);
-			dao.writeToFile();
+			
 		} catch (NullPointerException | IndexOutOfBoundsException ex) {
-			dao.writeToFile();
+			
 			return "redirect:dvds";
 		}
 		return "edit";
@@ -118,11 +118,11 @@ public class DvdLibraryController {
 
 	@RequestMapping(value = "/updateDvd", method = RequestMethod.POST)
 	public String updateDvd(@ModelAttribute("dvd") Dvd dvd, Model model, HttpServletRequest req, HttpServletResponse resp) {
-		dao.loadFromFile();
+		
 		LocalDate releaseDate = LocalDate.parse(req.getParameter("releaseDate"));
 		dvd.setReleaseDate(releaseDate);
 		dao.add(dvd);
-		dao.writeToFile();
+		
 
 		return "redirect:dvds";
 
@@ -130,7 +130,7 @@ public class DvdLibraryController {
 
 	@RequestMapping(value = "/findDvd", method = RequestMethod.POST)
 	public String findDvd(HttpServletRequest req, HttpServletResponse resp) {
-		dao.loadFromFile();
+		
 		String keyword = req.getParameter("keyword");
 
 		list = new ArrayList<>();
@@ -141,9 +141,9 @@ public class DvdLibraryController {
 		try {
 			int years = Integer.parseInt(keyword);
 			list.addAll(dao.getReleasesInLastNYears(years));
-			dao.writeToFile();
+			
 		} catch (NumberFormatException ex) {
-			dao.writeToFile();
+			
 			return "redirect:results";
 		}
 
@@ -153,10 +153,10 @@ public class DvdLibraryController {
 	@RequestMapping(value = "/stats", method = RequestMethod.GET)
 	public String displayStats(Model model) {
 
-		dao.loadFromFile();
+		
 		model.addAttribute("averageAge", dao.getAverageAge());
 		model.addAttribute("size", dao.listAll().size());
-		dao.writeToFile();
+		
 		return "displayStats";
 	}
 

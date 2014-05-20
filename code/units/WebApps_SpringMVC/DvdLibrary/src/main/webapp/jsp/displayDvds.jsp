@@ -69,10 +69,10 @@
         <div class="row">
           <p class="col-md-5">Title: ${dvd.title}  </p>      
           <a class="col-md-1 text-right" 
-             href="displayEditForm?index=${index}">
+             href="displayEditForm?title=${dvd.title}&release_date=${dvd.releaseDate}">
             Edit</a>  
           <a class="col-md-1"  
-             href="deleteDvd?index=${index}">  Delete</a>
+             href="deleteDvd?title=${dvd.title}&release_date=${dvd.releaseDate}">  Delete</a>
         </div>
         
         <p class="row col-md-12">Director: ${dvd.director}</p>

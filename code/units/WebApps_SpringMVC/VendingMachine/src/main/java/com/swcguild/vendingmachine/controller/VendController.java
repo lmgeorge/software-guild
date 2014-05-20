@@ -8,7 +8,6 @@ package com.swcguild.vendingmachine.controller;
 import com.swcguild.vendingmachine.dao.VendingMachineDao;
 import com.swcguild.vendingmachine.model.Change;
 import com.swcguild.vendingmachine.model.Item;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

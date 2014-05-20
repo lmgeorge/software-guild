@@ -1,7 +1,13 @@
+<%-- 
+    Document   : login
+    Created on : May 13, 2014, 3:27:59 PM
+    Author     : lmgeorge <lauren.george@live.com>
+--%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
   <head>
@@ -37,8 +43,9 @@
     <div class="container-fluid">
 
       <div class="page-header text-center">
-        <h1><a href="spring/menu">Vending Machine</a></h1>
-        <h1><a href="spring/login">Admin</a></h1>
+        <sf:form modelAttribute="credential" method="validateLogin">
+          
+        </sf:form>
       </div>        
      
     </div> <!--.container-fluid-->

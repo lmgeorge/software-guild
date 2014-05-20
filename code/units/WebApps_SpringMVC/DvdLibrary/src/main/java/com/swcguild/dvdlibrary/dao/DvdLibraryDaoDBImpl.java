@@ -6,109 +6,68 @@
 package com.swcguild.dvdlibrary.dao;
 
 import com.swcguild.dvdlibrary.model.Dvd;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.chrono.IsoChronology;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
-import java.util.Scanner;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 
 /**
  *
  * @author lmgeorge <lauren.george@live.com>
  */
-public class DvdLibraryDaoImpl implements DvdLibraryDao {
+public class DvdLibraryDaoDBImpl implements DvdLibraryDao {
 
 	private String notes;
 	private List<Dvd> dvdLib = new ArrayList<>();
 	private final String DELIMITER = "::";
-	private final String dvdFile = "dvds.txt";
 
-	public void loadFromFile() {
-		Scanner file;
-		try {
-			File DVDS = new File("dvds.txt");
-			if (!DVDS.exists()) {
-				FileWriter creator = new FileWriter(dvdFile);
-			}
-			file = new Scanner(new BufferedReader(new FileReader(dvdFile)));
-			String[] dvdInfo;
+	private static final String SQL_INSERT_DVD = 
+		"insert into dvds (`title`, `release_date`, `mpaa_rating`, `studio`, `note`)"
+		+ "values (?,?,?,?,?)";
+	private static final String SQL_DELETE_DVD = 
+		"delete from dvds "
+		+ "where title = ? AND release_date = ?";
+	private static final String SQL_UPDATE_DVD = 
+		"update dvds"
+		+ "set title = ?,"
+		+ "release_date = ?,"
+		+ "mpaa_rating = ?,"
+		+ "studio = ?,"
+		+ "note = ? "
+		+ "where title = ? AND release_date = ?";
+	private static final String SQL_SELECT_DVD = 
+		"select * from dvds "
+		+ "where title = ? AND release_date = ?";
+	private static final String SQL_SELECT_ALL_DVDS =
+		"select * from dvds";
+	private static final String SQL_SELECT_BY_STUDIO =
+		"select * from "
+		+ "where studio = ?";
 
-			while (file.hasNextLine()) {
-				String dvdrecord = file.nextLine();
-				dvdInfo = dvdrecord.split(DELIMITER);
+	private static final String SQL_SELECT_BY_RATING = 
+		"select * from "
+		+ "where mpaa_rating = ?";
 
-				Dvd dvd = new Dvd();
-				dvd.setTitle(dvdInfo[0]);
-				LocalDate date = LocalDate.parse(dvdInfo[1]);
-				dvd.setReleaseDate(date);
-				dvd.setMpaaRating(dvdInfo[2]);
-				dvd.setDirector(dvdInfo[3]);
-				dvd.setStudio(dvdInfo[4]);
-				if (dvdInfo.length > 5) {
-					if (dvdInfo[5].equals("null")) {
-						dvd.setNote("");
-					} else {
-						dvd.setNote(dvdInfo[5]);
-					}
-				}
-				dvdLib.add(dvd);
-			}
-			file.close();
+	private JdbcTemplate jdbcTemplate;
 
-		} catch (FileNotFoundException | NullPointerException ex) {
-			Logger
-				.getLogger(DvdLibraryDaoImpl.class.getName())
-				.log(Level.OFF, ("Error: " + ex.getMessage()));
-		} catch (IOException ex) {
-			Logger
-				.getLogger(DvdLibraryDaoImpl.class.getName())
-				.log(Level.SEVERE, ex.getMessage());
-		}
+	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
 	}
 
 	public List<Dvd> listAll() {
 		return dvdLib
 			.stream()
 			.collect(Collectors.toList());
-	}
-
-	public void writeToFile() {
-
-		PrintWriter file;
-		try{ 
-
-		file = new PrintWriter(new FileWriter(dvdFile));
-
-			dvdLib
-				.stream()
-				.forEach(dvd -> {
-					file.println(
-						dvd.getTitle() + DELIMITER
-						+ dvd.getReleaseDate() + DELIMITER
-						+ dvd.getMpaaRating() + DELIMITER
-						+ dvd.getDirector() + DELIMITER
-						+ dvd.getStudio() + DELIMITER
-						+ dvd.getNote());
-					file.flush();
-				});
-			file.close();
-			dvdLib = new ArrayList<>();
-		} catch (IOException | NullPointerException ex) {
-			Logger
-				.getLogger(DvdLibraryDaoImpl.class.getName())
-				.log(Level.OFF, ("Error: " + ex.getMessage()));
-		}
 	}
 
 	public void add(Dvd dvd) {
@@ -165,7 +124,7 @@ public class DvdLibraryDaoImpl implements DvdLibraryDao {
 			date = LocalDate.parse(str);
 		} catch (DateTimeParseException | NullPointerException ex) {
 			Logger
-				.getLogger(DvdLibraryDaoImpl.class.getName())
+				.getLogger(DvdLibraryDaoDBImpl.class.getName())
 				.log(Level.OFF, ("Error: " + ex.getMessage()));
 		}
 		return date;
@@ -180,6 +139,25 @@ public class DvdLibraryDaoImpl implements DvdLibraryDao {
 				notes += (delimiter + str);
 			});
 		return notes;
+	}
+
+	private static final class DvdMapper implements ParameterizedRowMapper<Dvd>{
+
+		@Override
+		public Dvd mapRow(ResultSet rs, int i) throws SQLException {
+			Dvd dvd = new Dvd();
+			dvd.setTitle(rs.getString("title"));
+			dvd.setReleaseDate(rs.getDate("release_date").toLocalDate());
+			dvd.setTitle(rs.getString("title"));
+			dvd.setTitle(rs.getString("title"));
+		}
+		
+	}
+	
+	public void loadFromFile() {
+	}
+
+	public void writeToFile() {
 	}
 
 
