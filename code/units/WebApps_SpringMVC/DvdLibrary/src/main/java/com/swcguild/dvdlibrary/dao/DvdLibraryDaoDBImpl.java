@@ -9,17 +9,13 @@ import com.swcguild.dvdlibrary.model.Dvd;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.chrono.IsoChronology;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -27,36 +23,50 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
  */
 public class DvdLibraryDaoDBImpl implements DvdLibraryDao {
 
-	private String notes;
+	
 	private List<Dvd> dvdLib = new ArrayList<>();
-	private final String DELIMITER = "::";
+	
 
-	private static final String SQL_INSERT_DVD = 
-		"insert into dvds (`title`, `release_date`, `mpaa_rating`, `studio`, `note`)"
-		+ "values (?,?,?,?,?)";
-	private static final String SQL_DELETE_DVD = 
-		"delete from dvds "
-		+ "where title = ? AND release_date = ?";
-	private static final String SQL_UPDATE_DVD = 
-		"update dvds"
+	private static final String SQL_INSERT_DVD
+		= "insert into dvds (`title`, `director`, `release_date`, `mpaa_rating`, `studio`, `note`)"
+		+ "values (?,?,?,?,?,?)";
+	private static final String SQL_DELETE_DVD
+		= "delete from dvds "
+		+ "where dvdID = ?";
+	private static final String SQL_UPDATE_DVD
+		= "update dvds"
 		+ "set title = ?,"
+		+ "director = ?,"
 		+ "release_date = ?,"
 		+ "mpaa_rating = ?,"
 		+ "studio = ?,"
 		+ "note = ? "
-		+ "where title = ? AND release_date = ?";
-	private static final String SQL_SELECT_DVD = 
-		"select * from dvds "
-		+ "where title = ? AND release_date = ?";
-	private static final String SQL_SELECT_ALL_DVDS =
-		"select * from dvds";
-	private static final String SQL_SELECT_BY_STUDIO =
-		"select * from "
-		+ "where studio = ?";
+		+ "where dvdID = ?";
+	private static final String SQL_SELECT_DVD
+		= "select * from dvds "
+		+ "where dvdID = ?";
+	private static final String SQL_SELECT_ALL_DVDS
+		= "select * from dvds";
 
-	private static final String SQL_SELECT_BY_RATING = 
-		"select * from "
-		+ "where mpaa_rating = ?";
+	private static final String SQL_SELECT_BY_TITLE
+		= "select * from dvds"
+		+ "where title rlike ?";
+
+	private static final String SQL_SELECT_BY_STUDIO
+		= "select * from dvds"
+		+ "where studio rlike ?";
+
+	private static final String SQL_SELECT_BY_RATING
+		= "select * from dvds"
+		+ "where mpaa_rating rlike ?";
+
+	private static final String SQL_SELECT_BY_YEAR
+		= "select * from dvds "
+		+ "where extract(year from BirthDate) >= ?;";
+	
+	private static final String SQL_SELECT_YEARS
+		= "select extract(year from BirthDate) from dvds";
+
 
 	private JdbcTemplate jdbcTemplate;
 
@@ -65,95 +75,98 @@ public class DvdLibraryDaoDBImpl implements DvdLibraryDao {
 	}
 
 	public List<Dvd> listAll() {
-		return dvdLib
-			.stream()
-			.collect(Collectors.toList());
+		return jdbcTemplate.query(SQL_SELECT_ALL_DVDS, new DvdMapper());
 	}
 
+	public Dvd getDvd(int dvdID) {
+
+		try {
+			return jdbcTemplate.queryForObject(SQL_SELECT_DVD, new DvdMapper(), dvdID);
+		} catch (EmptyResultDataAccessException ex) {
+			return null;
+		}
+
+	}
+
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public void add(Dvd dvd) {
-		dvdLib.add(dvd);
+		jdbcTemplate.update(SQL_INSERT_DVD,
+			dvd.getTitle(),
+			dvd.getDirector(),
+			dvd.getReleaseDate(),
+			dvd.getMpaaRating(),
+			dvd.getStudio(),
+			dvd.getStudio());
+		dvd.setDvdID(
+			jdbcTemplate.queryForObject("select LAST_INSERT_ID()", Integer.class));
 	}
 
-	public void remove(Dvd dvd) {
-		dvdLib.remove(dvd);
+	public void remove(int dvdID) {
+		jdbcTemplate.update(SQL_DELETE_DVD, dvdID);
 	}
 
-	public List<Dvd> getByTitle(String dvdTitle) {
-		return dvdLib
-			.stream()
-			.filter(d -> d.getTitle().equalsIgnoreCase(dvdTitle))
-			.collect(Collectors.toList());
+	public void update(Dvd dvd) {
+		jdbcTemplate.update(SQL_UPDATE_DVD,
+			dvd.getTitle(),
+			dvd.getDirector(),
+			dvd.getReleaseDate(),
+			dvd.getMpaaRating(),
+			dvd.getStudio(),
+			dvd.getNote(),
+			dvd.getDvdID());
+	}
+
+	public List<Dvd> getByTitle(String title) {
+		return jdbcTemplate.query(SQL_SELECT_BY_TITLE, new DvdMapper(), title);
 	}
 
 	@Override
-	public List<Dvd> getByRating(String mpaa) {
-		return dvdLib
-			.stream()
-			.filter(d -> d.getMpaaRating().matches(mpaa))
-			.collect(Collectors.toList());
+	public List<Dvd> getByRating(String mpaaRating) {
+		return jdbcTemplate.query(SQL_SELECT_BY_RATING, new DvdMapper(), mpaaRating);
 	}
 
 	@Override
 	public List<Dvd> getByStudio(String studio) {
-		return dvdLib
-			.stream()
-			.filter(d -> d.getStudio().equalsIgnoreCase(studio))
-			.collect(Collectors.toList());
+		return jdbcTemplate.query(SQL_SELECT_BY_STUDIO, new DvdMapper(), studio);
 	}
 
 	@Override
 	public float getAverageAge() {
-		return (float) dvdLib
-			.stream()
-			.mapToLong(Dvd::getAge)
-			.average()
-			.getAsDouble();
+		List<Integer> years;
+		years = jdbcTemplate.queryForList(SQL_SELECT_YEARS, Integer.class);
+		float sum = 0;
+		float age;
+		
+		for (Integer year : years) {
+			sum += year;
+		}
+		
+		age = sum/years.size();
+		
+		return age;
+		
 	}
 
 	public List<Dvd> getReleasesInLastNYears(int year) {
-		return dvdLib
-			.stream()
-			.filter(d -> d.getReleaseDate().getYear() >= year)
-			.collect(Collectors.toList());
+		return jdbcTemplate.query(SQL_SELECT_BY_YEAR, new DvdMapper(), year);
 	}
 
-	//Utility method for loadFromFile
-	public LocalDate checkDate(String str) {
-		LocalDate date = IsoChronology.INSTANCE.dateNow();
-		try {
-			date = LocalDate.parse(str);
-		} catch (DateTimeParseException | NullPointerException ex) {
-			Logger
-				.getLogger(DvdLibraryDaoDBImpl.class.getName())
-				.log(Level.OFF, ("Error: " + ex.getMessage()));
-		}
-		return date;
-	}
-
-	//Utility method for loadFromFile
-	public String toString(ArrayList<String> al, String delimiter) {
-		notes = "";
-		al
-			.stream()
-			.forEach(str -> {
-				notes += (delimiter + str);
-			});
-		return notes;
-	}
-
-	private static final class DvdMapper implements ParameterizedRowMapper<Dvd>{
+	private static final class DvdMapper implements ParameterizedRowMapper<Dvd> {
 
 		@Override
 		public Dvd mapRow(ResultSet rs, int i) throws SQLException {
 			Dvd dvd = new Dvd();
 			dvd.setTitle(rs.getString("title"));
-			dvd.setReleaseDate(rs.getDate("release_date").toLocalDate());
-			dvd.setTitle(rs.getString("title"));
-			dvd.setTitle(rs.getString("title"));
+			dvd.setReleaseDate(rs.getObject("release_date", LocalDate.class));
+			dvd.setDirector(rs.getString("director"));
+			dvd.setNote(rs.getString("note"));
+
+			return dvd;
 		}
-		
+
+
 	}
-	
+
 	public void loadFromFile() {
 	}
 

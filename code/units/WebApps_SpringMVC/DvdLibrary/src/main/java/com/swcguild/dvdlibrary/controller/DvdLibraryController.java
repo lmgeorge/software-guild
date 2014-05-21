@@ -76,53 +76,27 @@ public class DvdLibraryController {
 	}
 
 	@RequestMapping(value = "/deleteDvd", method = RequestMethod.GET)
-	public String deleteDvd(@RequestParam("index") int index) {
-		
-		try {
-			Dvd temp = list.get(index);
-			Dvd temp2 = dao.listAll()
-				.stream()
-				.filter(dvd -> compareObject(dvd, temp))
-				.collect(Collectors.toList()).get(0);
-			dao.remove(temp2);
+	public String deleteDvd(@RequestParam("id") int id) {
+			dao.remove(id);
 			
-		} catch (NullPointerException | IndexOutOfBoundsException ex) {
-
-		} finally {
 			return "redirect:dvds";
-		}
 	}
 
 	@RequestMapping(value = "/displayEditForm", method = RequestMethod.GET)
-	public String displayEditForm(
-		@RequestParam("title") String title, 
-		@RequestParam("release_date") LocalDate releaseDate, 
+	public String displayEditForm(@RequestParam("id") int id, 
 		Model model) {
+			
+		Dvd dvd = dao.getDvd(id);
 		
-		try {
-			Dvd temp = list.get(index);
-			Dvd temp2 = dao.listAll()
-				.stream()
-				.filter(dvd -> compareObject(dvd, temp))
-				.collect(Collectors.toList()).get(0);
-
-			model.addAttribute("dvd", temp2);
-			dao.remove(temp2);
-			
-		} catch (NullPointerException | IndexOutOfBoundsException ex) {
-			
-			return "redirect:dvds";
-		}
+		model.addAttribute("dvd", dvd);
+		
 		return "edit";
 	}
 
 	@RequestMapping(value = "/updateDvd", method = RequestMethod.POST)
-	public String updateDvd(@ModelAttribute("dvd") Dvd dvd, Model model, HttpServletRequest req, HttpServletResponse resp) {
+	public String updateDvd(@ModelAttribute("dvd") Dvd dvd, Model model) {
 		
-		LocalDate releaseDate = LocalDate.parse(req.getParameter("releaseDate"));
-		dvd.setReleaseDate(releaseDate);
-		dao.add(dvd);
-		
+		dao.update(dvd);
 
 		return "redirect:dvds";
 
@@ -149,21 +123,19 @@ public class DvdLibraryController {
 
 		return "redirect:results";
 	}
+	
+		@RequestMapping(value = "/results", method = RequestMethod.GET)
+	public String displayResults(Model model) {
+		model.addAttribute("results", list);
+		return "displayResults";
+	}
 
 	@RequestMapping(value = "/stats", method = RequestMethod.GET)
 	public String displayStats(Model model) {
-
-		
 		model.addAttribute("averageAge", dao.getAverageAge());
 		model.addAttribute("size", dao.listAll().size());
 		
 		return "displayStats";
-	}
-
-	@RequestMapping(value = "/results", method = RequestMethod.GET)
-	public String displayResults(Model model) {
-		model.addAttribute("results", list);
-		return "displayResults";
 	}
 
 	public boolean compareObject(Dvd dvd1, Dvd dvd2) {

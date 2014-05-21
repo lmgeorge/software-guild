@@ -64,16 +64,16 @@
     <h1 class="text-center" style="font-size: 5em; margin-bottom: 2%">Results:</h1>
     <hr class="row col-md-12">
     <c:forEach var="dvd" items="${results}">
-      <c:set value="${results.indexOf(dvd)}" var="index"/>
+      
       <div class="row col-md-offset-3">
         
         <div class="row">
           <p class="col-md-5">Title: ${dvd.title}  </p>      
           <a class="col-md-1 text-right" 
-             href="displayEditForm?index=${index}">
+             href="displayEditForm?id=${dvd.dvdID}">
             Edit</a>  
           <a class="col-md-1"  
-             href="deleteDvd?index=${index}">  Delete</a>
+             href="deleteDvd?id=${dvd.dvdID}">  Delete</a>
         </div>
         
         <p class="row col-md-12">Director: ${dvd.director}</p>
