@@ -16,7 +16,8 @@ public class ArrayStack implements Stack {
 	private static final int DEFAULT_INITIAL_SIZE = 4;
 	private Object[] items;
 	private int numItems = 0;
-
+	
+	
 	public ArrayStack(int size) {
 		items = new Object[size];
 	}
@@ -50,7 +51,8 @@ public class ArrayStack implements Stack {
 		if (numItems == 0){
 			return null;
 		}
-		Object temp = items[numItems--];
+		numItems--;
+		Object temp = items[numItems];
 		items[numItems] = null;
 		
 		if(numItems > 0 && numItems == items.length/4){
@@ -62,7 +64,7 @@ public class ArrayStack implements Stack {
 
 	@Override
 	public Iterator iterator() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return new ReverseArrayIterator();
 	}
 
 	private void resize(int length) {
@@ -77,5 +79,17 @@ public class ArrayStack implements Stack {
 		items = temp;
 	}
 
+	private class ReverseArrayIterator implements Iterator{
+		private int i = numItems;
+		@Override
+		public boolean hasNext() {
+			return i > 0;
+		}
 
+		@Override
+		public Object next() {
+			return items[--i];
+		}
+		
+	}
 }
