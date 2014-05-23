@@ -34,7 +34,7 @@ public class ArrayQueue implements Queue {
 		}
 
 		objects[tail] = obj;
-		tail++;
+		tail++; //resizing will reset the tail to the end of the array, but incrementing the tail will help keep track if things are added in sucession
 		numItems++;
 
 	}
@@ -44,14 +44,15 @@ public class ArrayQueue implements Queue {
 		Object obj = null;
 
 		if (!isEmpty()) {
-
+			//if the numItems == 1, then the array will be shrunk 
+			//if we don't use <= then if numItems < 2, the array won't be shrunk
 			if (numItems <= objects.length / 4) {
 				resize(objects.length / 4);
 			}
 
 			obj = objects[head];
-			objects[head] = null;
-			head++;
+			objects[head] = null; // null out the object
+			head++; //resizing will reset the head to the beginning of the array, but incrementing the head will help keep track if things are removed and then added again
 			numItems--;
 		}
 
@@ -71,23 +72,25 @@ public class ArrayQueue implements Queue {
 	public void resize(int length) {
 		Object[] temp = new Object[length];
 
-		int i = 0;
+		int counter = 0;
 		int index = 0;
-		while (i < tail) {
-			temp[index] = objects[i % objects.length];
+		while (counter < tail) {
+			temp[index] = objects[counter % objects.length];
 			
-			if (objects[index] == null && objects[tail - 1] != null) {
+			// check if the indexed spot in the old array is null
+			// if the new array is smaller than the old, the head in the new array won't be set to null
+			// otherwise keep increment the index and check the next position as long as the counter is less than the tail position.
+			if (objects[index] == null ) { 
 				index = 0;
 			} else {
 				index++;
 			}				
 			
-			i++;
+			counter++;
 		}
 		objects = temp;
 		head = 0;
 		tail = index % objects.length;
-		//tail = index;
 	}
 
 	public int size() {
