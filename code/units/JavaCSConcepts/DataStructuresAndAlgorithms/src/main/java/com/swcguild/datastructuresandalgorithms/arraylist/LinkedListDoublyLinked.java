@@ -13,28 +13,21 @@ import java.util.Iterator;
  */
 public class LinkedListDoublyLinked implements ArrayListEx {
 
-	private int numItems = 0;
-	private int maxIndex = 0;
-	private Object[] objects = {};
-	private Node first, prev, last, next, node;
+	private int size;
+	private Node head, tail;
+
+	public LinkedListDoublyLinked() {
+		head = new Node(null, null, null, 0);
+		tail = new Node(null, null, null, 1);
+		size = 0;
+
+		head.setNext(tail);
+		tail.setPrev(head);
+	}
 
 	@Override
 	public void prepend(Object obj) {
-		if (isEmpty()) {
-			first = new Node(obj, null, null, maxIndex);
 
-			maxIndex++;
-			numItems++;
-		} else {
-			next = new Node(first.obj, first, null, maxIndex);
-
-			first = new Node(obj, null, next, 0);
-			
-			next.prev = first;
-			
-			maxIndex++;
-			numItems++;
-		}
 	}
 
 	@Override
@@ -51,36 +44,24 @@ public class LinkedListDoublyLinked implements ArrayListEx {
 
 	@Override
 	public int size() {
-		return maxIndex + 1;
+		return size + 1;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		return numItems == 0;
+		return size == 0;
 	}
 
 	@Override
 	public Object get(int index) {
-		Object ret = null;
-		Iterator iter = iterator();
-
-		Node temp = new Node();
-		while (iter.hasNext()) {
-			if (temp.prev.index == index) {
-				ret = temp.prev.obj;
-			} else if (temp.next.index == index) {
-				ret = temp.next.obj;
-			} else {
-
-			}
-		}
-
-		return ret;
+		Object obj = null;
+		
+		return obj; 
 	}
 
 	@Override
 	public void insert(Object obj, int index) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
 	}
 
 	@Override
@@ -90,7 +71,7 @@ public class LinkedListDoublyLinked implements ArrayListEx {
 
 	private class LinkedListArrayListIterator implements Iterator {
 
-		Node node = first;
+		Node node;
 
 		@Override
 		public boolean hasNext() {
@@ -133,6 +114,28 @@ public class LinkedListDoublyLinked implements ArrayListEx {
 			this.prev = prev;
 			this.next = next;
 			this.index = index;
+		}
+
+		public void setPrev(Node prev) {
+			this.prev = prev;
+		}
+
+		public void setNext(Node next) {
+			this.next = next;
+		}
+
+		public Node getPrev(Node node) {
+			if (node == head) {
+				return null;
+			}
+			return node.prev;
+		}
+
+		public Node getNext(Node node) {
+			if (node == tail) {
+				return null;
+			}
+			return node.next;
 		}
 
 

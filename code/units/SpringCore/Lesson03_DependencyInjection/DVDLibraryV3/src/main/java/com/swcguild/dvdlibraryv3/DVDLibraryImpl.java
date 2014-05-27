@@ -178,5 +178,20 @@ public class DVDLibraryImpl implements DvdLibraryDao {
 		return notes;
 	}
 
+	@Override
+	public void update(Dvd dvd) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public void remove(int dvdID) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public Dvd getDvd(int dvdID) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
 
 }
