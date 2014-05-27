@@ -6,28 +6,28 @@
   http://www.springframework.org/schema/security
   http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
-    <http pattern="/spring/login" security="none"/>
-    <http auto-config="true" use-expressions="false">
-        <form-login login-processing-url="/j_spring_security_check"
+  <http pattern="/spring/login" security="none"/>
+  <http auto-config="true" use-expressions="false">
+    <form-login login-processing-url="/j_spring_security_check"
                     login-page = "/spring/login"
                     authentication-failure-url="/spring/login?login_error=1" />
-        <logout logout-success-url="/spring/login" />
-        <intercept-url pattern="/spring/displayNewContactForm" access="ROLE_ADMIN" />
-        <intercept-url pattern="/spring/addContact" access="ROLE_ADMIN" />
-        <intercept-url pattern="/spring/deleteContact" access="ROLE_ADMIN" />
-        <intercept-url pattern="/spring/displayEditContactForm" access="ROLE_ADMIN" />
-        <intercept-url pattern="/spring/updateContact" access="ROLE_ADMIN" />
-        <intercept-url pattern="/spring/**" access="ROLE_USER" />    
-    </http>
+    <logout logout-success-url="/spring/login" />
+    <intercept-url pattern="/spring/displayNewContactForm" access="ROLE_ADMIN" />
+    <intercept-url pattern="/spring/addContact" access="ROLE_ADMIN" />
+    <intercept-url pattern="/spring/deleteContact" access="ROLE_ADMIN" />
+    <intercept-url pattern="/spring/displayEditContactForm" access="ROLE_ADMIN" />
+    <intercept-url pattern="/spring/updateContact" access="ROLE_ADMIN" />
+    <intercept-url pattern="/spring/**" access="ROLE_USER" />    
+  </http>
     
-    <authentication-manager>
-        <authentication-provider>
-            <jdbc-user-service id="userService"
-                               data-source-ref="dataSource"
-                               users-by-username-query="select username, password, enabled from users where username=?"
-                               authorities-by-username-query="select username, authority from authorities where username=?" />
-        </authentication-provider>
-    </authentication-manager>
+  <authentication-manager>
+    <authentication-provider>
+      <jdbc-user-service id="userService"
+        data-source-ref="dataSource"
+        users-by-username-query="select username, password, enabled from users where username=?"
+        authorities-by-username-query="select username, authority from authorities where username=?" />
+    </authentication-provider>
+  </authentication-manager>
 
 
 </beans:beans>
