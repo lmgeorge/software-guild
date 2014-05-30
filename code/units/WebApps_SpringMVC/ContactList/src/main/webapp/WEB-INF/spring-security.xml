@@ -5,8 +5,11 @@
   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
   http://www.springframework.org/schema/security
   http://www.springframework.org/schema/security/spring-security-3.1.xsd">
-
+  <beans:bean id="webexpressionHandler"
+  class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler"/>
+  
   <http pattern="/spring/login" security="none"/>
+  <http pattern="/spring/rest/**" security="none"/>
   <http auto-config="true" use-expressions="false">
     <form-login login-processing-url="/j_spring_security_check"
                     login-page = "/spring/login"
