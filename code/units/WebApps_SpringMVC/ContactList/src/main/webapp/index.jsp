@@ -34,12 +34,10 @@
 
     <div class="container-fluid">
       <a href="spring/displayNewForm" class="btn btn-info btn-block" role="button">Add a contact</a>
-    </div>
-    <div class="container-fluid">
-      <a href="spring/contacts" class="btn btn-info btn-block" role="button">Display all contacts</a>
-    </div>
-    <div class="container-fluid">
-      <a href="j_spring_security_logout" class="btn btn-info btn-block" role="button">Log Out</a>
+
+      <a href="spring/contacts" class="btn btn-primary btn-block" role="button">Display all contacts</a>
+
+      <a href="j_spring_security_logout" class="btn btn-success btn-block" role="button">Log Out</a>
     </div>
     <!-- Bootstrap core JavaScript
     ================================================== -->
