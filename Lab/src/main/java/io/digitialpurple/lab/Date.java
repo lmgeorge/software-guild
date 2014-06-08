@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.swcguild.lab;
+package io.digitialpurple.lab;
 
 import com.swcguild.consoleio.ConsoleIO;
 import com.swcguild.consoleio.ConsoleIOImpl;
