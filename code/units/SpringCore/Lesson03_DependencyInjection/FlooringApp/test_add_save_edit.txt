@@ -1,0 +1,213 @@
+cd /home/apprentice/Documents/GitHub/LaurenGeorge/code/units/SpringCore/Lesson03_DependencyInjection/FlooringApp; JAVA_HOME=/usr/lib/jvm/java-8-oracle M2_HOME=/home/apprentice/apache-maven-3.2.1 /home/apprentice/apache-maven-3.2.1/bin/mvn "-Dexec.args=-classpath %classpath com.swcguild.flooringapp.FlooringMastery" -Dexec.executable=/usr/lib/jvm/java-8-oracle/bin/java org.codehaus.mojo:exec-maven-plugin:1.2.1:exec
+Running NetBeans Compile On Save execution. Phase execution is skipped and output directories of dependency projects (with Compile on Save turned on) will be used instead of their jar artifacts.
+Scanning for projects...
+
+Using the builder org.apache.maven.lifecycle.internal.builder.singlethreaded.SingleThreadedBuilder with a thread count of 1
+                                                                        
+------------------------------------------------------------------------
+Building FlooringApp 1.0-SNAPSHOT
+------------------------------------------------------------------------
+The artifact aspectj:aspectjtools:jar:1.5.4 has been relocated to org.aspectj:aspectjtools:jar:1.5.4
+
+--- exec-maven-plugin:1.2.1:exec (default-cli) @ FlooringApp ---
+May 03, 2014 10:02:04 PM org.springframework.context.support.ClassPathXmlApplicationContext prepareRefresh
+INFO: Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@433c675d: startup date [Sat May 03 22:02:04 EDT 2014]; root of context hierarchy
+May 03, 2014 10:02:04 PM org.springframework.beans.factory.xml.XmlBeanDefinitionReader loadBeanDefinitions
+INFO: Loading XML bean definitions from class path resource [appContext.xml]
+
+MENU
+
+	1. Display by Date 
+	2. Add an order
+	3. Edit an order
+	4. Remove an order
+	5. Save
+	0. Quit
+
+Please enter your choice: 1
+
+DISPLAY BY DATE
+
+
+Please enter a date (MM/DD/YYYY): 02/12/1950
+
+================================================================
+
+	Order Number: 201
+	Name: Hunter Gervelis
+	State: PA
+	Tax Rate: 5%
+	Product Type: hardwood
+	Area: 888
+	Cost per sqft: $6.50
+	Labor per sqft: $100.00
+	Total Material: $5,200.00
+	Total Labor: $80,000.00
+	Total Tax: $0.00
+	Total Cost: $85,200.00
+
+================================================================
+
+
+
+MENU
+
+	1. Display by Date 
+	2. Add an order
+	3. Edit an order
+	4. Remove an order
+	5. Save
+	0. Quit
+
+Please enter your choice: 2
+
+ADD ORDER
+
+
+Please enter a date (MM/DD/YYYY): 05/03/2014
+Customer Name: Lauren George
+State (Ohio -> OH): NY
+
+Error: Invalid entry.
+State (Ohio -> OH): OH
+Material Type: wood
+Area (sqft): 500
+
+================================================================
+
+	Order Number: 5
+	Name: Lauren George
+	State: OH
+	Tax Rate: 6.25%
+	Product Type: wood
+	Area: 500
+	Cost per sqft: $5.15
+	Labor per sqft: $4.75
+	Total Material: $2,575.00
+	Total Labor: $2,375.00
+	Total Tax: $309.38
+	Total Cost: $5,259.38
+
+================================================================
+
+
+Would you like to add another order (1 = Yes /  0 = No)? 1
+
+Please enter a date (MM/DD/YYYY): 06/15/2013
+Customer Name: Dan Sass
+State (Ohio -> OH): MI
+Material Type: laminate
+Area (sqft): 0
+Error: Invalid entry.
+
+Area (sqft): 65
+
+================================================================
+
+	Order Number: 6
+	Name: Dan Sass
+	State: MI
+	Tax Rate: 5.75%
+	Product Type: laminate
+	Area: 65
+	Cost per sqft: $1.75
+	Labor per sqft: $2.10
+	Total Material: $113.75
+	Total Labor: $136.50
+	Total Tax: $14.39
+	Total Cost: $264.64
+
+================================================================
+
+
+Would you like to add another order (1 = Yes /  0 = No)? 0
+
+MENU
+
+	1. Display by Date 
+	2. Add an order
+	3. Edit an order
+	4. Remove an order
+	5. Save
+	0. Quit
+
+Please enter your choice: 5
+
+SAVE
+
+ATTENTION: Are you sure you want to save  (1 = Yes /  0 = No)? 1
+
+MENU
+
+	1. Display by Date 
+	2. Add an order
+	3. Edit an order
+	4. Remove an order
+	5. Save
+	0. Quit
+
+Please enter your choice: 3
+
+EDIT ORDER
+
+
+Please enter a date (MM/DD/YYYY): 06/15/2013
+Enter order number: 6
+Customer Name(Dan Sass): 
+State (MI): PA
+Material Type (laminate): tile
+Area (65.0sqft.) : 
+
+================================================================
+
+	Order Number: 6
+	Name: Dan Sass
+	State: PA
+	Tax Rate: 6.75%
+	Product Type: tile
+	Area: 65
+	Cost per sqft: $3.50
+	Labor per sqft: $4.15
+	Total Material: $227.50
+	Total Labor: $269.75
+	Total Tax: $33.56
+	Total Cost: $530.81
+
+================================================================
+
+
+MENU
+
+	1. Display by Date 
+	2. Add an order
+	3. Edit an order
+	4. Remove an order
+	5. Save
+	0. Quit
+
+Please enter your choice: 5
+
+SAVE
+
+ATTENTION: Are you sure you want to save  (1 = Yes /  0 = No)? 1
+
+MENU
+
+	1. Display by Date 
+	2. Add an order
+	3. Edit an order
+	4. Remove an order
+	5. Save
+	0. Quit
+
+Please enter your choice: 0
+
+ATTENTION: Quitting will discard any unsaved changes.
+Are you sure you want to Quit? (1 = Yes /  0 = No)? 1
+------------------------------------------------------------------------
+BUILD SUCCESS
+------------------------------------------------------------------------
+Total time: 03:06 min
+Finished at: 2014-05-03T22:05:10-05:00
+Final Memory: 5M/159M
+------------------------------------------------------------------------

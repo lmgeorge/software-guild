@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lab 02: Forms</title>
+
+    <!-- Bootstrap -->
+    <link href="../web/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+
+    <!-- My Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+
+    
+    <div class="container-fluid">
+     
+      <!--header -->
+      <div class="row">  
+        <div class="col-md-12">
+          <h2>Software Craftsmanship Guild</h2>
+        </div>
+      </div>
+
+
+      <!-- Forms -->
+      <div class="row" id="all-forms">
+
+        <!-- Returning Users -->
+        <div class="col-md-6 col-sm-6">
+
+          <h3>Existing Users Log In Here</h3>
+          <hr>
+          
+          <form class="form-horizontal" role="form">
+            
+            <!--Email -->
+            <div class="form-group">
+              <label for="inputEmail" class="col-sm-2 col-md-2 control-label">Email</label>
+              <div class="col-md-6 col-sm-6">
+                <input type="email" class="form-control" id="inputEmail" placeholder="Email" />
+              </div>
+            </div>
+
+            <!--Password -->
+            <div class="form-group">
+              <label for="inputPassword" class="col-md-2 col-sm-2 control-label">Password</label>
+              <div class="col-md-6 col-sm-6">
+                <input type="password" class="form-control" id="inputPassword" placeholder="Password" /> 
+              </div>
+            </div>
+
+            <!--Remember Me -->
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <div class="checkbox">
+                  <label> <input type="checkbox" />Remember me</label>
+                </div>
+              </div>
+            </div>
+
+            <!--Log In Button-->
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+               <button type="submit" class="btn btn-primary">Log In</button>
+              </div>
+            </div>
+
+          </form>
+        </div>
+
+        <!--New Users -->
+        <div class="col-md-6 col-sm-6">
+          <h3>New User? Register Now!</h3>
+          <hr>
+
+
+          <form class="form-horizontal" role="form">
+            
+            <!--Email -->
+            <div class="form-group">
+              <label for="inputEmail" class="col-sm-2 col-md-2 control-label">Email</label>
+              <div class="col-md-6 col-sm-6">
+                <input type="email" class="form-control" id="inputEmail" placeholder="Email" />
+              </div>
+            </div>
+
+            <!-- First name -->
+            <div class="form-group">
+              <label for="firstName" class="col-sm-2 col-md-2 control-label">First Name</label>
+              <div class="col-md-6 col-sm-6">
+                <input type="text" class="form-control" id="firstName" placeholder="First name" />
+              </div>
+            </div>
+
+            <!-- Last name -->
+            <div class="form-group">
+              <label for="lastName" class="col-sm-2 col-md-2 control-label">Last Name</label>
+              <div class="col-md-6 col-sm-6">
+                <input type="text" class="form-control" id="lastName" placeholder="Last name" />
+              </div>
+            </div>
+
+            <!--Password -->
+            <div class="form-group">
+              <label for="inputPassword" class="col-md-2 col-sm-2 control-label">Password</label>
+              <div class="col-md-6 col-sm-6">
+                <input type="password" class="form-control" id="inputPassword" placeholder="Password" /> 
+              </div>
+            </div>
+
+            <!--Confirm Password -->
+            <div class="form-group">
+              <label for="confirmPassword" class="col-md-2 col-sm-2 control-label">Confirm Password</label>
+              <div class="col-md-6 col-sm-6">
+                <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm password" /> 
+              </div>
+            </div>
+
+
+            <!--Register Button-->
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+               <button type="submit" class="btn btn-primary">Register</button>
+              </div>
+            </div>
+
+          </form>
+        </div>
+
+
+      </div><!-- close forms -->
+
+      <!-- horizontal line -->
+      <div class="row">
+        <div class="col-md-12">
+          <hr/>
+        </div>
+      </div>
+
+      <!-- Copyright -->
+      <div class="row">
+        <div class="col-md-12"> 
+          &#169; 2014-Software Craftsmanship Guild
+        </div>
+      </div>
+
+
+    </div><!--close container -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>

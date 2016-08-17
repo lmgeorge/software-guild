@@ -1,0 +1,14 @@
+body {
+	padding-top: 70px;
+}
+
+.nav.nav-tabs {
+	margin-top: 20px;
+	margin-bottom: 15px;
+	font-size: 0.75em;
+}
+
+
+div#copyright{
+	margin-bottom: 15px;
+}

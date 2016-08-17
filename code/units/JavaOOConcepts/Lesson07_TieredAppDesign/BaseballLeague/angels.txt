@@ -1,0 +1,5 @@
+49::Ernesto::Frieri::pitcher::0.197::240::7/19/1985
+45::Tyler::Skaggs::pitcher::0.244::18::7/13/1991
+16::Hyun Choi::Conger::catcher::0.230::182::1/29/1988
+6::David::Freese::infielder::0.281::487::4/28/1983
+7::Collin::Cowgill::outfielder::0.292::167::5/22/1986

@@ -1,0 +1,8 @@
+Lauren::George::746 Park Rd::Charlottesville::VA::22902
+Eric::Ward::520 Main St::Akron::OH::00012
+Dan::Sass::123 Main St::Akron::OH::78945
+Michael::Ekebratt::124 Main St::Akron::OH::78945
+Denis::Terpanov::666 Jerry Falwell Hwy::Charlotte::NC::28204
+Dante::George::808 Hawthorne Ln::Matthews::NC::28102
+Eric::Wise::S Main St::Columbus::OH::89967
+Donna::Karan::789 Fashion Blvd::Toledo::OH::65423
